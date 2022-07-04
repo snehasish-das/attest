@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 04, 2022 at 11:45 AM
+-- Generation Time: Jul 04, 2022 at 01:22 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -67,7 +67,7 @@ CREATE TABLE `tcm_nodes` (
 CREATE TABLE `tcm_releases` (
   `id` bigint(20) NOT NULL,
   `name` varchar(64) NOT NULL,
-  `description` varchar(128) NOT NULL,
+  `description` varchar(128) DEFAULT NULL,
   `test_id` bigint(20) NOT NULL,
   `test_status` varchar(16) NOT NULL DEFAULT 'PASSED',
   `execution_date` date NOT NULL,
@@ -90,19 +90,19 @@ CREATE TABLE `tcm_releases` (
 CREATE TABLE `tcm_tests` (
   `id` bigint(20) NOT NULL,
   `name` varchar(40) NOT NULL,
-  `description` varchar(128) NOT NULL,
+  `description` varchar(128) DEFAULT NULL,
   `product` varchar(16) NOT NULL,
   `author` varchar(40) NOT NULL,
   `steps` blob NOT NULL,
   `expected_output` blob NOT NULL,
   `test_type` enum('Manual','Automation') DEFAULT 'Automation',
   `priority` int(11) NOT NULL,
-  `automation_status` enum('Not Planned','In Progress','Ready','Not Applicable') DEFAULT NULL,
+  `automation_status` enum('Not Planned','In Progress','Ready','Not Applicable') DEFAULT 'Not Planned',
   `automation_author` varchar(40) DEFAULT NULL,
   `tag` varchar(128) DEFAULT NULL,
   `scrum_name` varchar(40) DEFAULT NULL,
   `pages_involved` blob DEFAULT NULL,
-  `feature_id` bigint(20) DEFAULT NULL,
+  `feature_id` varchar(20) DEFAULT NULL,
   `parent_node` bigint(20) NOT NULL,
   `created_by` varchar(40) NOT NULL,
   `created_date` timestamp NOT NULL DEFAULT current_timestamp(),
@@ -158,13 +158,15 @@ ALTER TABLE `tcm_nodes`
 -- Indexes for table `tcm_releases`
 --
 ALTER TABLE `tcm_releases`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `name` (`name`,`test_id`);
 
 --
 -- Indexes for table `tcm_tests`
 --
 ALTER TABLE `tcm_tests`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `name` (`name`);
 
 --
 -- Indexes for table `tcm_users`

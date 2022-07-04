@@ -60,12 +60,12 @@ $app->post('/tests', function (Request $request, Response $response) {
     $tag = $request->getParam('tag');
     $scrum_name = $request->getParam('scrum_name');
     $pages_involved = $request->getParam('pages_involved');
-    $id = $request->getParam('id');
+    $feature_id = $request->getParam('feature_id');
     try {
         $db = new db();
         $db = $db->connect();
         
-        $addQuery = "INSERT INTO `tcm_tests` (`name`, `description`, `product`, `author`, `steps`, `expected_output`, `test_type`, `priority`, `parent_node`, `automation_status`, `automation_author`, `tag`, `scrum_name`, `pages_involved`, `id`, `created_by`, `last_updated_by`) VALUES (:name, :description, :product, :author, :steps, :expected_output, :test_type, :priority, :parent_node, :automation_status, :automation_author, :tag, :scrum_name, :pages_involved, :id, :created_by, :last_updated_by)";
+        $addQuery = "INSERT INTO `tcm_tests` (`name`, `description`, `product`, `author`, `steps`, `expected_output`, `test_type`, `priority`, `parent_node`, `automation_status`, `automation_author`, `tag`, `scrum_name`, `pages_involved`, `feature_id`, `created_by`, `last_updated_by`) VALUES (:name, :description, :product, :author, :steps, :expected_output, :test_type, :priority, :parent_node, :automation_status, :automation_author, :tag, :scrum_name, :pages_involved, :feature_id, :created_by, :last_updated_by)";
 
         $stmt = $db->prepare($addQuery);
         $stmt->bindParam(':name', $name);
@@ -83,7 +83,7 @@ $app->post('/tests', function (Request $request, Response $response) {
         $stmt->bindParam(':tag', $tag);
         $stmt->bindParam(':scrum_name', $scrum_name);
         $stmt->bindParam(':pages_involved', $pages_involved);
-        $stmt->bindParam(':id', $id);
+        $stmt->bindParam(':feature_id', $feature_id);
         $stmt->bindParam(':created_by', $_SESSION['id']);
         $stmt->bindParam(':last_updated_by', $_SESSION['id']);
 
@@ -157,7 +157,7 @@ $app->patch('/tests/{id}', function (Request $request, Response $response, array
         $updateQuery .= ", `pages_involved`='$pages_involved'";
     }
     $feature_id = $request->getParam('feature_id');
-    if ($tag != '') {
+    if ($feature_id != '') {
         $updateQuery .= ", `feature_id`='$feature_id'";
     }
     $parent_node = $request->getParam('parent_node');
