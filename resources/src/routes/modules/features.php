@@ -5,7 +5,7 @@ use \Psr\Http\Message\ResponseInterface as Response;
 
 //Get
 $app->get('/features', function (Request $request, Response $response, array $args) {
-    $getFeatures = "SELECT * FROM `tcm_features` WHERE is_deleted=0 ORDER BY ";
+    $getFeatures = "SELECT * FROM `tcm_features` WHERE is_deleted=0 ORDER BY name";
 
     try {
         $db = new db();
@@ -34,15 +34,15 @@ $app->post('/features', function (Request $request, Response $response) {
         $db = new db();
         $db = $db->connect();
         
-        $addQuery = "INSERT INTO `tcm_features` (`id`, `feature_id`, `name`, `description`, `is_multi_sprint`, `created_by`, `last_updated_by`) VALUES ((SELECT UUID()), :feature_id, :name, :description, :is_multi_sprint, :created_by, :last_updated_by)";
+        $addQuery = "INSERT INTO `tcm_features` (`feature_id`, `name`, `description`, `is_multi_sprint`, `created_by`, `last_updated_by`) VALUES (:feature_id, :name, :description, :is_multi_sprint, :created_by, :last_updated_by)";
 
         $stmt = $db->prepare($addQuery);
         $stmt->bindParam(':feature_id', $feature_id);
         $stmt->bindParam(':name', $name);
         $stmt->bindParam(':description', $description);
         $stmt->bindParam(':is_multi_sprint', $is_multi_sprint);
-        $stmt->bindParam(':created_by', $_SESSION['emp_id']);
-        $stmt->bindParam(':last_updated_by', $_SESSION['emp_id']);
+        $stmt->bindParam(':created_by', $_SESSION['id']);
+        $stmt->bindParam(':last_updated_by', $_SESSION['id']);
 
         if ($stmt->execute()) {
             $node = $db->query("SELECT * FROM tcm_features WHERE feature_id='$feature_id'")->fetch(PDO::FETCH_ASSOC);
@@ -59,32 +59,19 @@ $app->post('/features', function (Request $request, Response $response) {
 // Update
 $app->patch('/features/{feature_id}', function (Request $request, Response $response, array $args) {
     $feature_id = $args['feature_id'];
-    
-    $updateQuery = "UPDATE `tcm_features` SET ";
-    $index=0;
+    $emp_id = $_SESSION['id'];
+    $updateQuery = "UPDATE `tcm_features` SET  `last_updated_by`='$emp_id'";
     $name = $request->getParam('name');
     if ($name != '') {
-        if($index > 0)
-            $updateQuery .= ", `name`='$name'";
-        else
-            $updateQuery .= " `name`='$name'";
-        $index++;
+        $updateQuery .= ", `name`='$name'";
     }
     $description = $request->getParam('description');
     if ($description != '') {
-        if($index > 0)
-            $updateQuery .= ", `description`='$description'";
-        else
-            $updateQuery .= " `description`='$description'";
-        $index++;
+        $updateQuery .= ", `description`='$description'";
     }
     $is_multi_sprint = $request->getParam('is_multi_sprint');
     if ($is_multi_sprint != '') {
-        if($index > 0)
-            $updateQuery .= ", `is_multi_sprint`='$is_multi_sprint'";
-        else
-            $updateQuery .= " `is_multi_sprint`='$is_multi_sprint'";
-        $index++;
+       $updateQuery .= ", `is_multi_sprint`='$is_multi_sprint'";
     }
 
     $updateQuery .= " WHERE `feature_id`='$feature_id'";
@@ -111,7 +98,8 @@ $app->patch('/features/{feature_id}', function (Request $request, Response $resp
 // Delete
 $app->delete('/features/{feature_id}', function (Request $request, Response $response, array $args) {
     $feature_id = $args['feature_id'];
-    $deleteQuery = "UPDATE `tcm_features` SET `is_deleted`=1 WHERE `feature_id`='$feature_id'";
+    $emp_id = $_SESSION['id'];
+    $deleteQuery = "UPDATE `tcm_features` SET `is_deleted`=1, `last_updated_by`='$emp_id' WHERE `feature_id`='$feature_id'";
 
     try {
         $db = new db();

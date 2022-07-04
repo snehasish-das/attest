@@ -33,13 +33,13 @@ class UserMiddleware
             foreach((array)$result as $key => $value){
                 //echo "\nKey=".$key.", Value=".$value;
                 if($key=='id'){
-                    $_SESSION['emp_id']=$value;
+                    $_SESSION['id']=$value;
                 }
                 if($key == 'role'){
                     $_SESSION['role']=$value;
                 }
             }
-            if (isset($_SESSION['emp_id'])) {
+            if (isset($_SESSION['id'])) {
                 $response = $next($request, $response);
             }
             else

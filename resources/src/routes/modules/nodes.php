@@ -5,7 +5,7 @@ use \Psr\Http\Message\ResponseInterface as Response;
 
 //Get
 $app->get('/nodes', function (Request $request, Response $response, array $args) {
-    $getNodes = "SELECT * FROM `tcm_nodes` WHERE is_deleted=0 ORDER BY ";
+    $getNodes = "SELECT * FROM `tcm_nodes` WHERE is_deleted=0 ORDER BY distance_from_root";
 
     try {
         $db = new db();
@@ -52,8 +52,8 @@ $app->post('/nodes', function (Request $request, Response $response) {
         $stmt->bindParam(':parent_node', $parent_node);
         $stmt->bindParam(':node_type', $node_type);
         $stmt->bindParam(':distance_from_root', $distance_from_root);
-        $stmt->bindParam(':created_by', $_SESSION['emp_id']);
-        $stmt->bindParam(':last_updated_by', $_SESSION['emp_id']);
+        $stmt->bindParam(':created_by', $_SESSION['id']);
+        $stmt->bindParam(':last_updated_by', $_SESSION['id']);
 
         if ($stmt->execute()) {
             $node = $db->query("SELECT * FROM tcm_nodes WHERE node_name='$node_name'")->fetch(PDO::FETCH_ASSOC);
@@ -70,32 +70,19 @@ $app->post('/nodes', function (Request $request, Response $response) {
 // Update
 $app->patch('/nodes/{id}', function (Request $request, Response $response, array $args) {
     $id = $args['id'];
-    
-    $updateQuery = "UPDATE `tcm_nodes` SET ";
-    $index=0;
+    $emp_id = $_SESSION['id'];
+    $updateQuery = "UPDATE `tcm_nodes` SET `last_updated_by`='$emp_id'";
     $node_name = $request->getParam('node_name');
     if ($node_name != '') {
-        if($index > 0)
-            $updateQuery .= ", `node_name`='$node_name'";
-        else
-            $updateQuery .= " `node_name`='$node_name'";
-        $index++;
+        $updateQuery .= ", `node_name`='$node_name'";
     }
     $parent_node = $request->getParam('parent_node');
     if ($parent_node != '') {
-        if($index > 0)
-            $updateQuery .= ", `parent_node`='$parent_node'";
-        else
-            $updateQuery .= " `parent_node`='$parent_node'";
-        $index++;
+        $updateQuery .= ", `parent_node`='$parent_node'";
     }
     $distance_from_root = $request->getParam('distance_from_root');
     if ($distance_from_root != '') {
-        if($index > 0)
-            $updateQuery .= ", `distance_from_root`='$distance_from_root'";
-        else
-            $updateQuery .= " `distance_from_root`='$distance_from_root'";
-        $index++;
+        $updateQuery .= ", `distance_from_root`='$distance_from_root'";
     }
 
     $updateQuery .= " WHERE `id`='$id'";
@@ -122,7 +109,8 @@ $app->patch('/nodes/{id}', function (Request $request, Response $response, array
 // Delete
 $app->delete('/nodes/{id}', function (Request $request, Response $response, array $args) {
     $id = $args['id'];
-    $deleteQuery = "UPDATE `tcm_nodes` SET `is_deleted`=1 WHERE `id`='$id'";
+    $emp_id = $_SESSION['id'];
+    $deleteQuery = "UPDATE `tcm_nodes` SET `is_deleted`=1, `last_updated_by`='$emp_id' WHERE `id`='$id'";
 
     try {
         $db = new db();
