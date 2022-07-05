@@ -16,18 +16,21 @@ $site_name = $data[0]['option_value'];
 
 @$auth_user=$_REQUEST['username'];
 @$auth_pass=$_REQUEST['password'];
-
+$redirect = $_REQUEST['redirect'];
+if($redirect == ''){
+    $redirect = 'index';
+}
 if($auth_pass != '' && $auth_user != ''){
     $auth_phrase = base64_encode($auth_user.":".$auth_pass);
 
     $url=$_SESSION['site-url'].'/api/users/login';
-    echo '<br>URL='.$url.'<br>';
+    //echo '<br>URL='.$url.'<br>';
     $data=json_decode($cta->httpGetWithAuth($url,$auth_phrase),true);
 
     if(sizeof($data)>0){
         $_SESSION['user-details']=$data;
         $_SESSION['auth-phrase']=$auth_phrase;
-        header("Location: ".$_REQUEST['redirect']);
+        header("Location: ".$redirect);
         exit(); 
     }
     else{
@@ -78,7 +81,7 @@ if($auth_pass != '' && $auth_user != ''){
                         <?php } unset($_SESSION['error']); ?>
                         <h1 class="">Log In to <a href="index"><span class="brand-name"><?php echo $site_name; ?></span></a></h1>
                         <!--p class="signup-link">New Here? <a href="auth_register.html">Create an account</a></p-->
-                        <form class="text-left" action="login" method="post">
+                        <form class="text-left" action="<?php echo 'login?redirect='.$redirect ?>" method="post">
                             <div class="form">
                                 <div id="username-field" class="field-wrapper input">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
