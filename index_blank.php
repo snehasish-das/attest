@@ -4,7 +4,7 @@ if (!isset($_SESSION['user-details'])) {
 	header("Location: index.php");
 	exit();
 }
-require_once '../api/src/functions.php';
+require_once './api/src/functions.php';
 
 $cta = new CallToAction();
 $site_name_url = $_SESSION['site-url'] . '/api/site_options/site_name';

@@ -1,11 +1,11 @@
 <?php
     @$currUrl = end(explode('/',$_SERVER['REQUEST_URI']));
 ?>
-
 <nav id="compactSidebar">
     <ul class="menu-categories">
-        <li class="menu  menu-single <?php  if($currUrl == 'index' || $currUrl =='') { echo 'active'; }?>">
-            <a href="index" data-active="<?php echo ($currUrl == 'index' || $currUrl =='') ? 'true' : 'false'  ?>" class="menu-toggle">
+        <li class="menu menu-single <?php  if($currUrl == 'index' || $currUrl =='') { echo 'active'; }?>">
+            <a href="index" data-active="<?php echo ($currUrl == 'index' || $currUrl =='') ? 'true' : 'false'  ?>"
+                class="menu-toggle">
                 <div class="base-menu">
                     <div class="base-icons">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -20,8 +20,9 @@
             </a>
         </li>
 
-        <li class="menu menu-single <?php  if($currUrl == 'test-plan') { echo 'active'; }?>">
-            <a href="test-plan" data-active="<?php echo ($currUrl == 'test-plan') ? 'true' : 'false'  ?>" class="menu-toggle">
+        <li class="menu <?php  if($currUrl == 'test-plan') { echo 'active'; }?>">
+            <a href="#testplan" data-active="<?php echo ($currUrl == 'test-plan') ? 'true' : 'false'  ?>"
+                class="menu-toggle">
                 <div class="base-menu">
                     <div class="base-icons">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -44,8 +45,9 @@
             </a>
         </li>
 
-        <li class="menu menu-single" <?php  if($currUrl == 'test-lab') { echo 'active'; }?>>
-            <a href="test-lab" data-active="<?php echo ($currUrl == 'test-lab') ? 'true' : 'false'  ?>" class="menu-toggle">
+        <li class="menu" <?php  if($currUrl == 'test-lab') { echo 'active'; }?>>
+            <a href="#testlab" data-active="<?php echo ($currUrl == 'test-lab') ? 'true' : 'false'  ?>"
+                class="menu-toggle">
                 <div class="base-menu">
                     <div class="base-icons">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -60,7 +62,8 @@
         </li>
 
         <li class="menu menu-single" <?php  if($currUrl == 'requirements') { echo 'active'; }?>>
-            <a href="requirements" data-active="<?php echo ($currUrl == 'requirements') ? 'true' : 'false'  ?>" class="menu-toggle">
+            <a href="requirements" data-active="<?php echo ($currUrl == 'requirements') ? 'true' : 'false'  ?>"
+                class="menu-toggle">
                 <div class="base-menu">
                     <div class="base-icons">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -79,7 +82,8 @@
         </li>
 
         <li class="menu menu-single" <?php  if($currUrl == 'releases') { echo 'active'; }?>>
-            <a href="releases" data-active="<?php echo ($currUrl == 'releases') ? 'true' : 'false'  ?>" class="menu-toggle">
+            <a href="releases" data-active="<?php echo ($currUrl == 'releases') ? 'true' : 'false'  ?>"
+                class="menu-toggle">
                 <div class="base-menu">
                     <div class="base-icons">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -95,7 +99,8 @@
         </li>
 
         <li class="menu menu-single" <?php  if($currUrl == 'reports') { echo 'active'; }?>>
-            <a href="reports" data-active="<?php echo ($currUrl == 'reports') ? 'true' : 'false'  ?>" class="menu-toggle">
+            <a href="reports" data-active="<?php echo ($currUrl == 'reports') ? 'true' : 'false'  ?>"
+                class="menu-toggle">
                 <div class="base-menu">
                     <div class="base-icons">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -113,64 +118,172 @@
     </ul>
 </nav>
 
-<!-- <div id="compact_submenuSidebar" class="submenu-sidebar">
-
-    <div class="submenu" id="starterKit">
-        <ul class="submenu-list" data-parent-element="#starterKit">
-            <li class="active">
-                <a href="starter_kit_blank_page.html"> <span class="icon"><svg xmlns="http://www.w3.org/2000/svg"
-                            width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                            class="feather feather-git-commit">
-                            <circle cx="12" cy="12" r="4"></circle>
-                            <line x1="1.05" y1="12" x2="7" y2="12"></line>
-                            <line x1="17.01" y1="12" x2="22.96" y2="12"></line>
-                        </svg></span> Blank Page </a>
-            </li>
+<div id="compact_submenuSidebar" class="submenu-sidebar">
+    <div class="nav-link dropdown-toggle d-icon label-group">
+        <a href="#"> 
+            <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path><line x1="12" y1="11" x2="12" y2="17"></line><line x1="9" y1="14" x2="15" y2="14"></line></svg>
+        </a>
+        <a href="#"> 
+            <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg>
+        </a>
+    </div>
+    <div class="submenu" id="testplan">
+        <ul class="submenu-list" data-parent-element="#testplan">
             <li>
-                <a href="starter_kit_breadcrumb.html"> <span class="icon"><svg xmlns="http://www.w3.org/2000/svg"
-                            width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                            class="feather feather-git-commit">
-                            <circle cx="12" cy="12" r="4"></circle>
-                            <line x1="1.05" y1="12" x2="7" y2="12"></line>
-                            <line x1="17.01" y1="12" x2="22.96" y2="12"></line>
-                        </svg></span> Breadcrumb </a>
+                <span class="caret">Test Plan Parent</span>
+                <ul class="nested active">
+                    <li>
+                        <span class="caret caret-down">Empty Child</span>
+                        <ul class="nested">
+                        </ul>
+                    </li>
+                    <li>
+                        <span class="caret caret-down">Child 1</span>
+                        <ul class="nested">
+                            <li>Test 1</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <span class="caret caret-down">Child 2</span>
+                        <ul class="nested">
+                            <li>Test 2</li>
+                        </ul>
+                    </li>
+                    <li>
+                    <li>Test 3</li>
             </li>
-            <li>
-                <a href="starter_kit_alt_menu.html"> <span class="icon"><svg xmlns="http://www.w3.org/2000/svg"
-                            width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                            class="feather feather-git-commit">
-                            <circle cx="12" cy="12" r="4"></circle>
-                            <line x1="1.05" y1="12" x2="7" y2="12"></line>
-                            <line x1="17.01" y1="12" x2="22.96" y2="12"></line>
-                        </svg></span> Alternate Menu </a>
-            </li>
+        </ul>
+        </li>
         </ul>
     </div>
 
-    <div class="submenu" id="menuFirst">
-        <ul class="submenu-list menu-block-submenu" data-parent-element="#menuFirst">
-            <li class="menu-block">
-                <a href="javascript:void(0);"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                        stroke-linejoin="round" class="feather feather-message-square">
-                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-                    </svg> Submenu 1 </a>
+    <div class="submenu" id="testlab">
+        <ul class="submenu-list" data-parent-element="#testlab">
+            <li>
+                <span class="caret">Test Lab Parent</span>
+                <ul class="nested active">
+                    <li>
+                        <span class="caret caret-down">Empty Child</span>
+                        <ul class="nested">
+                        </ul>
+                    </li>
+                    <li>
+                        <span class="caret caret-down">Child 1</span>
+                        <ul class="nested">
+                            <li>Test 1</li>
+                            <li>Test 2</li>
+                            <li>Test 2</li>
+                            <li>Test 2</li>
+                            <li>Test 2</li>
+                            <li>Test 2</li>
+                            <li>Test 2</li>
+                            <li>Test 2</li>
+                            <li>Test 2</li>
+                            <li>Test 2</li>
+                            <li>Test 2</li>
+                            <li>Test 2</li>
+                            <li>Test 2</li>
+                            <li>Test 2</li>
+                            <li>Test 2</li>
+                            <li>Test 2</li>
+                            <li>Test 2</li>
+                            <li>Test 2</li>
+                            <li>Test 2</li>
+                            <li>Test 2</li>
+                            <li>Test 2</li>
+                            <li>Test 2</li>
+                            <li>Test 2</li>
+                            <li>Test 2</li>
+                            <li>Test 2</li>
+                            <li>Test 2</li>
+                            <li>Test 2</li>
+                            <li>Test 2</li>
+                            <li>Test 2</li>
+                            <li>Test 2</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <span class="caret caret-down">Child 2</span>
+                        <ul class="nested">
+                            <li>Test 2</li>
+                            <li>Test 2</li>
+                            <li>Test 2</li>
+                            <li>Test 2</li>
+                            <li>Test 2</li>
+                            <li>Test 2</li>
+                            <li>Test 2</li>
+                            <li>Test 2</li>
+                            <li>Test 2</li>
+                            <li>Test 2</li>
+                            <li>Test 2</li>
+                            <li>Test 2</li>
+                            <li>Test 2</li>
+                            <li>Test 2</li>
+                            <li>Test 2</li>
+                            <li>Test 2</li>
+                            <li>Test 2</li>
+                            <li>Test 2</li>
+                            <li>Test 2</li>
+                            <li>Test 2</li>
+                            <li>Test 2</li>
+                            <li>Test 2</li>
+                            <li>Test 2</li>
+                            <li>Test 2</li>
+                            <li>Test 2</li>
+                            <li>Test 2</li>
+                            <li>Test 2</li>
+                            <li>Test 2</li>
+                            <li>Test 2</li>
+                            <li>Test 2</li>
+                            <li>Test 2</li>
+                            <li>Test 2</li>
+                            <li>Test 2</li>
+                            <li>Test 2</li>
+                            <li>Test 2</li>
+                            <li>Test 2</li>
+                            <li>Test 2</li>
+                            <li>Test 2</li>
+                            <li>Test 2</li>
+                            <li>Test 2</li>
+                            <li>Test 2</li>
+                            <li>Test 2</li>
+                            <li>Test 2</li>
+                            <li>Test 2</li>
+                            <li>Test 2</li>
+                            <li>Test 2</li>
+                            <li>Test 2</li>
+                            <li>Test 2</li>
+                            <li>Test 2</li>
+                            <li>Test 2</li>
+                            <li>Test 2</li>
+                            <li>Test 2</li>
+                            <li>Test 2</li>
+                            <li>Test 2</li>
+                            <li>Test 2</li>
+                            <li>Test 2</li>
+                            <li>Test 2</li>
+                            <li>Test 2</li>
+                            <li>Test 2</li>
+                            <li>Test 2</li>
+                            <li>Test 2</li>
+                            <li>Test 2</li>
+                            <li>Test 2</li>
+                            <li>Test 2</li>
+                            <li>Test 2</li>
+                            <li>Test 2</li>
+                            <li>Test 2</li>
+                            <li>Test 2</li>
+                        </ul>
+                    </li>
+                    <li>
+                    <li>Test 3</li>
             </li>
-            <li class="menu-block">
-                <a href="javascript:void(0);"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                        stroke-linejoin="round" class="feather feather-mail">
-                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-                        <polyline points="22,6 12,13 2,6"></polyline>
-                    </svg> Submenu 2 </a>
-            </li>
+        </ul>
+        </li>
         </ul>
     </div>
 
-    <div class="submenu" id="menuSecond">
+    <!-- <div class="submenu" id="menuSecond">
         <ul class="submenu-list" data-parent-element="#menuSecond">
             <li>
                 <a href="javascript:void(0);"> <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24"
@@ -246,6 +359,6 @@
                 </ul>
             </li>
         </ul>
-    </div>
+    </div> -->
 
-</div> -->
+</div>
