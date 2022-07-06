@@ -1,0 +1,29 @@
+.success-icon{
+    background-color: #ddf5f0;
+    color: #009688;
+    display: inline-block;
+    align-self: center;
+    padding: 10px;
+    border-radius: 12px;
+    margin-right: 16px;
+}
+
+.warning-icon{
+    background-color: #fff9ed;
+    color: #e2a03f;
+    display: inline-block;
+    align-self: center;
+    padding: 10px;
+    border-radius: 12px;
+    margin-right: 16px;
+}
+
+.danger-icon{
+    background-color: #fff5f5;
+    color: #e7515a;
+    display: inline-block;
+    align-self: center;
+    padding: 10px;
+    border-radius: 12px;
+    margin-right: 16px;
+}

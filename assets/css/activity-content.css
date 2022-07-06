@@ -44,6 +44,7 @@
   z-index: 1029!important;
   transition: .3s ease all;
   width: 348px;
+  height: 100%;
 }
 #content .col-right-content {
   background: #030305;

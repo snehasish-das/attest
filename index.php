@@ -32,6 +32,8 @@ $site_name = $data[0]['option_value'];
     <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="assets/css/plugins.css" rel="stylesheet" type="text/css" />
     <link href="assets/css/structure.css" rel="stylesheet" type="text/css" class="structure" />
+    
+    <link href="assets/css/custom.css" rel="stylesheet" type="text/css" />
     <!-- END GLOBAL MANDATORY STYLES -->
 
     <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM STYLES -->
@@ -58,8 +60,8 @@ $site_name = $data[0]['option_value'];
         <div class="sidebar-wrapper sidebar-theme">
 
             <div class="theme-logo">
-                <a href="index.html">
-                    <img src="assets/img/90x90.jpg" class="navbar-logo" alt="logo">
+                <a href="index">
+                    <img src="assets/img/247-logo.svg" class="navbar-logo" alt="logo">
                     <span class="admin-logo"><?php echo $site_name; ?><span></span></span>
                 </a>
             </div>
@@ -83,209 +85,12 @@ $site_name = $data[0]['option_value'];
                         <div class="col-left-content">
 
                             <div class="header-container">
-                                <header class="header navbar navbar-expand-sm">                                    
-                                    <div class="d-flex">
-                                        <a href="javascript:void(0);" class="sidebarCollapse" data-placement="bottom">
-                                            <div class="bt-menu-trigger">
-                                                <span></span>
-                                            </div>
-                                        </a>
-                                        <div class="page-header">
-                                            <div class="page-title">
-                                                <h3>Analytics</h3>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="header-actions">
-                                        <div class="nav-item dropdown language-dropdown more-dropdown">
-                                            <div class="dropdown custom-dropdown-icon">
-                                                <a class="dropdown-toggle btn" href="#" role="button" id="customDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="assets/img/flag-ca2.svg" class="flag-width" alt="flag"><span>English</span> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg></a>
-                        
-                                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="customDropdown">
-                                                    <a class="dropdown-item" data-img-value="flag-de3" data-value="German" href="javascript:void(0);"><img src="assets/img/flag-de3.svg" class="flag-width" alt="flag"> German</a>
-                                                    <a class="dropdown-item" data-img-value="flag-sp" data-value="Spanish" href="javascript:void(0);"><img src="assets/img/flag-sp.svg" class="flag-width" alt="flag"> Spanish</a>
-                                                    <a class="dropdown-item" data-img-value="flag-fr3" data-value="French" href="javascript:void(0);"><img src="assets/img/flag-fr3.svg" class="flag-width" alt="flag"> French</a>
-                                                    <a class="dropdown-item" data-img-value="flag-ca2" data-value="English" href="javascript:void(0);"><img src="assets/img/flag-ca2.svg" class="flag-width" alt="flag"> English</a>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="toggle-notification-bar">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bell"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
-                                        </div>
-                                    </div>
-                                </header>
+                                <?php require_once './partials/header.php'; ?>
                             </div>
 
                             <div class="admin-data-content layout-top-spacing">
 
                                 <div class="row">
-                                    
-                                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 layout-spacing">
-                                        <div class="widget widget-one">
-                                            <div class="widget-heading">
-                                                <h6 class="">Statistics</h6>
-                                            </div>
-                                            <div class="w-chart">
-
-                                                <div class="w-chart-section total-visits-content">
-                                                    <div class="w-detail">
-                                                        <p class="w-title">Total Visits</p>
-                                                        <p class="w-stats">423,964</p>
-                                                    </div>
-                                                    <div class="w-chart-render-one">
-                                                        <div id="total-users"></div>
-                                                    </div>
-                                                </div>
-                                                
-                                                
-                                                <div class="w-chart-section paid-visits-content">
-                                                    <div class="w-detail">
-                                                        <p class="w-title">Paid Visits</p>
-                                                        <p class="w-stats">7,929</p>
-                                                    </div>
-                                                    <div class="w-chart-render-one">
-                                                        <div id="paid-visits"></div>
-                                                    </div>
-                                                </div>
-                                                
-                                            </div>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 layout-spacing">
-                                        <div class="widget widget-card-four">
-                                            <div class="widget-content">
-                                                <div class="w-header">
-                                                    <div class="w-info">
-                                                        <h6 class="value">Expenses</h6>
-                                                    </div>
-                                                    <div class="task-action">
-                                                        <div class="dropdown">
-                                                            <a class="dropdown-toggle" href="#" role="button" id="pendingTask" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-horizontal"><circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle><circle cx="5" cy="12" r="1"></circle></svg>
-                                                            </a>
-                
-                                                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="pendingTask" style="will-change: transform;">
-                                                                <a class="dropdown-item" href="javascript:void(0);">This Week</a>
-                                                                <a class="dropdown-item" href="javascript:void(0);">Last Week</a>
-                                                                <a class="dropdown-item" href="javascript:void(0);">Last Month</a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-
-                                                <div class="w-content">
-
-                                                    <div class="w-info">
-                                                        <p class="value">$ 45,141 <span>this week</span> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trending-up"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg></p>
-                                                        <!-- <p class="">Expenses</p> -->
-                                                    </div>
-                                                    
-                                                </div>
-
-                                                <div class="w-progress-stats">                                            
-                                                    <div class="progress">
-                                                        <div class="progress-bar bg-gradient-secondary" role="progressbar" style="width: 57%" aria-valuenow="57" aria-valuemin="0" aria-valuemax="100"></div>
-                                                    </div>
-
-                                                    <div class="">
-                                                        <div class="w-icon">
-                                                            <p>57%</p>
-                                                        </div>
-                                                    </div>
-                                                    
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 layout-spacing">
-                                        <div class="widget widget-account-invoice-two">
-                                            <div class="widget-content">
-                                                <div class="account-box">
-                                                    <div class="info">
-                                                        <div class="inv-title">
-                                                            <h5 class="">Total Balance</h5>
-                                                        </div>
-                                                        <div class="inv-balance-info">
-
-                                                            <p class="inv-balance">$ 41,741.42</p>
-                                                            
-                                                            <span class="inv-stats balance-credited">+ 2453</span>
-                                                            
-                                                        </div>
-                                                    </div>
-                                                    <div class="acc-action">
-                                                        <div class="">
-                                                            <a href="javascript:void(0);"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg></a>
-                                                            <a href="javascript:void(0);"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-credit-card"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg></a>
-                                                        </div>
-                                                        <a href="javascript:void(0);">Upgrade</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 layout-spacing">
-                                        <div class="widget widget-card-one">
-                                            <div class="widget-content">
-                
-                                                <div class="media">
-                                                    <div class="w-img">
-                                                        <img src="assets/img/90x90.jpg" alt="avatar">
-                                                    </div>
-                                                    <div class="media-body">
-                                                        <h6>Jimmy Turner</h6>
-                                                        <p class="meta-date-time">Monday, Nov 18</p>
-                                                    </div>
-                                                </div>
-                
-                                                <p>"Duis aute irure dolor" in reprehenderit in voluptate velit esse cillum "dolore eu fugiat" nulla pariatur. Excepteur sint occaecat cupidatat non proident.</p>
-                
-                                                <div class="w-action">
-                                                    <div class="card-like">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-thumbs-up"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path></svg>
-                                                        <span>551 Likes</span>
-                                                    </div>
-
-                                                    <div class="read-more">
-                                                        <a href="javascript:void(0);">Read More <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevrons-right"><polyline points="13 17 18 12 13 7"></polyline><polyline points="6 17 11 12 6 7"></polyline></svg></a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                
-                                    </div>
-
-                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 layout-spacing">
-                                        <div class="widget widget-chart-three">
-                                            <div class="widget-heading">
-                                                <div class="">
-                                                    <h5 class="">Unique Visitors</h5>
-                                                </div>
-                
-                                                <div class="dropdown ">
-                                                    <a class="dropdown-toggle" href="#" role="button" id="uniqueVisitors" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-horizontal"><circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle><circle cx="5" cy="12" r="1"></circle></svg>
-                                                    </a>
-                
-                                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="uniqueVisitors">
-                                                        <a class="dropdown-item" href="javascript:void(0);">View</a>
-                                                        <a class="dropdown-item" href="javascript:void(0);">Update</a>
-                                                        <a class="dropdown-item" href="javascript:void(0);">Download</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                
-                                            <div class="widget-content">
-                                                <div id="uniqueVisits"></div>
-                                            </div>
-                                        </div>
-                                    </div>
 
                                     <div class="col-xl-7 col-lg-6 col-md-12 col-sm-12 col-12 layout-spacing">
                                         <div class="widget-four">
@@ -644,15 +449,12 @@ $site_name = $data[0]['option_value'];
                                             </div>
 
                                         </div>
-                
                                     </div>
-
-                                    
                                 </div>
                             </div>
                             <div class="footer-wrapper col-xl-12">
                                 <div class="footer-section f-section-1">
-                                    <p class="">© 2021 <a target="_blank" href="https://designreset.com">DesignReset</a></p>
+                                    <p class="">© <?php echo date('Y'); ?> <a target="_blank" href="https://www.247.ai/">247.ai</a></p>
                                 </div>
                                 <div class="footer-section f-section-2">
                                     <p class="">Coded with <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-heart"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg></p>
@@ -661,233 +463,7 @@ $site_name = $data[0]['option_value'];
                         </div>
                     </div>
                     <div class="col-right">
-                        <div class="col-right-content">
-                            <div class="navbar-item flex-row search-ul navbar-dropdown">
-                                <div class="nav-item align-self-center search-animated">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search toggle-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-                                    <form class="form-inline search-full form-inline search" role="search">
-                                        <div class="search-bar">
-                                            <input type="text" class="form-control search-form-control  ml-lg-auto" placeholder="Search...">
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-
-                            <div class="col-right-content-container">
-
-                                <div class="activity-section">
-
-                                    <div class="widget-profile">
-
-                                        <div class="w-profile-view">
-                                            <img src="assets/img/90x90.jpg" alt="admin-profile" class="img-fluid">
-                                            <div class="w-profile-content">
-                                                <h6>Alan Green</h6>
-                                                <p>Lead Developer</p>
-                                            </div>
-                                        </div>
-
-                                        <div class="w-profile-links">
-                                            <a href="user_profile.html" class="w-p-link">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                                                <p>My Profile</p>
-                                            </a>
-
-                                            <a href="apps_mailbox.html" class="w-p-link">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-inbox"><polyline points="22 12 16 12 14 15 10 15 8 12 2 12"></polyline><path d="M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"></path></svg>
-                                                <p>Inbox</p>
-                                            </a>
-                                        </div>
-                                        
-                                    </div>
-
-                                    <div class="widget-todo">
-                                        <div class="todo-content">
-                                            <div class="todo-title">
-                                                <h6><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg></span> <span class="align-self-center">Todo</span></h6>
-                                            </div>
-                                            <div class="todo-text">
-                                                <a href="apps_todoList.html"><p>11 New Task</p></a>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="widget-message">
-                                        <div class="widget-title">
-                                            <h5>Messages</h5>
-                                            <a href="apps_chat.html">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-message-circle"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
-                                            </a>
-                                        </div>
-
-                                        <div class="widget-messages">
-                                            <a href="apps_chat.html" class="w-message">
-                                                <img src="assets/img/90x90.jpg" alt="" class="img-fluid">
-                                                <div class="msg-content">
-                                                    <h5 class="w-msg-username">Andy King</h5>
-                                                    <p class="w-msg-text">Work is delayed</p>
-                                                </div>
-                                            </a>
-
-                                            <a href="apps_chat.html" class="w-message">
-                                                <img src="assets/img/90x90.jpg" alt="" class="img-fluid">
-                                                <div class="msg-content">
-                                                    <h5 class="w-msg-username">Alma Clark</h5>
-                                                    <p class="w-msg-text">It was a bit dramatic.</p>
-                                                </div>
-                                            </a>
-
-                                            <a href="apps_chat.html" class="w-message">
-                                                <img src="assets/img/90x90.jpg" alt="" class="img-fluid">
-                                                <div class="msg-content">
-                                                    <h5 class="w-msg-username">Vincent</h5>
-                                                    <p class="w-msg-text">Coffee?</p>
-                                                </div>
-                                            </a>
-
-                                            <a href="apps_chat.html" class="w-message">
-                                                <img src="assets/img/90x90.jpg" alt="" class="img-fluid">
-                                                <div class="msg-content">
-                                                    <h5 class="w-msg-username">Iris Hofman</h5>
-                                                    <p class="w-msg-text">Not comming to office today.</p>
-                                                </div>
-                                            </a>
-
-                                            <a href="apps_chat.html" class="w-message">
-                                                <img src="assets/img/90x90.jpg" alt="" class="img-fluid">
-                                                <div class="msg-content">
-                                                    <h5 class="w-msg-username">Linda Nelson</h5>
-                                                    <p class="w-msg-text">Uploaded files to server.</p>
-                                                </div>
-                                            </a>
-                                        </div>
-                                    </div>
-
-                                    <div class="widget-invoice">
-                                        <div class="widget-title">
-                                            <h5>New Invoice</h5>
-                                            <a href="apps_invoice.html">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shopping-bag"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
-                                            </a>
-                                        </div>
-
-                                        <div class="widget-invoice-lists">
-                                            <div class="w-invoice">
-                                                <p class="w-inv-text"><a href="apps_invoice.html"><span class="inv-number">#002658</span></a> is generated for <span class="usr-name">Laurie Fox</span></p>
-                                            </div>
-
-                                            <div class="w-invoice">
-                                                <p class="w-inv-text"><a href="apps_invoice.html"><span class="inv-number">#0036489</span></a> is generated for <span class="usr-name">Ernest Reeves</span></p>
-                                            </div>
-
-                                            <div class="w-invoice">
-                                                <p class="w-inv-text"><a href="apps_invoice.html"><span class="inv-number">#014778</span></a> is generated for <span class="usr-name">Sean Freeman</span></p>
-                                            </div>
-
-                                            <div class="w-invoice">
-                                                <p class="w-inv-text"><a href="apps_invoice.html"><span class="inv-number">#0165987</span></a> is generated for <span class="usr-name">Nia Hillyer</span></p>
-                                            </div>
-
-                                            <div class="w-invoice">
-                                                <p class="w-inv-text"><a href="apps_invoice.html"><span class="inv-number">#0265998</span></a> is generated for <span class="usr-name">Dale Butler</span></p>
-                                            </div>
-                                        </div>
-                                    </div>
-
-
-                                    <div class="widget-taskBoard">
-                                        <div class="widget-title">
-                                            <h5>Task Board</h5>
-                                            <a href="apps_scrumboard.html">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
-                                            </a>
-                                        </div>
-
-                                        <div class="widget-taskBoard-lists">
-                                            <div class="w-taskBoard">
-                                                <p class="w-taskBoard-text"><a href="apps_scrumboard.html"><span class="taskBoard-number">Launch New Seo Wordpress Theme</span></a> has been moved to <span class="taskBoard-name">Completed</span> Board by <span class="usr-name">Alma Clark</span></p>
-                                            </div>
-
-                                            <div class="w-taskBoard">
-                                                <p class="w-taskBoard-text"><a href="apps_scrumboard.html"><span class="taskBoard-number">New Task</span></a> is added by <span class="usr-name">Ernest Reeves</span></p>
-                                            </div>
-
-                                            <div class="w-taskBoard">
-                                                <p class="w-taskBoard-text"><a href="apps_scrumboard.html"><span class="taskBoard-number">Dinner with Kelly Young</span></a> has been moved to <span class="taskBoard-name">Completed</span> Board by <span class="usr-name">Dale Butler</span></p>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="widget-calendar">
-                                        <div class="widget-title">
-                                            <h5>Event Notifications</h5>
-
-                                            <div class="task-action">
-                                                <div class="dropdown">
-                                                    <a class="dropdown-toggle" href="#" role="button" id="pendingTask" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-horizontal"><circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle><circle cx="5" cy="12" r="1"></circle></svg>
-                                                    </a>
-        
-                                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="pendingTask" style="will-change: transform;">
-                                                        <a class="dropdown-item" href="javascript:void(0);">View All</a>
-                                                        <a class="dropdown-item" href="javascript:void(0);">Mark as Read</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="widget-calendar-lists">
-                                            <div class="widget-calendar-lists-scroll">
-                                                <a href="apps_calendar.html" class="w-calendar w-calendar-c6">
-                                                    <div class="w-icon">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-                                                    </div>
-                                                    <p class="w-calendar-text"><span class="calendar-number">New Event</span> has been added on <span class="calendar-name">15 Dec 2020</span></p>
-                                                </a>
-
-                                                <a href="apps_calendar.html" class="w-calendar w-calendar-c3">
-                                                    <div class="w-icon">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-users"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-                                                    </div>
-                                                    <p class="w-calendar-text">Collect <span class="calendar-number">documents</span> from <span class="calendar-number">Kelly</span> at the restaurant tommorrow.</p>
-                                                </a>
-
-                                                <a href="apps_calendar.html" class="w-calendar w-calendar-c1">
-                                                    <div class="w-icon">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-users"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-                                                    </div>
-                                                    <p class="w-calendar-text"><span class="calendar-number">Meeting Event</span> on 12 Nov has been updated to 8 PM</p>
-                                                </a>
-
-                                                <a href="apps_calendar.html" class="w-calendar w-calendar-c5">
-                                                    <div class="w-icon">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-                                                    </div>
-                                                    <p class="w-calendar-text"><span class="calendar-number">New Event</span> Seminar organised by Design Reset will be held on 25 January</p>
-                                                </a>
-
-                                                <a href="apps_calendar.html" class="w-calendar w-calendar-c2">
-                                                    <div class="w-icon">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-alert-triangle"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
-                                                    </div>
-                                                    <p class="w-calendar-text">Today's <span class="calendar-number">Conference</span> is Cancelled.</p>
-                                                </a>
-
-                                                <a href="apps_calendar.html" class="w-calendar w-calendar-c4">
-                                                    <div class="w-icon">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-users"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-                                                    </div>
-                                                    <p class="w-calendar-text">Meeting with <span class="calendar-number">Project Lead</span> on 01 Jan has been updated to 15 Jan</p>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    
-                                </div>
-
-                            </div>
-                            
-                        </div>
+                        <?php require_once './partials/notifications.php'; ?>
                     </div>
 
                 </div>

@@ -4,6 +4,6 @@
     //unset($_SESSION['user-details']);
     
     session_destroy();
-    header('Location:index.php');
+    header('Location:index');
     exit;
 ?>
