@@ -1,5 +1,6 @@
 <?php
     @$currUrl = end(explode('/',$_SERVER['REQUEST_URI']));
+    $getNodes = $_SESSION['site-url'] . '/api/nodes?node_type=';
 ?>
 <nav id="compactSidebar">
     <ul class="menu-categories">
@@ -119,23 +120,38 @@
 </nav>
 
 <div id="compact_submenuSidebar" class="submenu-sidebar">
-    <div class="nav-link dropdown-toggle d-icon label-group">
-        <a href="#"> 
-            <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path><line x1="12" y1="11" x2="12" y2="17"></line><line x1="9" y1="14" x2="15" y2="14"></line></svg>
-        </a>
-        <a href="#"> 
-            <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg>
-        </a>
-    </div>
     <div class="submenu" id="testplan">
+        <div class="nav-link dropdown-toggle d-icon label-group">
+            <a href="#">
+                <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none"
+                    stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1">
+                    <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+                    <line x1="12" y1="11" x2="12" y2="17"></line>
+                    <line x1="9" y1="14" x2="15" y2="14"></line>
+                </svg>
+            </a>
+            <a href="#">
+                <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none"
+                    stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                    <polyline points="14 2 14 8 20 8"></polyline>
+                    <line x1="12" y1="18" x2="12" y2="12"></line>
+                    <line x1="9" y1="15" x2="15" y2="15"></line>
+                </svg>
+            </a>
+        </div>
         <ul class="submenu-list" data-parent-element="#testplan">
+            <?php 
+                $getNodes.= "testplan";
+                $nodes = json_decode($cta->httpGetWithAuth($getNodes,$_SESSION['auth-phrase']), true); //Sorted by Distance=> Parent node=> Node
+                
+            ?>
             <li>
                 <span class="caret">Test Plan Parent</span>
                 <ul class="nested active">
                     <li>
                         <span class="caret caret-down">Empty Child</span>
-                        <ul class="nested">
-                        </ul>
+                        <ul class="nested"></ul>
                     </li>
                     <li>
                         <span class="caret caret-down">Child 1</span>
@@ -149,11 +165,10 @@
                             <li>Test 2</li>
                         </ul>
                     </li>
-                    <li>
                     <li>Test 3</li>
+                </ul>
             </li>
-        </ul>
-        </li>
+            <?php } ?>
         </ul>
     </div>
 
@@ -171,115 +186,17 @@
                         <span class="caret caret-down">Child 1</span>
                         <ul class="nested">
                             <li>Test 1</li>
-                            <li>Test 2</li>
-                            <li>Test 2</li>
-                            <li>Test 2</li>
-                            <li>Test 2</li>
-                            <li>Test 2</li>
-                            <li>Test 2</li>
-                            <li>Test 2</li>
-                            <li>Test 2</li>
-                            <li>Test 2</li>
-                            <li>Test 2</li>
-                            <li>Test 2</li>
-                            <li>Test 2</li>
-                            <li>Test 2</li>
-                            <li>Test 2</li>
-                            <li>Test 2</li>
-                            <li>Test 2</li>
-                            <li>Test 2</li>
-                            <li>Test 2</li>
-                            <li>Test 2</li>
-                            <li>Test 2</li>
-                            <li>Test 2</li>
-                            <li>Test 2</li>
-                            <li>Test 2</li>
-                            <li>Test 2</li>
-                            <li>Test 2</li>
-                            <li>Test 2</li>
-                            <li>Test 2</li>
-                            <li>Test 2</li>
-                            <li>Test 2</li>
                         </ul>
                     </li>
                     <li>
                         <span class="caret caret-down">Child 2</span>
                         <ul class="nested">
                             <li>Test 2</li>
-                            <li>Test 2</li>
-                            <li>Test 2</li>
-                            <li>Test 2</li>
-                            <li>Test 2</li>
-                            <li>Test 2</li>
-                            <li>Test 2</li>
-                            <li>Test 2</li>
-                            <li>Test 2</li>
-                            <li>Test 2</li>
-                            <li>Test 2</li>
-                            <li>Test 2</li>
-                            <li>Test 2</li>
-                            <li>Test 2</li>
-                            <li>Test 2</li>
-                            <li>Test 2</li>
-                            <li>Test 2</li>
-                            <li>Test 2</li>
-                            <li>Test 2</li>
-                            <li>Test 2</li>
-                            <li>Test 2</li>
-                            <li>Test 2</li>
-                            <li>Test 2</li>
-                            <li>Test 2</li>
-                            <li>Test 2</li>
-                            <li>Test 2</li>
-                            <li>Test 2</li>
-                            <li>Test 2</li>
-                            <li>Test 2</li>
-                            <li>Test 2</li>
-                            <li>Test 2</li>
-                            <li>Test 2</li>
-                            <li>Test 2</li>
-                            <li>Test 2</li>
-                            <li>Test 2</li>
-                            <li>Test 2</li>
-                            <li>Test 2</li>
-                            <li>Test 2</li>
-                            <li>Test 2</li>
-                            <li>Test 2</li>
-                            <li>Test 2</li>
-                            <li>Test 2</li>
-                            <li>Test 2</li>
-                            <li>Test 2</li>
-                            <li>Test 2</li>
-                            <li>Test 2</li>
-                            <li>Test 2</li>
-                            <li>Test 2</li>
-                            <li>Test 2</li>
-                            <li>Test 2</li>
-                            <li>Test 2</li>
-                            <li>Test 2</li>
-                            <li>Test 2</li>
-                            <li>Test 2</li>
-                            <li>Test 2</li>
-                            <li>Test 2</li>
-                            <li>Test 2</li>
-                            <li>Test 2</li>
-                            <li>Test 2</li>
-                            <li>Test 2</li>
-                            <li>Test 2</li>
-                            <li>Test 2</li>
-                            <li>Test 2</li>
-                            <li>Test 2</li>
-                            <li>Test 2</li>
-                            <li>Test 2</li>
-                            <li>Test 2</li>
-                            <li>Test 2</li>
                         </ul>
                     </li>
-                    <li>
                     <li>Test 3</li>
+                </ul>
             </li>
-        </ul>
-        </li>
         </ul>
     </div>
 

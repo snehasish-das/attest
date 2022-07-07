@@ -99,7 +99,7 @@ $site_name = $data[0]['option_value'];
                                     <div class="col-xl-7 col-lg-6 col-md-12 col-sm-12 col-12 layout-spacing">
                                         <div class="widget-four">
                                             <div class="widget-heading">
-                                                <h5 class="">Visitors by Browser</h5>
+                                                <h5 class="">Tests by Browser</h5>
                                             </div>
                                             <div class="widget-content">
                                                 <div class="vistorsBrowser">
@@ -201,7 +201,7 @@ $site_name = $data[0]['option_value'];
                                                             </div>
                                                             <div class="t-content">
                                                                 <div class="t-uppercontent">
-                                                                    <h5>New project created : <a href="javscript:void(0);"><span>[<?php echo $site_name; ?> Admin Template]</span></a></h5>
+                                                                    <h5>New Feature created : <a href="javscript:void(0);"><span>[Kiran S]</span></a></h5>
                                                                 </div>
                                                                 <p>27 Feb, 2020</p>
                                                             </div>
@@ -213,7 +213,7 @@ $site_name = $data[0]['option_value'];
                                                             </div>
                                                             <div class="t-content">
                                                                 <div class="t-uppercontent">
-                                                                    <h5>Mail sent to <a href="javascript:void(0);">HR</a> and <a href="javascript:void(0);">Admin</a></h5>
+                                                                    <h5>Mail sent to <a href="javascript:void(0);">E2E Squad</a> for automation test failure analysis</h5>
                                                                 </div>
                                                                 <p>28 Feb, 2020</p>
                                                             </div>
@@ -225,7 +225,7 @@ $site_name = $data[0]['option_value'];
                                                             </div>
                                                             <div class="t-content">
                                                                 <div class="t-uppercontent">
-                                                                    <h5>Server Logs Updated</h5>
+                                                                    <h5>Thor release testing completed</h5>
                                                                 </div>
                                                                 <p>27 Feb, 2020</p>
                                                             </div>

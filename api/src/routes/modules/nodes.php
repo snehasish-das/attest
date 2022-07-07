@@ -5,19 +5,39 @@ use \Psr\Http\Message\ResponseInterface as Response;
 
 //Get
 $app->get('/nodes', function (Request $request, Response $response, array $args) {
-    $getNodes = "SELECT * FROM `tcm_nodes` WHERE is_deleted=0 ORDER BY distance_from_root";
+    // $getNodes = "SELECT nd.node_name, nd.parent_node, ts.* FROM tcm_tests ts 
+    // RIGHT OUTER JOIN tcm_nodes nd ON nd.id = ts.parent_node 
+    // WHERE is_deleted=0";
+
+    $getNodes = "SELECT * FROM tcm_nodes";
+
+    $node_type = $request->getQueryParam('node_type', $default = null);
+    if ($node_type != null) {
+        $getNodes .= " WHERE node_type = '$node_type'";
+    } else {
+        $getNodes .= " WHERE node_type = 'testplan'";
+    }
+
+    $getNodes.= " ORDER BY distance_from_root, parent_node, node_name";
 
     try {
         $db = new db();
         $db = $db->connect();
 
         $stmt = $db->query($getNodes);
-        $nodes = $stmt->fetchAll(PDO::FETCH_OBJ);
-        return $response->withStatus(200)->write(json_encode($nodes));
+        $nodes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $data = array();
+        foreach($nodes as $node){
+            $data = getNodeData($node_type,null,$db);
+        }
+
+        return $response->withStatus(200)->write(json_encode($data));
     } catch (PDOException $e) {
         return $response->withStatus(400)->write('{"error" : {"text": ' . $e->getMessage() . '}}');
     }
+
     $db = null;
+
 })->add(new UserMiddleware());
 
 // Create
@@ -127,3 +147,26 @@ $app->delete('/nodes/{id}', function (Request $request, Response $response, arra
     }
     $db = null;
 })->add(new UserMiddleware());
+
+
+
+function getNodeData($node_type, $parent_node, $db){
+    $getNodeForParent = "SELECT * FROM `tcm_nodes` WHERE node_type = '$node_type'";
+    if($parent_node ==''){
+        $getNodeForParent.= " AND `parent_node` IS NULL";
+    } else{
+        $getNodeForParent .= "AND `parent_node` = '$parent_node'";
+    }
+    $stmt = $db->query($getNodeForParent);
+    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    $output = array();
+    foreach($result as $row){
+        $sub_array = array();
+        $sub_array['node_name'] = $row['node_name'];
+        $sub_array['nodes'] = array_values(getNodeData($node_type,$row['node_name'],$db));
+        $output[] = $sub_array;
+    }
+
+    return $output;
+}

@@ -41,6 +41,4 @@ $app->add(function ($req, $res, $next) {
 });
 
 $app->run();
-
-
 ?>
