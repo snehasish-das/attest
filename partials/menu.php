@@ -1,6 +1,20 @@
 <?php
     @$currUrl = end(explode('/',$_SERVER['REQUEST_URI']));
     $getNodes = $_SESSION['site-url'] . '/api/nodes?node_type=';
+
+    function getTreeView($nodes){
+        foreach($nodes as $node){
+            echo '<li><span class="caret caret-down">'.$node['node_name'].'</span><ul class="nested">';
+            if(sizeof($node['nodes'])>0){
+                getTreeView($node['nodes']);
+            }
+            if(sizeof($node['tests'])>0){
+                for($i=0; $i<sizeof($node['tests']); $i++)
+                echo '<li>'.$node['tests'][$i]['name'].'</li>';
+            }
+            echo '</ul></li>';
+        }
+    }
 ?>
 <nav id="compactSidebar">
     <ul class="menu-categories">
@@ -121,7 +135,7 @@
 
 <div id="compact_submenuSidebar" class="submenu-sidebar">
     <div class="submenu" id="testplan">
-        <div class="nav-link dropdown-toggle d-icon label-group">
+        <!-- <div class="nav-link dropdown-toggle d-icon label-group">
             <a href="#">
                 <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none"
                     stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1">
@@ -139,143 +153,23 @@
                     <line x1="9" y1="15" x2="15" y2="15"></line>
                 </svg>
             </a>
-        </div>
+        </div> -->
         <ul class="submenu-list" data-parent-element="#testplan">
             <?php 
                 $getNodes.= "testplan";
                 $nodes = json_decode($cta->httpGetWithAuth($getNodes,$_SESSION['auth-phrase']), true); //Sorted by Distance=> Parent node=> Node
-                
+                getTreeView($nodes);
             ?>
-            <li>
-                <span class="caret">Test Plan Parent</span>
-                <ul class="nested active">
-                    <li>
-                        <span class="caret caret-down">Empty Child</span>
-                        <ul class="nested"></ul>
-                    </li>
-                    <li>
-                        <span class="caret caret-down">Child 1</span>
-                        <ul class="nested">
-                            <li>Test 1</li>
-                        </ul>
-                    </li>
-                    <li>
-                        <span class="caret caret-down">Child 2</span>
-                        <ul class="nested">
-                            <li>Test 2</li>
-                        </ul>
-                    </li>
-                    <li>Test 3</li>
-                </ul>
-            </li>
-            <?php } ?>
         </ul>
     </div>
 
     <div class="submenu" id="testlab">
         <ul class="submenu-list" data-parent-element="#testlab">
-            <li>
-                <span class="caret">Test Lab Parent</span>
-                <ul class="nested active">
-                    <li>
-                        <span class="caret caret-down">Empty Child</span>
-                        <ul class="nested">
-                        </ul>
-                    </li>
-                    <li>
-                        <span class="caret caret-down">Child 1</span>
-                        <ul class="nested">
-                            <li>Test 1</li>
-                        </ul>
-                    </li>
-                    <li>
-                        <span class="caret caret-down">Child 2</span>
-                        <ul class="nested">
-                            <li>Test 2</li>
-                        </ul>
-                    </li>
-                    <li>Test 3</li>
-                </ul>
-            </li>
+        <?php 
+                $getNodes.= "testlab";
+                $nodes = json_decode($cta->httpGetWithAuth($getNodes,$_SESSION['auth-phrase']), true); //Sorted by Distance=> Parent node=> Node
+                getTreeView($nodes);
+            ?>
         </ul>
     </div>
-
-    <!-- <div class="submenu" id="menuSecond">
-        <ul class="submenu-list" data-parent-element="#menuSecond">
-            <li>
-                <a href="javascript:void(0);"> <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24"
-                            height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                            stroke-linecap="round" stroke-linejoin="round" class="feather feather-git-commit">
-                            <circle cx="12" cy="12" r="4"></circle>
-                            <line x1="1.05" y1="12" x2="7" y2="12"></line>
-                            <line x1="17.01" y1="12" x2="22.96" y2="12"></line>
-                        </svg></span> Submenu 1 </a>
-            </li>
-            <li>
-                <a href="javascript:void(0);"> <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24"
-                            height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                            stroke-linecap="round" stroke-linejoin="round" class="feather feather-git-commit">
-                            <circle cx="12" cy="12" r="4"></circle>
-                            <line x1="1.05" y1="12" x2="7" y2="12"></line>
-                            <line x1="17.01" y1="12" x2="22.96" y2="12"></line>
-                        </svg></span> Submenu 2 </a>
-            </li>
-            <li>
-                <a href="javascript:void(0);"> <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24"
-                            height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                            stroke-linecap="round" stroke-linejoin="round" class="feather feather-git-commit">
-                            <circle cx="12" cy="12" r="4"></circle>
-                            <line x1="1.05" y1="12" x2="7" y2="12"></line>
-                            <line x1="17.01" y1="12" x2="22.96" y2="12"></line>
-                        </svg></span> Submenu 3 </a>
-            </li>
-        </ul>
-    </div>
-
-    <div class="submenu" id="menuThird">
-        <ul class="submenu-list" data-parent-element="#menuThird">
-            <li>
-                <a href="dragndrop_dragula.html"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24"
-                            height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                            stroke-linecap="round" stroke-linejoin="round" class="feather feather-git-commit">
-                            <circle cx="12" cy="12" r="4"></circle>
-                            <line x1="1.05" y1="12" x2="7" y2="12"></line>
-                            <line x1="17.01" y1="12" x2="22.96" y2="12"></line>
-                        </svg></span> Submenu 1 </a>
-            </li>
-            <li>
-                <a href="charts_apex.html"><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24"
-                            height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                            stroke-linecap="round" stroke-linejoin="round" class="feather feather-git-commit">
-                            <circle cx="12" cy="12" r="4"></circle>
-                            <line x1="1.05" y1="12" x2="7" y2="12"></line>
-                            <line x1="17.01" y1="12" x2="22.96" y2="12"></line>
-                        </svg></span> Submenu 2 </a>
-            </li>
-
-            <li class="sub-submenu">
-                <a role="menu" class="collapsed" data-toggle="collapse" data-target="#auth" aria-expanded="false">
-                    <div> <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                stroke-linecap="round" stroke-linejoin="round" class="feather feather-folder">
-                                <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z">
-                                </path>
-                            </svg></span> Submenu 3 </div> <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                        height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                        stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right">
-                        <polyline points="9 18 15 12 9 6"></polyline>
-                    </svg>
-                </a>
-                <ul id="auth" class="collapse" data-parent="#compact_submenuSidebar">
-                    <li>
-                        <a href="javascript:void(0)"> Sub-Submenu 1 </a>
-                    </li>
-                    <li>
-                        <a href="javascript:void(0)"> Sub-Submenu 2 </a>
-                    </li>
-                </ul>
-            </li>
-        </ul>
-    </div> -->
-
 </div>

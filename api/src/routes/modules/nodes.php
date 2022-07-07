@@ -9,27 +9,28 @@ $app->get('/nodes', function (Request $request, Response $response, array $args)
     // RIGHT OUTER JOIN tcm_nodes nd ON nd.id = ts.parent_node 
     // WHERE is_deleted=0";
 
-    $getNodes = "SELECT * FROM tcm_nodes";
+    //$getNodes = "SELECT * FROM tcm_nodes";
 
     $node_type = $request->getQueryParam('node_type', $default = null);
-    if ($node_type != null) {
-        $getNodes .= " WHERE node_type = '$node_type'";
-    } else {
-        $getNodes .= " WHERE node_type = 'testplan'";
-    }
+    // if ($node_type != null) {
+    //     $getNodes .= " WHERE node_type = '$node_type'";
+    // } else {
+    //     $getNodes .= " WHERE node_type = 'testplan'";
+    // }
 
-    $getNodes.= " ORDER BY distance_from_root, parent_node, node_name";
+    // $getNodes.= " ORDER BY distance_from_root, parent_node, node_name";
 
     try {
         $db = new db();
         $db = $db->connect();
 
-        $stmt = $db->query($getNodes);
-        $nodes = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        $data = array();
-        foreach($nodes as $node){
-            $data = getNodeData($node_type,null,$db);
-        }
+        // $stmt = $db->query($getNodes);
+        // $nodes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        // $data = array();
+        // foreach($nodes as $node){
+        //     $data = getNodeData($node_type,null,$db);
+        // }
+        $data = getNodeData($node_type,null,$db);
 
         return $response->withStatus(200)->write(json_encode($data));
     } catch (PDOException $e) {
@@ -151,19 +152,27 @@ $app->delete('/nodes/{id}', function (Request $request, Response $response, arra
 
 
 function getNodeData($node_type, $parent_node, $db){
-    $getNodeForParent = "SELECT * FROM `tcm_nodes` WHERE node_type = '$node_type'";
+    $getNodeForParent = "SELECT nd.node_name, nd.parent_node FROM tcm_nodes nd WHERE node_type = '$node_type'";
     if($parent_node ==''){
-        $getNodeForParent.= " AND `parent_node` IS NULL";
+        $getNodeForParent.= " AND nd.`parent_node` IS NULL";
     } else{
-        $getNodeForParent .= "AND `parent_node` = '$parent_node'";
+        $getNodeForParent .= " AND nd.`parent_node` = '$parent_node'";
     }
+    $getNodeForParent .= " ORDER BY distance_from_root, nd.parent_node,nd.node_name";
+
+    //echo "Query : ". $getNodeForParent;
     $stmt = $db->query($getNodeForParent);
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     $output = array();
     foreach($result as $row){
         $sub_array = array();
-        $sub_array['node_name'] = $row['node_name'];
+        $currNode = $row['node_name'];
+        $sub_array['node_name'] = $currNode;
+        $sub_array['parent_node'] = $row['parent_node'];
+
+        $tests = $db->query("SELECT name FROM tcm_tests where parent_node='$currNode'")->fetchAll(PDO::FETCH_OBJ);
+        $sub_array['tests'] = $tests;
         $sub_array['nodes'] = array_values(getNodeData($node_type,$row['node_name'],$db));
         $output[] = $sub_array;
     }
