@@ -18,12 +18,13 @@ $site_name = $data[0]['option_value'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
     <title><?php echo $site_name; ?> - Dashboard</title>
-    <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico"/>
+    <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico" />
     <link href="assets/css/loader.css" rel="stylesheet" type="text/css" />
     <script src="assets/js/loader.js"></script>
 
@@ -32,7 +33,7 @@ $site_name = $data[0]['option_value'];
     <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="assets/css/plugins.css" rel="stylesheet" type="text/css" />
     <link href="assets/css/structure.css" rel="stylesheet" type="text/css" class="structure" />
-    
+
     <link href="assets/css/custom.css" rel="stylesheet" type="text/css" />
     <!-- END GLOBAL MANDATORY STYLES -->
 
@@ -40,18 +41,27 @@ $site_name = $data[0]['option_value'];
     <link href="plugins/apex/apexcharts.css" rel="stylesheet" type="text/css">
     <link href="assets/css/dashboard/dash_1.css" rel="stylesheet" type="text/css" class="dashboard-analytics" />
     <!-- END PAGE LEVEL PLUGINS/CUSTOM STYLES -->
-    
+
     <!--  BEGIN CUSTOM STYLE FILE  -->
     <link href="assets/css/elements/custom-tree_view.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/scrollspyNav.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="plugins/select2/select2.min.css">
+    <link rel="stylesheet" type="text/css" href="plugins/editors/quill/quill.snow.css">
+    <link href="assets/css/apps/todolist.css" rel="stylesheet" type="text/css" />
     <!--  END CUSTOM STYLE FILE  -->
 
 </head>
+
 <body class="dashboard-analytics admin-header">
 
     <!-- BEGIN LOADER -->
-    <div id="load_screen"> <div class="loader"> <div class="loader-content">
-        <div class="spinner-grow align-self-center"></div>
-    </div></div></div>
+    <div id="load_screen">
+        <div class="loader">
+            <div class="loader-content">
+                <div class="spinner-grow align-self-center"></div>
+            </div>
+        </div>
+    </div>
     <!--  END LOADER -->
 
     <!--  BEGIN MAIN CONTAINER  -->
@@ -71,18 +81,23 @@ $site_name = $data[0]['option_value'];
             </div>
 
             <div class="sidebarCollapseFixed">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="feather feather-arrow-left">
+                    <line x1="19" y1="12" x2="5" y2="12"></line>
+                    <polyline points="12 19 5 12 12 5"></polyline>
+                </svg>
             </div>
-            
+
             <?php require_once './partials/menu.php'; ?>
 
         </div>
         <!--  END SIDEBAR  -->
-        
+
         <!--  BEGIN CONTENT AREA  -->
         <div id="content" class="main-content">
             <div class="layout-px-spacing">
-                
+
                 <div class="content-container">
 
                     <div class="col-left layout-top-spacing">
@@ -105,7 +120,17 @@ $site_name = $data[0]['option_value'];
                                                 <div class="vistorsBrowser">
                                                     <div class="browser-list">
                                                         <div class="w-icon">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chrome"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="4"></circle><line x1="21.17" y1="8" x2="12" y2="8"></line><line x1="3.95" y1="6.06" x2="8.54" y2="14"></line><line x1="10.88" y1="21.94" x2="15.46" y2="14"></line></svg>
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                height="24" viewBox="0 0 24 24" fill="none"
+                                                                stroke="currentColor" stroke-width="2"
+                                                                stroke-linecap="round" stroke-linejoin="round"
+                                                                class="feather feather-chrome">
+                                                                <circle cx="12" cy="12" r="10"></circle>
+                                                                <circle cx="12" cy="12" r="4"></circle>
+                                                                <line x1="21.17" y1="8" x2="12" y2="8"></line>
+                                                                <line x1="3.95" y1="6.06" x2="8.54" y2="14"></line>
+                                                                <line x1="10.88" y1="21.94" x2="15.46" y2="14"></line>
+                                                            </svg>
                                                         </div>
                                                         <div class="w-browser-details">
                                                             <div class="w-browser-info">
@@ -114,7 +139,10 @@ $site_name = $data[0]['option_value'];
                                                             </div>
                                                             <div class="w-browser-stats">
                                                                 <div class="progress">
-                                                                    <div class="progress-bar bg-gradient-primary" role="progressbar" style="width: 65%" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                    <div class="progress-bar bg-gradient-primary"
+                                                                        role="progressbar" style="width: 65%"
+                                                                        aria-valuenow="90" aria-valuemin="0"
+                                                                        aria-valuemax="100"></div>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -122,10 +150,19 @@ $site_name = $data[0]['option_value'];
 
                                                     <div class="browser-list">
                                                         <div class="w-icon">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-compass"><circle cx="12" cy="12" r="10"></circle><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon></svg>
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                height="24" viewBox="0 0 24 24" fill="none"
+                                                                stroke="currentColor" stroke-width="2"
+                                                                stroke-linecap="round" stroke-linejoin="round"
+                                                                class="feather feather-compass">
+                                                                <circle cx="12" cy="12" r="10"></circle>
+                                                                <polygon
+                                                                    points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76">
+                                                                </polygon>
+                                                            </svg>
                                                         </div>
                                                         <div class="w-browser-details">
-                                                            
+
                                                             <div class="w-browser-info">
                                                                 <h6>Safari</h6>
                                                                 <p class="browser-count">25%</p>
@@ -133,7 +170,10 @@ $site_name = $data[0]['option_value'];
 
                                                             <div class="w-browser-stats">
                                                                 <div class="progress">
-                                                                    <div class="progress-bar bg-gradient-danger" role="progressbar" style="width: 35%" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                    <div class="progress-bar bg-gradient-danger"
+                                                                        role="progressbar" style="width: 35%"
+                                                                        aria-valuenow="65" aria-valuemin="0"
+                                                                        aria-valuemax="100"></div>
                                                                 </div>
                                                             </div>
 
@@ -143,10 +183,20 @@ $site_name = $data[0]['option_value'];
 
                                                     <div class="browser-list">
                                                         <div class="w-icon">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-globe"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                height="24" viewBox="0 0 24 24" fill="none"
+                                                                stroke="currentColor" stroke-width="2"
+                                                                stroke-linecap="round" stroke-linejoin="round"
+                                                                class="feather feather-globe">
+                                                                <circle cx="12" cy="12" r="10"></circle>
+                                                                <line x1="2" y1="12" x2="22" y2="12"></line>
+                                                                <path
+                                                                    d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z">
+                                                                </path>
+                                                            </svg>
                                                         </div>
                                                         <div class="w-browser-details">
-                                                            
+
                                                             <div class="w-browser-info">
                                                                 <h6>Others</h6>
                                                                 <p class="browser-count">15%</p>
@@ -154,14 +204,17 @@ $site_name = $data[0]['option_value'];
 
                                                             <div class="w-browser-stats">
                                                                 <div class="progress">
-                                                                    <div class="progress-bar bg-gradient-warning" role="progressbar" style="width: 15%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                    <div class="progress-bar bg-gradient-warning"
+                                                                        role="progressbar" style="width: 15%"
+                                                                        aria-valuenow="15" aria-valuemin="0"
+                                                                        aria-valuemax="100"></div>
                                                                 </div>
                                                             </div>
 
                                                         </div>
 
                                                     </div>
-                                                    
+
                                                 </div>
 
                                             </div>
@@ -176,13 +229,27 @@ $site_name = $data[0]['option_value'];
 
                                                 <div class="task-action">
                                                     <div class="dropdown">
-                                                        <a class="dropdown-toggle" href="#" role="button" id="pendingTask" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-horizontal"><circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle><circle cx="5" cy="12" r="1"></circle></svg>
+                                                        <a class="dropdown-toggle" href="#" role="button"
+                                                            id="pendingTask" data-toggle="dropdown" aria-haspopup="true"
+                                                            aria-expanded="false">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                height="24" viewBox="0 0 24 24" fill="none"
+                                                                stroke="currentColor" stroke-width="2"
+                                                                stroke-linecap="round" stroke-linejoin="round"
+                                                                class="feather feather-more-horizontal">
+                                                                <circle cx="12" cy="12" r="1"></circle>
+                                                                <circle cx="19" cy="12" r="1"></circle>
+                                                                <circle cx="5" cy="12" r="1"></circle>
+                                                            </svg>
                                                         </a>
-            
-                                                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="pendingTask" style="will-change: transform;">
-                                                            <a class="dropdown-item" href="javascript:void(0);">View All</a>
-                                                            <a class="dropdown-item" href="javascript:void(0);">Mark as Read</a>
+
+                                                        <div class="dropdown-menu dropdown-menu-right"
+                                                            aria-labelledby="pendingTask"
+                                                            style="will-change: transform;">
+                                                            <a class="dropdown-item" href="javascript:void(0);">View
+                                                                All</a>
+                                                            <a class="dropdown-item" href="javascript:void(0);">Mark as
+                                                                Read</a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -194,14 +261,24 @@ $site_name = $data[0]['option_value'];
 
                                                 <div class="mt-container mx-auto">
                                                     <div class="timeline-line">
-                                                        
+
                                                         <div class="item-timeline timeline-new">
                                                             <div class="t-dot">
-                                                                <div class="t-secondary"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg></div>
+                                                                <div class="t-secondary"><svg
+                                                                        xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                        height="24" viewBox="0 0 24 24" fill="none"
+                                                                        stroke="currentColor" stroke-width="2"
+                                                                        stroke-linecap="round" stroke-linejoin="round"
+                                                                        class="feather feather-plus">
+                                                                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                                                                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                                                                    </svg></div>
                                                             </div>
                                                             <div class="t-content">
                                                                 <div class="t-uppercontent">
-                                                                    <h5>New Feature created : <a href="javscript:void(0);"><span>[Kiran S]</span></a></h5>
+                                                                    <h5>New Feature created : <a
+                                                                            href="javscript:void(0);"><span>[Kiran
+                                                                                S]</span></a></h5>
                                                                 </div>
                                                                 <p>27 Feb, 2020</p>
                                                             </div>
@@ -209,11 +286,23 @@ $site_name = $data[0]['option_value'];
 
                                                         <div class="item-timeline timeline-new">
                                                             <div class="t-dot">
-                                                                <div class="t-success"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-mail"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg></div>
+                                                                <div class="t-success"><svg
+                                                                        xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                        height="24" viewBox="0 0 24 24" fill="none"
+                                                                        stroke="currentColor" stroke-width="2"
+                                                                        stroke-linecap="round" stroke-linejoin="round"
+                                                                        class="feather feather-mail">
+                                                                        <path
+                                                                            d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z">
+                                                                        </path>
+                                                                        <polyline points="22,6 12,13 2,6"></polyline>
+                                                                    </svg></div>
                                                             </div>
                                                             <div class="t-content">
                                                                 <div class="t-uppercontent">
-                                                                    <h5>Mail sent to <a href="javascript:void(0);">E2E Squad</a> for automation test failure analysis</h5>
+                                                                    <h5>Mail sent to <a href="javascript:void(0);">E2E
+                                                                            Squad</a> for automation test failure
+                                                                        analysis</h5>
                                                                 </div>
                                                                 <p>28 Feb, 2020</p>
                                                             </div>
@@ -221,7 +310,14 @@ $site_name = $data[0]['option_value'];
 
                                                         <div class="item-timeline timeline-new">
                                                             <div class="t-dot">
-                                                                <div class="t-primary"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+                                                                <div class="t-primary"><svg
+                                                                        xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                        height="24" viewBox="0 0 24 24" fill="none"
+                                                                        stroke="currentColor" stroke-width="2"
+                                                                        stroke-linecap="round" stroke-linejoin="round"
+                                                                        class="feather feather-check">
+                                                                        <polyline points="20 6 9 17 4 12"></polyline>
+                                                                    </svg></div>
                                                             </div>
                                                             <div class="t-content">
                                                                 <div class="t-uppercontent">
@@ -233,11 +329,20 @@ $site_name = $data[0]['option_value'];
 
                                                         <div class="item-timeline timeline-new">
                                                             <div class="t-dot">
-                                                                <div class="t-danger"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+                                                                <div class="t-danger"><svg
+                                                                        xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                        height="24" viewBox="0 0 24 24" fill="none"
+                                                                        stroke="currentColor" stroke-width="2"
+                                                                        stroke-linecap="round" stroke-linejoin="round"
+                                                                        class="feather feather-check">
+                                                                        <polyline points="20 6 9 17 4 12"></polyline>
+                                                                    </svg></div>
                                                             </div>
                                                             <div class="t-content">
                                                                 <div class="t-uppercontent">
-                                                                    <h5>Task Completed : <a href="javscript:void(0);"><span>[Backup Files EOD]</span></a></h5>
+                                                                    <h5>Task Completed : <a
+                                                                            href="javscript:void(0);"><span>[Backup
+                                                                                Files EOD]</span></a></h5>
                                                                 </div>
                                                                 <p>01 Mar, 2020</p>
                                                             </div>
@@ -245,11 +350,22 @@ $site_name = $data[0]['option_value'];
 
                                                         <div class="item-timeline timeline-new">
                                                             <div class="t-dot">
-                                                                <div class="t-warning"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg></div>
+                                                                <div class="t-warning"><svg
+                                                                        xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                        height="24" viewBox="0 0 24 24" fill="none"
+                                                                        stroke="currentColor" stroke-width="2"
+                                                                        stroke-linecap="round" stroke-linejoin="round"
+                                                                        class="feather feather-file">
+                                                                        <path
+                                                                            d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z">
+                                                                        </path>
+                                                                        <polyline points="13 2 13 9 20 9"></polyline>
+                                                                    </svg></div>
                                                             </div>
                                                             <div class="t-content">
                                                                 <div class="t-uppercontent">
-                                                                    <h5>Documents Submitted from <a href="javascript:void(0);">Sara</a></h5>
+                                                                    <h5>Documents Submitted from <a
+                                                                            href="javascript:void(0);">Sara</a></h5>
                                                                     <span class=""></span>
                                                                 </div>
                                                                 <p>10 Mar, 2020</p>
@@ -258,7 +374,19 @@ $site_name = $data[0]['option_value'];
 
                                                         <div class="item-timeline timeline-new">
                                                             <div class="t-dot">
-                                                                <div class="t-dark"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-server"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6" y2="6"></line><line x1="6" y1="18" x2="6" y2="18"></line></svg></div>
+                                                                <div class="t-dark"><svg
+                                                                        xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                        height="24" viewBox="0 0 24 24" fill="none"
+                                                                        stroke="currentColor" stroke-width="2"
+                                                                        stroke-linecap="round" stroke-linejoin="round"
+                                                                        class="feather feather-server">
+                                                                        <rect x="2" y="2" width="20" height="8" rx="2"
+                                                                            ry="2"></rect>
+                                                                        <rect x="2" y="14" width="20" height="8" rx="2"
+                                                                            ry="2"></rect>
+                                                                        <line x1="6" y1="6" x2="6" y2="6"></line>
+                                                                        <line x1="6" y1="18" x2="6" y2="18"></line>
+                                                                    </svg></div>
                                                             </div>
                                                             <div class="t-content">
                                                                 <div class="t-uppercontent">
@@ -267,8 +395,8 @@ $site_name = $data[0]['option_value'];
                                                                 </div>
                                                                 <p>06 Apr, 2020</p>
                                                             </div>
-                                                        </div>                                      
-                                                    </div>                                    
+                                                        </div>
+                                                    </div>
                                                 </div>
 
                                                 <div class="w-shadow-bottom"></div>
@@ -283,7 +411,17 @@ $site_name = $data[0]['option_value'];
                                                     <div class="widget-heading">
                                                         <div class="w-title">
                                                             <div class="w-icon">
-                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-users"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                    height="24" viewBox="0 0 24 24" fill="none"
+                                                                    stroke="currentColor" stroke-width="2"
+                                                                    stroke-linecap="round" stroke-linejoin="round"
+                                                                    class="feather feather-users">
+                                                                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2">
+                                                                    </path>
+                                                                    <circle cx="9" cy="7" r="4"></circle>
+                                                                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                                                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                                                                </svg>
                                                             </div>
                                                             <div class="">
                                                                 <p class="w-value">31.6K</p>
@@ -291,7 +429,7 @@ $site_name = $data[0]['option_value'];
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="widget-content">    
+                                                    <div class="widget-content">
                                                         <div class="w-chart">
                                                             <div id="hybrid_followers"></div>
                                                         </div>
@@ -303,7 +441,18 @@ $site_name = $data[0]['option_value'];
                                                     <div class="widget-heading">
                                                         <div class="w-title">
                                                             <div class="w-icon">
-                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                    height="24" viewBox="0 0 24 24" fill="none"
+                                                                    stroke="currentColor" stroke-width="2"
+                                                                    stroke-linecap="round" stroke-linejoin="round"
+                                                                    class="feather feather-link">
+                                                                    <path
+                                                                        d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71">
+                                                                    </path>
+                                                                    <path
+                                                                        d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71">
+                                                                    </path>
+                                                                </svg>
                                                             </div>
                                                             <div class="">
                                                                 <p class="w-value">1,900</p>
@@ -311,7 +460,7 @@ $site_name = $data[0]['option_value'];
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="widget-content">    
+                                                    <div class="widget-content">
                                                         <div class="w-chart">
                                                             <div id="hybrid_followers1"></div>
                                                         </div>
@@ -323,7 +472,15 @@ $site_name = $data[0]['option_value'];
                                                     <div class="widget-heading">
                                                         <div class="w-title">
                                                             <div class="w-icon">
-                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-message-circle"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                    height="24" viewBox="0 0 24 24" fill="none"
+                                                                    stroke="currentColor" stroke-width="2"
+                                                                    stroke-linecap="round" stroke-linejoin="round"
+                                                                    class="feather feather-message-circle">
+                                                                    <path
+                                                                        d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z">
+                                                                    </path>
+                                                                </svg>
                                                             </div>
                                                             <div class="">
                                                                 <p class="w-value">18.2%</p>
@@ -331,7 +488,7 @@ $site_name = $data[0]['option_value'];
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="widget-content">    
+                                                    <div class="widget-content">
                                                         <div class="w-chart">
                                                             <div id="hybrid_followers3"></div>
                                                         </div>
@@ -368,7 +525,7 @@ $site_name = $data[0]['option_value'];
                                             </div>
                                         </div>
                                     </div>
-                                    
+
                                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 layout-spacing">
                                         <div class="widget widget-five">
 
@@ -384,51 +541,89 @@ $site_name = $data[0]['option_value'];
 
                                                         <h5>Figma Design</h5>
                                                         <span>Design Reset</span>
-                                                        
+
                                                     </div>
 
                                                 </a>
 
                                                 <div class="task-action">
                                                     <div class="dropdown">
-                                                        <a class="dropdown-toggle" href="#" role="button" id="pendingTask" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-horizontal"><circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle><circle cx="5" cy="12" r="1"></circle></svg>
+                                                        <a class="dropdown-toggle" href="#" role="button"
+                                                            id="pendingTask" data-toggle="dropdown" aria-haspopup="true"
+                                                            aria-expanded="false">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                height="24" viewBox="0 0 24 24" fill="none"
+                                                                stroke="currentColor" stroke-width="2"
+                                                                stroke-linecap="round" stroke-linejoin="round"
+                                                                class="feather feather-more-horizontal">
+                                                                <circle cx="12" cy="12" r="1"></circle>
+                                                                <circle cx="19" cy="12" r="1"></circle>
+                                                                <circle cx="5" cy="12" r="1"></circle>
+                                                            </svg>
                                                         </a>
-            
-                                                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="pendingTask" style="will-change: transform;">
-                                                            <a class="dropdown-item" href="javascript:void(0);">View Project</a>
-                                                            <a class="dropdown-item" href="javascript:void(0);">Edit Project</a>
-                                                            <a class="dropdown-item" href="javascript:void(0);">Mark as Done</a>
+
+                                                        <div class="dropdown-menu dropdown-menu-right"
+                                                            aria-labelledby="pendingTask"
+                                                            style="will-change: transform;">
+                                                            <a class="dropdown-item" href="javascript:void(0);">View
+                                                                Project</a>
+                                                            <a class="dropdown-item" href="javascript:void(0);">Edit
+                                                                Project</a>
+                                                            <a class="dropdown-item" href="javascript:void(0);">Mark as
+                                                                Done</a>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                
+
                                             </div>
-                                            
-                                            
+
+
                                             <div class="widget-content">
 
-                                                <p>Doloribus nisi vel suscipit modi, optio ex repudiandae voluptatibus officiis commodi. Nesciunt quas aut neque incidunt!</p>
+                                                <p>Doloribus nisi vel suscipit modi, optio ex repudiandae voluptatibus
+                                                    officiis commodi. Nesciunt quas aut neque incidunt!</p>
 
                                                 <div class="progress-data">
 
                                                     <div class="progress-info">
-                                                        <div class="task-count"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-square"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg><p>5 Tasks</p></div>
-                                                        <div class="progress-stats"><p>86.2%</p></div>
+                                                        <div class="task-count"><svg xmlns="http://www.w3.org/2000/svg"
+                                                                width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                                stroke="currentColor" stroke-width="2"
+                                                                stroke-linecap="round" stroke-linejoin="round"
+                                                                class="feather feather-check-square">
+                                                                <polyline points="9 11 12 14 22 4"></polyline>
+                                                                <path
+                                                                    d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11">
+                                                                </path>
+                                                            </svg>
+                                                            <p>5 Tasks</p>
+                                                        </div>
+                                                        <div class="progress-stats">
+                                                            <p>86.2%</p>
+                                                        </div>
                                                     </div>
-                                                    
+
                                                     <div class="progress">
-                                                        <div class="progress-bar bg-primary" role="progressbar" style="width: 65%" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
+                                                        <div class="progress-bar bg-primary" role="progressbar"
+                                                            style="width: 65%" aria-valuenow="90" aria-valuemin="0"
+                                                            aria-valuemax="100"></div>
                                                     </div>
-                                                    
+
                                                 </div>
 
                                                 <div class="meta-info">
 
                                                     <div class="due-time">
-                                                        <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clock"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg> 3 Days Left</p>
+                                                        <p><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                height="24" viewBox="0 0 24 24" fill="none"
+                                                                stroke="currentColor" stroke-width="2"
+                                                                stroke-linecap="round" stroke-linejoin="round"
+                                                                class="feather feather-clock">
+                                                                <circle cx="12" cy="12" r="10"></circle>
+                                                                <polyline points="12 6 12 12 16 14"></polyline>
+                                                            </svg> 3 Days Left</p>
                                                     </div>
-                                                    
+
 
                                                     <div class="avatar--group">
 
@@ -436,20 +631,20 @@ $site_name = $data[0]['option_value'];
                                                             <span class="avatar-title">+6</span>
                                                         </div>
                                                         <div class="avatar translateY-axis">
-                                                            <img alt="avatar" src="assets/img/90x90.jpg"/>
+                                                            <img alt="avatar" src="assets/img/90x90.jpg" />
                                                         </div>
                                                         <div class="avatar translateY-axis">
-                                                            <img alt="avatar" src="assets/img/90x90.jpg"/>
+                                                            <img alt="avatar" src="assets/img/90x90.jpg" />
                                                         </div>
                                                         <div class="avatar translateY-axis">
-                                                            <img alt="avatar" src="assets/img/90x90.jpg"/>
+                                                            <img alt="avatar" src="assets/img/90x90.jpg" />
                                                         </div>
-                                                        
+
                                                     </div>
 
                                                 </div>
-                                                
-                                                
+
+
                                             </div>
 
                                         </div>
@@ -457,12 +652,7 @@ $site_name = $data[0]['option_value'];
                                 </div>
                             </div>
                             <div class="footer-wrapper col-xl-12">
-                                <div class="footer-section f-section-1">
-                                    <p class="">© <?php echo date('Y'); ?> <a target="_blank" href="https://www.247.ai/">247.ai</a></p>
-                                </div>
-                                <div class="footer-section f-section-2">
-                                    <p class="">Coded with <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-heart"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg></p>
-                                </div>
+                                <?php require './partials/footer.php'; ?>
                             </div>
                         </div>
                     </div>
@@ -472,11 +662,66 @@ $site_name = $data[0]['option_value'];
 
                 </div>
             </div>
-            
+
         </div>
         <!--  END CONTENT AREA  -->
     </div>
     <!-- END MAIN CONTAINER -->
+
+    <!-- Modal -->
+    <form id="addTestplanNode" action="./actions/addNode.php" method="POST" novalidate>
+        <div class="modal fade" id="addTestPlanFolderModal" tabindex="-1" role="dialog" aria-hidden="true"
+            data-focus="false">
+            <div class="modal-dialog modal-dialog-centered" role="dialog">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            class="feather feather-x close" data-dismiss="modal">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                        <div class="compose-box">
+                            <div class="compose-content">
+                                <h5 class="task-heading">Add Node</h5>
+                                <div class="form-group mb-4">
+                                    <input type="hidden" value="testplan" name="node_type" />
+                                    <input type="text" class="form-control" id="node_name" name="node_name"
+                                        aria-describedby="nodeNameHelp" placeholder="Node name" required>
+                                    <small id="nodeNameHelp" class="form-text text-muted">You wont be able to update
+                                        this later.</small>
+                                </div>
+                                <div class="form-group mb-4">
+                                    <select class="form-control basic" id="parent_node" name="parent_node">
+                                        <?php 
+                                        $distinctValues = array();
+                                        foreach((array) $_SESSION['testplanNodes'] as $testplanNode){ 
+                                            if(array_search($testplanNode['node_name'], $distinctValues) == ''){
+                                                array_push($distinctValues,$testplanNode['node_name']);
+                                                echo '<option>'.$testplanNode['node_name'].'</option>';
+                                            }
+                                        } 
+                                        ?>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Save</button>
+                        <button class="btn" data-dismiss="modal"> <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash">
+                                <polyline points="3 6 5 6 21 6"></polyline>
+                                <path
+                                    d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2">
+                                </path>
+                            </svg> Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
 
     <!-- BEGIN GLOBAL MANDATORY SCRIPTS -->
     <script src="assets/js/libs/jquery-3.1.1.min.js"></script>
@@ -485,9 +730,9 @@ $site_name = $data[0]['option_value'];
     <script src="plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
     <script src="assets/js/app.js"></script>
     <script>
-        $(document).ready(function() {
-            App.init();
-        });
+    $(document).ready(function() {
+        App.init();
+    });
     </script>
     <script src="assets/js/custom.js"></script>
     <script src="plugins/treeview/custom-jstree.js"></script>
@@ -496,7 +741,11 @@ $site_name = $data[0]['option_value'];
     <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
     <script src="plugins/apex/apexcharts.min.js"></script>
     <script src="assets/js/dashboard/dash_1.js"></script>
+    <script src="plugins/select2/select2.min.js"></script>
+    <script src="plugins/select2/custom-select2.js"></script>
+    <script src="assets/js/forms/bootstrap_validation/bs_validation_script.js"></script>
     <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
 
 </body>
+
 </html>

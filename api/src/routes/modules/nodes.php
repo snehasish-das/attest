@@ -5,31 +5,10 @@ use \Psr\Http\Message\ResponseInterface as Response;
 
 //Get
 $app->get('/nodes', function (Request $request, Response $response, array $args) {
-    // $getNodes = "SELECT nd.node_name, nd.parent_node, ts.* FROM tcm_tests ts 
-    // RIGHT OUTER JOIN tcm_nodes nd ON nd.id = ts.parent_node 
-    // WHERE is_deleted=0";
-
-    //$getNodes = "SELECT * FROM tcm_nodes";
-
     $node_type = $request->getQueryParam('node_type', $default = null);
-    // if ($node_type != null) {
-    //     $getNodes .= " WHERE node_type = '$node_type'";
-    // } else {
-    //     $getNodes .= " WHERE node_type = 'testplan'";
-    // }
-
-    // $getNodes.= " ORDER BY distance_from_root, parent_node, node_name";
-
     try {
         $db = new db();
         $db = $db->connect();
-
-        // $stmt = $db->query($getNodes);
-        // $nodes = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        // $data = array();
-        // foreach($nodes as $node){
-        //     $data = getNodeData($node_type,null,$db);
-        // }
         $data = getNodeData($node_type,null,$db);
 
         return $response->withStatus(200)->write(json_encode($data));
@@ -53,26 +32,20 @@ $app->post('/nodes', function (Request $request, Response $response) {
     }
 
     $node_type = $request->getParam('node_type');
-    if ($node_type != 'testplan' || $node_type != 'testlab') {
+    if ($node_type != 'testplan' && $node_type != 'testlab') {
         return $response->withStatus(400)->write('{"error" : {"text": "Node type can either be testplan or testlab" }}');
-    }
-
-    $distance_from_root = $request->getParam('distance_from_root');
-    if ($distance_from_root == '') {
-        return $response->withStatus(400)->write('{"error" : {"text": "Distance is mandatory" }}');
     }
 
     try {
         $db = new db();
         $db = $db->connect();
         
-        $addQuery = "INSERT INTO `tcm_nodes` (`id`, `node_name`, `parent_node`, `node_type`, `distance_from_root`, `created_by`, `last_updated_by`) VALUES ((SELECT UUID()), :node_name, :parent_node, :node_type, :distance_from_root, :created_by, :last_updated_by)";
+        $addQuery = "INSERT INTO `tcm_nodes` (`id`, `node_name`, `parent_node`, `node_type`, `created_by`, `last_updated_by`) VALUES ((SELECT UUID()), :node_name, :parent_node, :node_type, :created_by, :last_updated_by)";
 
         $stmt = $db->prepare($addQuery);
         $stmt->bindParam(':node_name', $node_name);
         $stmt->bindParam(':parent_node', $parent_node);
         $stmt->bindParam(':node_type', $node_type);
-        $stmt->bindParam(':distance_from_root', $distance_from_root);
         $stmt->bindParam(':created_by', $_SESSION['id']);
         $stmt->bindParam(':last_updated_by', $_SESSION['id']);
 
@@ -100,10 +73,6 @@ $app->patch('/nodes/{id}', function (Request $request, Response $response, array
     $parent_node = $request->getParam('parent_node');
     if ($parent_node != '') {
         $updateQuery .= ", `parent_node`='$parent_node'";
-    }
-    $distance_from_root = $request->getParam('distance_from_root');
-    if ($distance_from_root != '') {
-        $updateQuery .= ", `distance_from_root`='$distance_from_root'";
     }
 
     $updateQuery .= " WHERE `id`='$id'";
@@ -158,7 +127,7 @@ function getNodeData($node_type, $parent_node, $db){
     } else{
         $getNodeForParent .= " AND nd.`parent_node` = '$parent_node'";
     }
-    $getNodeForParent .= " ORDER BY distance_from_root, nd.parent_node,nd.node_name";
+    $getNodeForParent .= " ORDER BY nd.parent_node,nd.node_name";
 
     //echo "Query : ". $getNodeForParent;
     $stmt = $db->query($getNodeForParent);

@@ -10,7 +10,7 @@
             }
             if(sizeof($node['tests'])>0){
                 for($i=0; $i<sizeof($node['tests']); $i++)
-                echo '<li>'.$node['tests'][$i]['name'].'</li>';
+                echo '<li><a href="test-plan?name='.$node['tests'][$i]['name'].'">'.$node['tests'][$i]['name'].'</a></li>';
             }
             echo '</ul></li>';
         }
@@ -135,40 +135,34 @@
 
 <div id="compact_submenuSidebar" class="submenu-sidebar">
     <div class="submenu" id="testplan">
-        <!-- <div class="nav-link dropdown-toggle d-icon label-group">
-            <a href="#">
-                <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none"
-                    stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1">
-                    <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
-                    <line x1="12" y1="11" x2="12" y2="17"></line>
-                    <line x1="9" y1="14" x2="15" y2="14"></line>
+        <div class="actions">
+            <a data-toggle="modal" data-target="#addTestPlanFolderModal">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="24">
+                    <!--! Font Awesome Pro 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+                    <path
+                        d="M384 32C419.3 32 448 60.65 448 96V416C448 451.3 419.3 480 384 480H64C28.65 480 0 451.3 0 416V96C0 60.65 28.65 32 64 32H384zM224 368C237.3 368 248 357.3 248 344V280H312C325.3 280 336 269.3 336 256C336 242.7 325.3 232 312 232H248V168C248 154.7 237.3 144 224 144C210.7 144 200 154.7 200 168V232H136C122.7 232 112 242.7 112 256C112 269.3 122.7 280 136 280H200V344C200 357.3 210.7 368 224 368z" />
                 </svg>
+                <span></span>
             </a>
-            <a href="#">
-                <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none"
-                    stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1">
-                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                    <polyline points="14 2 14 8 20 8"></polyline>
-                    <line x1="12" y1="18" x2="12" y2="12"></line>
-                    <line x1="9" y1="15" x2="15" y2="15"></line>
-                </svg>
-            </a>
-        </div> -->
+        </div>
+        <hr />
         <ul class="submenu-list" data-parent-element="#testplan">
             <?php 
                 $getNodes.= "testplan";
-                $nodes = json_decode($cta->httpGetWithAuth($getNodes,$_SESSION['auth-phrase']), true); //Sorted by Distance=> Parent node=> Node
-                getTreeView($nodes);
+                $testplanNodes = json_decode($cta->httpGetWithAuth($getNodes,$_SESSION['auth-phrase']), true); //Sorted by Distance=> Parent node=> Node
+                $_SESSION['testplanNodes'] = $testplanNodes;
+                getTreeView($testplanNodes);
             ?>
         </ul>
     </div>
 
     <div class="submenu" id="testlab">
         <ul class="submenu-list" data-parent-element="#testlab">
-        <?php 
+            <?php 
                 $getNodes.= "testlab";
-                $nodes = json_decode($cta->httpGetWithAuth($getNodes,$_SESSION['auth-phrase']), true); //Sorted by Distance=> Parent node=> Node
-                getTreeView($nodes);
+                $testlabNodes = json_decode($cta->httpGetWithAuth($getNodes,$_SESSION['auth-phrase']), true); //Sorted by Distance=> Parent node=> Node
+                $_SESSION['testlabNodes'] = $testlabNodes;
+                getTreeView($testlabNodes);
             ?>
         </ul>
     </div>

@@ -5,12 +5,18 @@ use \Psr\Http\Message\ResponseInterface as Response;
 
 //Get
 $app->get('/tests', function (Request $request, Response $response, array $args) {
-    $getTests = "SELECT * FROM `tcm_tests` WHERE is_deleted=0 ORDER BY name";
+    $getTests = "SELECT * FROM `tcm_tests` WHERE is_deleted=0";
 
     $parent_node = $request->getQueryParam('parent_node', $default = null);
     if ($parent_node != null) {
-        $getTests .= " AND nd.parent_node = '$parent_node'";
+        $getTests .= " AND parent_node = '$parent_node'";
     }
+
+    $name = $request->getQueryParam('name', $default = null);
+    if ($name != null) {
+        $getTests .= " AND `name` = '$name'";
+    }
+
     $getTests .= " ORDER BY name";
 
     try {

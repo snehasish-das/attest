@@ -1,6 +1,4 @@
-$(".basic").select2({
-	tags: true,
-});
+$(".basic").select2();
 
 var formSmall = $(".form-small").select2({ tags: true });
 formSmall.data('select2').$container.addClass('form-control-sm')

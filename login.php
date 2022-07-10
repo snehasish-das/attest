@@ -27,7 +27,7 @@ if($auth_pass != '' && $auth_user != ''){
     //echo '<br>URL='.$url.'<br>';
     $data=json_decode($cta->httpGetWithAuth($url,$auth_phrase),true);
 
-    if(sizeof($data)>0){
+    if(isset($data)){
         $_SESSION['user-details']=$data;
         $_SESSION['auth-phrase']=$auth_phrase;
         header("Location: ".$redirect);
