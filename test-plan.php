@@ -2,8 +2,8 @@
 session_start();
 require_once 'api/src/config/init.php';
 $_SESSION['site-url']=BASE_URL;
-
 @$currUrl = end(explode('/',$_SERVER['REQUEST_URI']));
+
 $redirect = $currUrl == '' ? 'index' : $currUrl; 
 if (!isset($_SESSION['user-details'])) {
 	header("Location: login?redirect=".$redirect);
@@ -15,15 +15,21 @@ $cta = new CallToAction();
 $site_name_url = $_SESSION['site-url'] . '/api/site_options/site_name';
 $data = json_decode($cta->httpGet($site_name_url), true);
 $site_name = $data[0]['option_value'];
+
+$parent_node = $_REQUEST['node'];
+$tests_url = $_SESSION['site-url'] . '/api/tests?parent_node='.$parent_node;
+$tests = json_decode($cta->httpGetWithAuth($tests_url,$_SESSION['auth-phrase']), true);
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
     <title><?php echo $site_name; ?> - Test Plan</title>
-    <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico"/>
+    <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico" />
     <link href="assets/css/loader.css" rel="stylesheet" type="text/css" />
     <script src="assets/js/loader.js"></script>
 
@@ -32,22 +38,36 @@ $site_name = $data[0]['option_value'];
     <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="assets/css/plugins.css" rel="stylesheet" type="text/css" />
     <link href="assets/css/structure.css" rel="stylesheet" type="text/css" class="structure" />
-    
+
     <link href="assets/css/custom.css" rel="stylesheet" type="text/css" />
     <!-- END GLOBAL MANDATORY STYLES -->
 
-    <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM STYLES -->
-    <link href="plugins/apex/apexcharts.css" rel="stylesheet" type="text/css">
-    <link href="assets/css/dashboard/dash_1.css" rel="stylesheet" type="text/css" class="dashboard-analytics" />
-    <!-- END PAGE LEVEL PLUGINS/CUSTOM STYLES -->
+    <!--  BEGIN CUSTOM STYLE FILE  -->
+    <link href="assets/css/elements/custom-tree_view.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/scrollspyNav.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="plugins/select2/select2.min.css">
+    <link rel="stylesheet" type="text/css" href="plugins/editors/quill/quill.snow.css">
+    <link href="assets/css/apps/todolist.css" rel="stylesheet" type="text/css" />
+    <!--  END CUSTOM STYLE FILE  -->
+
+    <!-- BEGIN PAGE LEVEL CUSTOM STYLES -->
+    <link rel="stylesheet" type="text/css" href="plugins/table/datatable/datatables.css">
+    <link rel="stylesheet" type="text/css" href="plugins/table/datatable/custom_dt_html5.css">
+    <link rel="stylesheet" type="text/css" href="plugins/table/datatable/dt-global_style.css">
+    <!-- END PAGE LEVEL CUSTOM STYLES -->
 
 </head>
+
 <body class="dashboard-analytics admin-header">
 
     <!-- BEGIN LOADER -->
-    <div id="load_screen"> <div class="loader"> <div class="loader-content">
-        <div class="spinner-grow align-self-center"></div>
-    </div></div></div>
+    <div id="load_screen">
+        <div class="loader">
+            <div class="loader-content">
+                <div class="spinner-grow align-self-center"></div>
+            </div>
+        </div>
+    </div>
     <!--  END LOADER -->
 
     <!--  BEGIN MAIN CONTAINER  -->
@@ -67,18 +87,23 @@ $site_name = $data[0]['option_value'];
             </div>
 
             <div class="sidebarCollapseFixed">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="feather feather-arrow-left">
+                    <line x1="19" y1="12" x2="5" y2="12"></line>
+                    <polyline points="12 19 5 12 12 5"></polyline>
+                </svg>
             </div>
-            
+
             <?php require_once './partials/menu.php'; ?>
 
         </div>
         <!--  END SIDEBAR  -->
-        
+
         <!--  BEGIN CONTENT AREA  -->
         <div id="content" class="main-content">
             <div class="layout-px-spacing">
-                
+
                 <div class="content-container">
 
                     <div class="col-left layout-top-spacing">
@@ -90,194 +115,78 @@ $site_name = $data[0]['option_value'];
 
                             <div class="admin-data-content layout-top-spacing">
 
-                                <div class="row">
-                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                                        <div class="row widget-statistic">
-                                            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 layout-spacing">
-                                                <div class="widget widget-one_hybrid widget-followers">
-                                                    <div class="widget-heading">
-                                                        <div class="w-title">
-                                                            <div class="w-icon">
-                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-users"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                                <div class="row layout-top-spacing" id="cancel-row">
+
+                                    <div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
+                                        <div class="widget-content widget-content-area br-6">
+                                            <table id="html5-extension" class="table table-hover non-hover"
+                                                style="width:100%">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Name</th>
+                                                        <th>Product</th>
+                                                        <th>Author</th>
+                                                        <th>Test Type</th>
+                                                        <th>Priority</th>
+                                                        <th>Automation Status</th>
+                                                        <th>Tags</th>
+                                                        <!-- <th class="dt-no-sorting"></th> -->
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <?php 
+                                                    if(isset($tests)){
+                                                    foreach((array) $tests as $test){ ?>
+                                                    <tr>
+                                                        <td><?php echo '<a class="link" href="test-plan-details?name='.$test['name'].'"><span class="taskBoard-number">'.$test['name'].'</span></a>'; ?></td>
+                                                        <td><?php echo $test['product']; ?></td>
+                                                        <td><?php echo $test['user_name']; ?></td>
+                                                        <td><?php echo $test['test_type']; ?></td>
+                                                        <td><?php echo $test['priority']; ?></td>
+                                                        <td><?php if(str_contains($test['automation_status'],'Not')){ echo '<span class="badge badge-danger">'; } else if(str_contains($test['automation_status'],'In Progress')){ echo '<span class="badge badge-warning">'; } else { echo '<span class="badge badge-primary">'; } echo $test['automation_status'].'</span>'; ?></td>
+                                                        <td><?php echo $test['tag']; ?></td>
+                                                        <!-- <td>
+                                                            <div class="btn-group">
+                                                                <button type="button"
+                                                                    class="btn btn-dark btn-sm">Open</button>
+                                                                <button type="button"
+                                                                    class="btn btn-dark btn-sm dropdown-toggle dropdown-toggle-split"
+                                                                    id="dropdownMenuReference1" data-toggle="dropdown"
+                                                                    aria-haspopup="true" aria-expanded="false"
+                                                                    data-reference="parent">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                        height="24" viewBox="0 0 24 24" fill="none"
+                                                                        stroke="currentColor" stroke-width="2"
+                                                                        stroke-linecap="round" stroke-linejoin="round"
+                                                                        class="feather feather-chevron-down">
+                                                                        <polyline points="6 9 12 15 18 9"></polyline>
+                                                                    </svg>
+                                                                </button>
+                                                                <div class="dropdown-menu"
+                                                                    aria-labelledby="dropdownMenuReference1">
+                                                                    <a class="dropdown-item" href="#">Action</a>
+                                                                    <a class="dropdown-item" href="#">Another action</a>
+                                                                    <a class="dropdown-item" href="#">Something else
+                                                                        here</a>
+                                                                    <div class="dropdown-divider"></div>
+                                                                    <a class="dropdown-item" href="#">Separated link</a>
+                                                                </div>
                                                             </div>
-                                                            <div class="">
-                                                                <p class="w-value">31.6K</p>
-                                                                <h5 class="">Followers</h5>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="widget-content">    
-                                                        <div class="w-chart">
-                                                            <div id="hybrid_followers"></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 layout-spacing">
-                                                <div class="widget widget-one_hybrid widget-referral">
-                                                    <div class="widget-heading">
-                                                        <div class="w-title">
-                                                            <div class="w-icon">
-                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
-                                                            </div>
-                                                            <div class="">
-                                                                <p class="w-value">1,900</p>
-                                                                <h5 class="">Referral</h5>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="widget-content">    
-                                                        <div class="w-chart">
-                                                            <div id="hybrid_followers1"></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 layout-spacing">
-                                                <div class="widget widget-one_hybrid widget-engagement">
-                                                    <div class="widget-heading">
-                                                        <div class="w-title">
-                                                            <div class="w-icon">
-                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-message-circle"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
-                                                            </div>
-                                                            <div class="">
-                                                                <p class="w-value">18.2%</p>
-                                                                <h5 class="">Engagement</h5>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="widget-content">    
-                                                        <div class="w-chart">
-                                                            <div id="hybrid_followers3"></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                                        </td> -->
+                                                    </tr>
+                                                    <?php } 
+                                                    } else{
+                                                        echo '<tr><td colspan="8">No tests added</td></tr>';   
+                                                    }?>
+                                                </tbody>
+                                            </table>
                                         </div>
                                     </div>
 
-                                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 layout-spacing">
-                                        <div class="widget widget-card-two">
-                                            <div class="widget-content">
-
-                                                <div class="media">
-                                                    <div class="w-img">
-                                                        <img src="assets/img/90x90.jpg" alt="avatar">
-                                                    </div>
-                                                    <div class="media-body">
-                                                        <h6>Dev Summit - New York</h6>
-                                                        <p class="meta-date-time">Bronx, NY</p>
-                                                    </div>
-                                                </div>
-
-                                                <div class="card-bottom-section">
-                                                    <h5>4 Members Going</h5>
-                                                    <div class="img-group">
-                                                        <img src="assets/img/90x90.jpg" alt="avatar">
-                                                        <img src="assets/img/90x90.jpg" alt="avatar">
-                                                        <img src="assets/img/90x90.jpg" alt="avatar">
-                                                        <img src="assets/img/90x90.jpg" alt="avatar">
-                                                    </div>
-                                                    <a href="javascript:void(0);" class="btn">View Details</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 layout-spacing">
-                                        <div class="widget widget-five">
-
-                                            <div class="widget-heading">
-
-                                                <a href="javascript:void(0)" class="task-info">
-
-                                                    <div class="usr-avatar">
-                                                        <span>FD</span>
-                                                    </div>
-
-                                                    <div class="w-title">
-
-                                                        <h5>Figma Design</h5>
-                                                        <span>Design Reset</span>
-                                                        
-                                                    </div>
-
-                                                </a>
-
-                                                <div class="task-action">
-                                                    <div class="dropdown">
-                                                        <a class="dropdown-toggle" href="#" role="button" id="pendingTask" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-horizontal"><circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle><circle cx="5" cy="12" r="1"></circle></svg>
-                                                        </a>
-            
-                                                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="pendingTask" style="will-change: transform;">
-                                                            <a class="dropdown-item" href="javascript:void(0);">View Project</a>
-                                                            <a class="dropdown-item" href="javascript:void(0);">Edit Project</a>
-                                                            <a class="dropdown-item" href="javascript:void(0);">Mark as Done</a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                
-                                            </div>
-                                            
-                                            
-                                            <div class="widget-content">
-
-                                                <p>Doloribus nisi vel suscipit modi, optio ex repudiandae voluptatibus officiis commodi. Nesciunt quas aut neque incidunt!</p>
-
-                                                <div class="progress-data">
-
-                                                    <div class="progress-info">
-                                                        <div class="task-count"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-square"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg><p>5 Tasks</p></div>
-                                                        <div class="progress-stats"><p>86.2%</p></div>
-                                                    </div>
-                                                    
-                                                    <div class="progress">
-                                                        <div class="progress-bar bg-primary" role="progressbar" style="width: 65%" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
-                                                    </div>
-                                                    
-                                                </div>
-
-                                                <div class="meta-info">
-
-                                                    <div class="due-time">
-                                                        <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clock"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg> 3 Days Left</p>
-                                                    </div>
-                                                    
-
-                                                    <div class="avatar--group">
-
-                                                        <div class="avatar translateY-axis more-group">
-                                                            <span class="avatar-title">+6</span>
-                                                        </div>
-                                                        <div class="avatar translateY-axis">
-                                                            <img alt="avatar" src="assets/img/90x90.jpg"/>
-                                                        </div>
-                                                        <div class="avatar translateY-axis">
-                                                            <img alt="avatar" src="assets/img/90x90.jpg"/>
-                                                        </div>
-                                                        <div class="avatar translateY-axis">
-                                                            <img alt="avatar" src="assets/img/90x90.jpg"/>
-                                                        </div>
-                                                        
-                                                    </div>
-
-                                                </div>
-                                                
-                                                
-                                            </div>
-
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
                             <div class="footer-wrapper col-xl-12">
-                                <div class="footer-section f-section-1">
-                                    <p class="">© <?php echo date('Y'); ?> <a target="_blank" href="https://www.247.ai/">247.ai</a></p>
-                                </div>
-                                <div class="footer-section f-section-2">
-                                    <p class="">Coded with <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-heart"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg></p>
-                                </div>
+                                <?php require './partials/footer.php'; ?>
                             </div>
                         </div>
                     </div>
@@ -287,11 +196,121 @@ $site_name = $data[0]['option_value'];
 
                 </div>
             </div>
-            
+
         </div>
         <!--  END CONTENT AREA  -->
     </div>
     <!-- END MAIN CONTAINER -->
+
+    <!-- Add Test plan node Modal -->
+    <form id="addTestplanNode" action="./actions/addNode.php" method="POST" novalidate>
+        <div class="modal fade" id="addTestplanFolderModal" tabindex="-1" role="dialog" aria-hidden="true"
+            data-focus="false">
+            <div class="modal-dialog modal-dialog-centered" role="dialog">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            class="feather feather-x close" data-dismiss="modal">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                        <div class="compose-box">
+                            <div class="compose-content">
+                                <h5 class="task-heading">Add Node</h5>
+                                <div class="form-group mb-4">
+                                    <input type="hidden" value="testplan" name="node_type" />
+                                    <input type="text" class="form-control" id="node_name" name="node_name"
+                                        aria-describedby="nodeNameHelp" placeholder="Node name" required>
+                                    <small id="nodeNameHelp" class="form-text text-muted">You wont be able to update
+                                        this later.</small>
+                                </div>
+                                <div class="form-group mb-4">
+                                    <select class="form-control basic" id="parent_node" name="parent_node">
+                                        <?php 
+                                        $distinctValues = array();
+                                        foreach((array) $_SESSION['testplanNodes'] as $testplanNode){ 
+                                            if(array_search($testplanNode['node_name'], $distinctValues) == ''){
+                                                array_push($distinctValues,$testplanNode['node_name']);
+                                                echo '<option>'.$testplanNode['node_name'].'</option>';
+                                            }
+                                        } 
+                                        ?>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Save</button>
+                        <button class="btn" data-dismiss="modal"> <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash">
+                                <polyline points="3 6 5 6 21 6"></polyline>
+                                <path
+                                    d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2">
+                                </path>
+                            </svg> Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <!-- Add Test plan node Modal -->
+    <form id="addTestplanNode" action="./actions/addNode.php" method="POST" novalidate>
+        <div class="modal fade" id="addTestplanFolderModal" tabindex="-1" role="dialog" aria-hidden="true"
+            data-focus="false">
+            <div class="modal-dialog modal-dialog-centered" role="dialog">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            class="feather feather-x close" data-dismiss="modal">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                        <div class="compose-box">
+                            <div class="compose-content">
+                                <h5 class="task-heading">Add Node</h5>
+                                <div class="form-group mb-4">
+                                    <input type="hidden" value="testplan" name="node_type" />
+                                    <input type="text" class="form-control" id="node_name" name="node_name"
+                                        aria-describedby="nodeNameHelp" placeholder="Node name" required>
+                                    <small id="nodeNameHelp" class="form-text text-muted">You wont be able to update
+                                        this later.</small>
+                                </div>
+                                <div class="form-group mb-4">
+                                    <select class="form-control basic" id="parent_node" name="parent_node">
+                                        <?php 
+                                        $distinctValues = array();
+                                        foreach((array) $_SESSION['testplanNodes'] as $testplanNode){ 
+                                            if(array_search($testplanNode['node_name'], $distinctValues) == ''){
+                                                array_push($distinctValues,$testplanNode['node_name']);
+                                                echo '<option>'.$testplanNode['node_name'].'</option>';
+                                            }
+                                        } 
+                                        ?>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Save</button>
+                        <button class="btn" data-dismiss="modal"> <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash">
+                                <polyline points="3 6 5 6 21 6"></polyline>
+                                <path
+                                    d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2">
+                                </path>
+                            </svg> Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
 
     <!-- BEGIN GLOBAL MANDATORY SCRIPTS -->
     <script src="assets/js/libs/jquery-3.1.1.min.js"></script>
@@ -300,17 +319,56 @@ $site_name = $data[0]['option_value'];
     <script src="plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
     <script src="assets/js/app.js"></script>
     <script>
-        $(document).ready(function() {
-            App.init();
-        });
+    $(document).ready(function() {
+        App.init();
+    });
     </script>
     <script src="assets/js/custom.js"></script>
+    <script src="plugins/treeview/custom-jstree.js"></script>
     <!-- END GLOBAL MANDATORY SCRIPTS -->
 
-    <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
-    <script src="plugins/apex/apexcharts.min.js"></script>
-    <script src="assets/js/dashboard/dash_1.js"></script>
-    <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
+    <!-- BEGIN MODAL FORM -->
+    <script src="plugins/select2/select2.min.js"></script>
+    <script src="plugins/select2/custom-select2.js"></script>
+    <script src="assets/js/forms/bootstrap_validation/bs_validation_script.js"></script>
+    <!-- BEGIN MODAL FORM -->
+
+    
+
+    <!-- BEGIN PAGE LEVEL CUSTOM SCRIPTS -->
+    <script src="plugins/table/datatable/datatables.js"></script>
+    <!-- NOTE TO Use Copy CSV Excel PDF Print Options You Must Include These Files  -->
+    <script src="plugins/table/datatable/button-ext/dataTables.buttons.min.js"></script>
+    <script src="plugins/table/datatable/button-ext/jszip.min.js"></script>    
+    <script src="plugins/table/datatable/button-ext/buttons.html5.min.js"></script>
+    <script src="plugins/table/datatable/button-ext/buttons.print.min.js"></script>
+    <script>
+        $('#html5-extension').DataTable( {
+            "dom": "<'dt--top-section'<'row'<'col-sm-12 col-md-6 d-flex justify-content-md-start justify-content-center'B><'col-sm-12 col-md-6 d-flex justify-content-md-end justify-content-center mt-md-0 mt-3'f>>>" +
+        "<'table-responsive'tr>" +
+        "<'dt--bottom-section d-sm-flex justify-content-sm-between text-center'<'dt--pages-count  mb-sm-0 mb-3'i><'dt--pagination'p>>",
+            buttons: {
+                buttons: [
+                    { extend: 'copy', className: 'btn btn-sm' },
+                    { extend: 'csv', className: 'btn btn-sm' },
+                    { extend: 'excel', className: 'btn btn-sm' },
+                    { extend: 'print', className: 'btn btn-sm' }
+                ]
+            },
+            "oLanguage": {
+                "oPaginate": { "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>', "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>' },
+                "sInfo": "Showing page _PAGE_ of _PAGES_",
+                "sSearch": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
+                "sSearchPlaceholder": "Search...",
+               "sLengthMenu": "Results :  _MENU_",
+            },
+            "stripeClasses": [],
+            "lengthMenu": [7, 10, 20, 50],
+            "pageLength": 7 
+        } );
+    </script>
+    <!-- END PAGE LEVEL CUSTOM SCRIPTS -->
 
 </body>
+
 </html>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 07, 2022 at 12:58 PM
+-- Generation Time: Jul 10, 2022 at 11:16 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -49,7 +49,6 @@ CREATE TABLE `tcm_nodes` (
   `id` varchar(40) NOT NULL,
   `node_name` varchar(40) NOT NULL,
   `parent_node` varchar(40) DEFAULT NULL,
-  `distance_from_root` int(11) NOT NULL,
   `node_type` enum('testlab','testplan') NOT NULL DEFAULT 'testplan',
   `created_by` varchar(40) NOT NULL,
   `created_date` timestamp NOT NULL DEFAULT current_timestamp(),
@@ -62,15 +61,17 @@ CREATE TABLE `tcm_nodes` (
 -- Dumping data for table `tcm_nodes`
 --
 
-INSERT INTO `tcm_nodes` (`id`, `node_name`, `parent_node`, `distance_from_root`, `node_type`, `created_by`, `created_date`, `last_updated_by`, `last_updated_date`, `is_deleted`) VALUES
-('29699302-fdb1-11ec-ba34-0c9a3ce20ee5', 'Open Channel', 'Messaging', 1, 'testplan', 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', '2022-07-07 02:50:24', 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', '2022-07-07 02:50:24', 0),
-('82affcb1-fd9c-11ec-ba34-0c9a3ce20ee5', 'Cards', 'Assist', 1, 'testplan', 'Snehasish', '2022-07-07 02:26:22', 'Snehasish', '2022-07-07 02:26:22', 0),
-('da8b5ae8-fd9a-11ec-ba34-0c9a3ce20ee5', 'Answers', NULL, 0, 'testplan', 'Seed Data', '2022-07-07 02:16:47', 'Seed Data', '2022-07-07 02:16:47', 0),
-('da8b65fc-fd9a-11ec-ba34-0c9a3ce20ee5', 'Conversation', NULL, 0, 'testplan', 'Seed Data', '2022-07-07 02:16:47', 'Seed Data', '2022-07-07 02:16:47', 0),
-('da8b666b-fd9a-11ec-ba34-0c9a3ce20ee5', 'Messaging', NULL, 0, 'testplan', 'Seed Data', '2022-07-07 02:16:47', 'Seed Data', '2022-07-07 02:16:47', 0),
-('da8b66ac-fd9a-11ec-ba34-0c9a3ce20ee5', 'Voice', NULL, 0, 'testplan', 'Seed Data', '2022-07-07 02:16:47', 'Seed Data', '2022-07-07 02:16:47', 0),
-('da8b66ed-fd9a-11ec-ba34-0c9a3ce20ee5', 'Butterfly', NULL, 0, 'testplan', 'Seed Data', '2022-07-07 02:16:47', 'Seed Data', '2022-07-07 02:16:47', 0),
-('f0de7882-fd9a-11ec-ba34-0c9a3ce20ee5', 'Assist', NULL, 0, 'testplan', 'Seed Data', '2022-07-07 02:12:11', 'Seed Data', '2022-07-07 02:12:11', 0);
+INSERT INTO `tcm_nodes` (`id`, `node_name`, `parent_node`, `node_type`, `created_by`, `created_date`, `last_updated_by`, `last_updated_date`, `is_deleted`) VALUES
+('0cc0142c-001d-11ed-b09d-0c9a3ce20ee5', 'New Testplan Node', 'Answers', 'testplan', 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', '2022-07-10 06:53:48', 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', '2022-07-10 06:53:48', 0),
+('2733a58e-001c-11ed-b09d-0c9a3ce20ee5', 'TestPlan Node 1', 'Answers', 'testplan', 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', '2022-07-10 06:47:23', 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', '2022-07-10 06:47:23', 0),
+('29699302-fdb1-11ec-ba34-0c9a3ce20ee5', 'Open Channel', 'Messaging', 'testplan', 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', '2022-07-07 02:50:24', 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', '2022-07-07 02:50:24', 0),
+('82affcb1-fd9c-11ec-ba34-0c9a3ce20ee5', 'Cards', 'Assist', 'testplan', 'Snehasish', '2022-07-07 02:26:22', 'Snehasish', '2022-07-07 02:26:22', 0),
+('da8b5ae8-fd9a-11ec-ba34-0c9a3ce20ee5', 'Answers', NULL, 'testplan', 'Seed Data', '2022-07-07 02:16:47', 'Seed Data', '2022-07-07 02:16:47', 0),
+('da8b65fc-fd9a-11ec-ba34-0c9a3ce20ee5', 'Conversation', NULL, 'testplan', 'Seed Data', '2022-07-07 02:16:47', 'Seed Data', '2022-07-07 02:16:47', 0),
+('da8b666b-fd9a-11ec-ba34-0c9a3ce20ee5', 'Messaging', NULL, 'testplan', 'Seed Data', '2022-07-07 02:16:47', 'Seed Data', '2022-07-07 02:16:47', 0),
+('da8b66ac-fd9a-11ec-ba34-0c9a3ce20ee5', 'Voice', NULL, 'testplan', 'Seed Data', '2022-07-07 02:16:47', 'Seed Data', '2022-07-07 02:16:47', 0),
+('da8b66ed-fd9a-11ec-ba34-0c9a3ce20ee5', 'Butterfly', NULL, 'testplan', 'Seed Data', '2022-07-07 02:16:47', 'Seed Data', '2022-07-07 02:16:47', 0),
+('f0de7882-fd9a-11ec-ba34-0c9a3ce20ee5', 'Assist', NULL, 'testplan', 'Seed Data', '2022-07-07 02:12:11', 'Seed Data', '2022-07-07 02:12:11', 0);
 
 -- --------------------------------------------------------
 

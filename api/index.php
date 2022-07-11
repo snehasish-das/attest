@@ -26,6 +26,9 @@ require 'src/routes/middleware/UserMiddleware.php';
 //Modules
 require 'src/routes/modules/users.php';
 require 'src/routes/modules/nodes.php';
+require 'src/routes/modules/tests.php';
+require 'src/routes/modules/releases.php';
+require 'src/routes/modules/features.php';
 
 $app->options('/{routes:.+}', function ($request, $response, $args) {
     return $response;

@@ -1,5 +1,6 @@
 <?php
-    @$currUrl = end(explode('/',$_SERVER['REQUEST_URI']));
+    $endpoint = explode('?',$_SERVER['REQUEST_URI']);
+    @$currUrl = end(explode('/',$endpoint[0]));
     $currUrl = ($currUrl == 'index' || $currUrl =='') ? 'Dashboard' : $currUrl;
     $header = str_replace('-',' ',strtoupper($currUrl));
 ?>

@@ -32,3 +32,8 @@
     padding: 0.5rem 1rem;
     float: right;
 }
+
+a.link{
+    font-weight: 600;
+    color: #61b6cd;
+}

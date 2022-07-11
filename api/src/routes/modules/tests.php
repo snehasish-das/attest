@@ -5,7 +5,7 @@ use \Psr\Http\Message\ResponseInterface as Response;
 
 //Get
 $app->get('/tests', function (Request $request, Response $response, array $args) {
-    $getTests = "SELECT * FROM `tcm_tests` WHERE is_deleted=0";
+    $getTests = "SELECT tt.*, tu.name as user_name FROM `tcm_tests` tt, `tcm_users` tu WHERE tt.is_deleted=0 AND tt.author=tu.id";
 
     $parent_node = $request->getQueryParam('parent_node', $default = null);
     if ($parent_node != null) {

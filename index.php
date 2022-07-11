@@ -668,9 +668,9 @@ $site_name = $data[0]['option_value'];
     </div>
     <!-- END MAIN CONTAINER -->
 
-    <!-- Modal -->
+    <!-- Add Test plan node Modal -->
     <form id="addTestplanNode" action="./actions/addNode.php" method="POST" novalidate>
-        <div class="modal fade" id="addTestPlanFolderModal" tabindex="-1" role="dialog" aria-hidden="true"
+        <div class="modal fade" id="addTestplanFolderModal" tabindex="-1" role="dialog" aria-hidden="true"
             data-focus="false">
             <div class="modal-dialog modal-dialog-centered" role="dialog">
                 <div class="modal-content">
