@@ -22,6 +22,11 @@ $tests = json_decode($cta->httpGetWithAuth($tests_url,$_SESSION['auth-phrase']),
 $test = $tests[0];
 
 $tags = explode(',', $test['tag']);
+
+
+$features_url = $_SESSION['site-url'] . '/api/features';
+$features = json_decode($cta->httpGetWithAuth($features_url,$_SESSION['auth-phrase']), true);
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -61,10 +66,10 @@ $tags = explode(',', $test['tag']);
         margin: 0 auto;
     }
     </style>
-    <!-- END PAGE LEVEL CUSTOM STYLES -->
     <link rel="stylesheet" type="text/css" href="assets/css/forms/theme-checkbox-radio.css">
     <link href="plugins/jquery-ui/jquery-ui.min.css" rel="stylesheet" type="text/css" />
     <link href="assets/css/apps/contacts.css" rel="stylesheet" type="text/css" />
+    <!-- END PAGE LEVEL CUSTOM STYLES -->
 
 </head>
 
@@ -438,9 +443,13 @@ $tags = explode(',', $test['tag']);
                                                                             stroke-linejoin="round"
                                                                             class="feather file-plus">
                                                                             <title>Add Requirement</title>
-                                                                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                                                                            <polyline points="14 2 14 8 20 8"></polyline>
-                                                                            <line x1="12" y1="18" x2="12" y2="12"></line>
+                                                                            <path
+                                                                                d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z">
+                                                                            </path>
+                                                                            <polyline points="14 2 14 8 20 8">
+                                                                            </polyline>
+                                                                            <line x1="12" y1="18" x2="12" y2="12">
+                                                                            </line>
                                                                             <line x1="9" y1="15" x2="15" y2="15"></line>
                                                                         </svg>
 
@@ -488,7 +497,7 @@ $tags = explode(',', $test['tag']);
                                                                     <div class="modal fade" id="addContactModal"
                                                                         tabindex="-1" role="dialog"
                                                                         aria-labelledby="addContactModalTitle"
-                                                                        aria-hidden="true">
+                                                                        aria-hidden="true" data-focus="false">
                                                                         <div class="modal-dialog modal-dialog-centered"
                                                                             role="document">
                                                                             <div class="modal-content">
@@ -500,85 +509,24 @@ $tags = explode(',', $test['tag']);
                                                                                             class="add-contact-content">
                                                                                             <form
                                                                                                 id="addContactModalTitle">
-                                                                                                <div class="row">
-                                                                                                    <div
-                                                                                                        class="col-md-6">
-                                                                                                        <div
-                                                                                                            class="contact-name">
-                                                                                                            <i
-                                                                                                                class="flaticon-user-11"></i>
-                                                                                                            <input
-                                                                                                                type="text"
-                                                                                                                id="c-name"
-                                                                                                                class="form-control"
-                                                                                                                placeholder="Name">
-                                                                                                            <span
-                                                                                                                class="validation-text"></span>
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                    <div
-                                                                                                        class="col-md-6">
-                                                                                                        <div
-                                                                                                            class="contact-email">
-                                                                                                            <i
-                                                                                                                class="flaticon-mail-26"></i>
-                                                                                                            <input
-                                                                                                                type="text"
-                                                                                                                id="c-email"
-                                                                                                                class="form-control"
-                                                                                                                placeholder="Email">
-                                                                                                            <span
-                                                                                                                class="validation-text"></span>
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                </div>
+                                                                                                <div class="form-group">
+                                                                                                    <label
+                                                                                                        for="autocomplete-dynamic">Features:</label>
 
-                                                                                                <div class="row">
-                                                                                                    <div
-                                                                                                        class="col-md-6">
-                                                                                                        <div
-                                                                                                            class="contact-occupation">
-                                                                                                            <i
-                                                                                                                class="flaticon-fill-area"></i>
-                                                                                                            <input
-                                                                                                                type="text"
-                                                                                                                id="c-occupation"
-                                                                                                                class="form-control"
-                                                                                                                placeholder="Occupation">
-                                                                                                        </div>
-                                                                                                    </div>
-
-                                                                                                    <div
-                                                                                                        class="col-md-6">
-                                                                                                        <div
-                                                                                                            class="contact-phone">
-                                                                                                            <i
-                                                                                                                class="flaticon-telephone"></i>
-                                                                                                            <input
-                                                                                                                type="text"
-                                                                                                                id="c-phone"
-                                                                                                                class="form-control"
-                                                                                                                placeholder="Phone">
-                                                                                                            <span
-                                                                                                                class="validation-text"></span>
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                </div>
-
-                                                                                                <div class="row">
-                                                                                                    <div
-                                                                                                        class="col-md-12">
-                                                                                                        <div
-                                                                                                            class="contact-location">
-                                                                                                            <i
-                                                                                                                class="flaticon-location-1"></i>
-                                                                                                            <input
-                                                                                                                type="text"
-                                                                                                                id="c-location"
-                                                                                                                class="form-control"
-                                                                                                                placeholder="Location">
-                                                                                                        </div>
-                                                                                                    </div>
+                                                                                                    <select
+                                                                                                        class="form-control basic"
+                                                                                                        id="features"
+                                                                                                        name="features">
+                                                                                                        <?php 
+                                                                                                            $distinctValues = array();
+                                                                                                            foreach((array) $features as $feature){ 
+                                                                                                                if(array_search($feature['feature_id'], $distinctValues) == ''){
+                                                                                                                    array_push($distinctValues,$feature['feature_id']);
+                                                                                                                    echo '<option value="'.$feature['feature_id'].'">'.$feature['name'].'</option>';
+                                                                                                                }
+                                                                                                            } 
+                                                                                                            ?>
+                                                                                                    </select>
                                                                                                 </div>
 
                                                                                             </form>
@@ -647,7 +595,7 @@ $tags = explode(',', $test['tag']);
                                                                         </div>
                                                                     </div>
                                                                 </div>
-
+                                                                <?php if($test['feature_id']!=''){?>
                                                                 <div class="items">
                                                                     <div class="item-content">
                                                                         <div class="user-profile">
@@ -661,29 +609,57 @@ $tags = explode(',', $test['tag']);
                                                                                         class="new-control-indicator"></span>
                                                                                 </label>
                                                                             </div>
-                                                                                <?php if(str_contains($test['feature_type'],'New')){?>
-                                                                                    <svg viewBox="0 0 24 24" width="40" height="40" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1"><circle cx="18" cy="18" r="3"></circle><circle cx="6" cy="6" r="3"></circle><path d="M13 6h3a2 2 0 0 1 2 2v7"></path><line x1="6" y1="9" x2="6" y2="21"></line></svg>
-                                                                                <?php } else{ ?>
-                                                                                    <svg viewBox="0 0 24 24" width="40" height="40" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1"><line x1="6" y1="3" x2="6" y2="15"></line><circle cx="18" cy="6" r="3"></circle><circle cx="6" cy="18" r="3"></circle><path d="M18 9a9 9 0 0 1-9 9"></path></svg>
-                                                                                <?php } ?>  
-                                                                            <div class="user-meta-info">  
+                                                                            <?php if(str_contains($test['feature_type'],'New')){?>
+                                                                            <svg viewBox="0 0 24 24" width="40"
+                                                                                height="40" stroke="currentColor"
+                                                                                stroke-width="2" fill="none"
+                                                                                stroke-linecap="round"
+                                                                                stroke-linejoin="round"
+                                                                                class="css-i6dzq1">
+                                                                                <circle cx="18" cy="18" r="3"></circle>
+                                                                                <circle cx="6" cy="6" r="3"></circle>
+                                                                                <path d="M13 6h3a2 2 0 0 1 2 2v7">
+                                                                                </path>
+                                                                                <line x1="6" y1="9" x2="6" y2="21">
+                                                                                </line>
+                                                                            </svg>
+                                                                            <?php } else{ ?>
+                                                                            <svg viewBox="0 0 24 24" width="40"
+                                                                                height="40" stroke="currentColor"
+                                                                                stroke-width="2" fill="none"
+                                                                                stroke-linecap="round"
+                                                                                stroke-linejoin="round"
+                                                                                class="css-i6dzq1">
+                                                                                <line x1="6" y1="3" x2="6" y2="15">
+                                                                                </line>
+                                                                                <circle cx="18" cy="6" r="3"></circle>
+                                                                                <circle cx="6" cy="18" r="3"></circle>
+                                                                                <path d="M18 9a9 9 0 0 1-9 9"></path>
+                                                                            </svg>
+                                                                            <?php } ?>
+                                                                            <div class="user-meta-info">
                                                                                 <p class="user-name"
-                                                                                    data-name="<?php echo $test['feature_id']; ?>"><?php echo $test['feature_id']; ?>
+                                                                                    data-name="<?php echo $test['feature_id']; ?>">
+                                                                                    <?php echo $test['feature_id']; ?>
                                                                                 </p>
                                                                                 <p class="user-work"
-                                                                                    data-occupation="<?php echo $test['feature_name']; ?>"><?php echo $test['feature_name']; ?></p>
+                                                                                    data-occupation="<?php echo $test['feature_name']; ?>">
+                                                                                    <?php echo $test['feature_name']; ?>
+                                                                                </p>
                                                                             </div>
                                                                         </div>
                                                                         <div class="user-location">
                                                                             <p class="info-title">Type: </p>
                                                                             <p class="usr-email-addr"
-                                                                                data-email="<?php echo $test['feature_type']; ?>"><?php echo $test['feature_type']; ?>
+                                                                                data-email="<?php echo $test['feature_type']; ?>">
+                                                                                <?php echo $test['feature_type']; ?>
                                                                             </p>
                                                                         </div>
                                                                         <div class="user-phone">
                                                                             <p class="info-title">Status: </p>
                                                                             <p class="usr-location"
-                                                                                data-location="<?php echo $test['feature_status']; ?>"><?php echo $test['feature_status']; ?>
+                                                                                data-location="<?php echo $test['feature_status']; ?>">
+                                                                                <?php echo $test['feature_status']; ?>
                                                                             </p>
                                                                         </div>
                                                                         <div class="action-btn">
@@ -706,13 +682,18 @@ $tags = explode(',', $test['tag']);
                                                                                 stroke-linecap="round"
                                                                                 stroke-linejoin="round"
                                                                                 class="feather file-minus delete">
-                                                                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                                                                                <polyline points="14 2 14 8 20 8"></polyline>
-                                                                                <line x1="9" y1="15" x2="15" y2="15"></line>
+                                                                                <path
+                                                                                    d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z">
+                                                                                </path>
+                                                                                <polyline points="14 2 14 8 20 8">
+                                                                                </polyline>
+                                                                                <line x1="9" y1="15" x2="15" y2="15">
+                                                                                </line>
                                                                             </svg>
                                                                         </div>
                                                                     </div>
                                                                 </div>
+                                                                <?php } else {echo '<div class="items">No requirements associated</div>';}?>
                                                             </div>
 
                                                         </div>
@@ -754,6 +735,8 @@ $tags = explode(',', $test['tag']);
     </script>
     <script src="assets/js/custom.js"></script>
     <script src="plugins/treeview/custom-jstree.js"></script>
+    <script src="plugins/select2/select2.min.js"></script>
+    <script src="plugins/select2/custom-select2.js"></script>
     <!-- END GLOBAL MANDATORY SCRIPTS -->
 
     <!-- BEGIN PAGE LEVEL SCRIPTS -->
@@ -767,7 +750,7 @@ $tags = explode(',', $test['tag']);
     });
     //instance.addData(['PHP', 'Wordpress', 'Javascript', 'jQuery'])
 
-    instance.addData([<?php echo '"'.implode('","', $tags).'"' ?>])
+    instance.addData([<?php echo '"'.implode('","', $tags).'"' ?>]);
     </script>
     <script src="plugins/jquery-ui/jquery-ui.min.js"></script>
     <script src="assets/js/apps/contact.js"></script>

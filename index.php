@@ -682,13 +682,13 @@ $site_name = $data[0]['option_value'];
     </script>
     <script src="assets/js/custom.js"></script>
     <script src="plugins/treeview/custom-jstree.js"></script>
+    <script src="plugins/select2/select2.min.js"></script>
+    <script src="plugins/select2/custom-select2.js"></script>
     <!-- END GLOBAL MANDATORY SCRIPTS -->
 
     <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
     <script src="plugins/apex/apexcharts.min.js"></script>
     <script src="assets/js/dashboard/dash_1.js"></script>
-    <script src="plugins/select2/select2.min.js"></script>
-    <script src="plugins/select2/custom-select2.js"></script>
     <script src="assets/js/forms/bootstrap_validation/bs_validation_script.js"></script>
     <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
 

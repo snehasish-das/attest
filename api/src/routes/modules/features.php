@@ -5,7 +5,8 @@ use \Psr\Http\Message\ResponseInterface as Response;
 
 //Get
 $app->get('/features', function (Request $request, Response $response, array $args) {
-    $getFeatures = "SELECT * FROM `tcm_features` WHERE is_deleted=0 ORDER BY name";
+    $getFeatures = "SELECT * FROM `tcm_features` WHERE is_deleted=0 AND `created_date` > DATE_SUB(now(), INTERVAL 6 MONTH) ORDER BY name";
+
 
     try {
         $db = new db();
