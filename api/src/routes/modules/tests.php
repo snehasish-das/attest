@@ -5,7 +5,9 @@ use \Psr\Http\Message\ResponseInterface as Response;
 
 //Get
 $app->get('/tests', function (Request $request, Response $response, array $args) {
-    $getTests = "SELECT tt.*, tu.name as user_name FROM `tcm_tests` tt, `tcm_users` tu WHERE tt.is_deleted=0 AND tt.author=tu.id";
+    $getTests = "SELECT tt.*, tu.name as user_name, tf.`name` as `feature_name`, tf.`status` as `feature_status`, tf.`feature_type` 
+    FROM `tcm_tests` tt JOIN `tcm_users` tu ON tt.author=tu.id LEFT OUTER JOIN `tcm_features` tf ON tf.feature_id=tt.feature_id
+    WHERE tt.is_deleted=0";
 
     $parent_node = $request->getQueryParam('parent_node', $default = null);
     if ($parent_node != null) {
@@ -14,10 +16,10 @@ $app->get('/tests', function (Request $request, Response $response, array $args)
 
     $name = $request->getQueryParam('name', $default = null);
     if ($name != null) {
-        $getTests .= " AND `name` = '$name'";
+        $getTests .= " AND tt.`name` = '$name'";
     }
 
-    $getTests .= " ORDER BY name";
+    $getTests .= " ORDER BY tt.name";
 
     try {
         $db = new db();

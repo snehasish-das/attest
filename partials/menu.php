@@ -11,7 +11,7 @@
             }
             if(sizeof($node['tests'])>0){
                 for($i=0; $i<sizeof($node['tests']); $i++)
-                echo '<li><a href="test-plan?name='.$node['tests'][$i]['name'].'">'.$node['tests'][$i]['name'].'</a></li>';
+                echo '<li><a href="test-plan-details?name='.$node['tests'][$i]['name'].'">'.$node['tests'][$i]['name'].'</a></li>';
             }
             echo '</ul></li>';
         }
@@ -19,8 +19,8 @@
 ?>
 <nav id="compactSidebar">
     <ul class="menu-categories">
-        <li class="menu menu-single <?php  if($currUrl == 'index' || $currUrl =='') { echo 'active'; }?>">
-            <a href="index" data-active="<?php echo ($currUrl == 'index' || $currUrl =='') ? 'true' : 'false'  ?>"
+        <li class="menu menu-single <?php  if(str_contains($currUrl,'index') || $currUrl =='') { echo 'active'; }?>">
+            <a href="index" data-active="<?php echo (str_contains($currUrl,'index') || $currUrl =='') ? 'true' : 'false'  ?>"
                 class="menu-toggle">
                 <div class="base-menu">
                     <div class="base-icons">
@@ -36,8 +36,8 @@
             </a>
         </li>
 
-        <li class="menu <?php  if($currUrl == 'test-plan') { echo 'active'; }?>">
-            <a href="#testplan" data-active="<?php echo ($currUrl == 'test-plan') ? 'true' : 'false'  ?>"
+        <li class="menu <?php  if(str_contains($currUrl,'test-plan')) { echo 'active'; }?>">
+            <a href="#testplan" data-active="<?php echo (str_contains($currUrl,'test-plan')) ? 'true' : 'false'  ?>"
                 class="menu-toggle">
                 <div class="base-menu">
                     <div class="base-icons">
@@ -61,8 +61,8 @@
             </a>
         </li>
 
-        <li class="menu" <?php  if($currUrl == 'test-lab') { echo 'active'; }?>>
-            <a href="#testlab" data-active="<?php echo ($currUrl == 'test-lab') ? 'true' : 'false'  ?>"
+        <li class="menu" <?php  if(str_contains($currUrl,'test-lab')) { echo 'active'; }?>>
+            <a href="#testlab" data-active="<?php echo (str_contains($currUrl,'test-lab')) ? 'true' : 'false'  ?>"
                 class="menu-toggle">
                 <div class="base-menu">
                     <div class="base-icons">
@@ -77,8 +77,8 @@
             </a>
         </li>
 
-        <li class="menu menu-single" <?php  if($currUrl == 'requirements') { echo 'active'; }?>>
-            <a href="requirements" data-active="<?php echo ($currUrl == 'requirements') ? 'true' : 'false'  ?>"
+        <li class="menu menu-single" <?php  if(str_contains($currUrl,'requirements')) { echo 'active'; }?>>
+            <a href="requirements" data-active="<?php echo (str_contains($currUrl,'requirements')) ? 'true' : 'false'  ?>"
                 class="menu-toggle">
                 <div class="base-menu">
                     <div class="base-icons">
@@ -97,8 +97,8 @@
             </a>
         </li>
 
-        <li class="menu menu-single" <?php  if($currUrl == 'releases') { echo 'active'; }?>>
-            <a href="releases" data-active="<?php echo ($currUrl == 'releases') ? 'true' : 'false'  ?>"
+        <li class="menu menu-single" <?php  if(str_contains($currUrl,'releases')) { echo 'active'; }?>>
+            <a href="releases" data-active="<?php echo (str_contains($currUrl,'releases')) ? 'true' : 'false'  ?>"
                 class="menu-toggle">
                 <div class="base-menu">
                     <div class="base-icons">
@@ -114,8 +114,8 @@
             </a>
         </li>
 
-        <li class="menu menu-single" <?php  if($currUrl == 'reports') { echo 'active'; }?>>
-            <a href="reports" data-active="<?php echo ($currUrl == 'reports') ? 'true' : 'false'  ?>"
+        <li class="menu menu-single" <?php  if(str_contains($currUrl,'reports')) { echo 'active'; }?>>
+            <a href="reports" data-active="<?php echo (str_contains($currUrl,'reports')) ? 'true' : 'false'  ?>"
                 class="menu-toggle">
                 <div class="base-menu">
                     <div class="base-icons">
