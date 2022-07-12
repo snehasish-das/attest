@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 10, 2022 at 11:16 AM
+-- Generation Time: Jul 12, 2022 at 07:50 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -30,6 +30,8 @@ SET time_zone = "+00:00";
 CREATE TABLE `tcm_features` (
   `feature_id` varchar(20) NOT NULL,
   `name` varchar(64) NOT NULL,
+  `status` enum('Not Started','In Progress','Delivered','Partially Delivered','Cancelled','Not Planned') NOT NULL,
+  `feature_type` enum('New Feature','Enhancement') NOT NULL,
   `description` varchar(128) NOT NULL,
   `is_multi_sprint` tinyint(1) NOT NULL DEFAULT 1,
   `created_by` varchar(40) NOT NULL,
@@ -38,6 +40,13 @@ CREATE TABLE `tcm_features` (
   `last_updated_date` timestamp NOT NULL DEFAULT current_timestamp(),
   `is_deleted` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `tcm_features`
+--
+
+INSERT INTO `tcm_features` (`feature_id`, `name`, `status`, `feature_type`, `description`, `is_multi_sprint`, `created_by`, `created_date`, `last_updated_by`, `last_updated_date`, `is_deleted`) VALUES
+('17XYZ3', 'Demo Feature', 'Not Planned', 'New Feature', 'Demo feature for Assist Cards Tests', 1, 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', '2022-07-12 03:16:18', 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', '2022-07-12 03:16:18', 0);
 
 -- --------------------------------------------------------
 
@@ -152,8 +161,8 @@ CREATE TABLE `tcm_tests` (
 --
 
 INSERT INTO `tcm_tests` (`id`, `name`, `description`, `product`, `author`, `steps`, `expected_output`, `test_type`, `priority`, `automation_status`, `automation_author`, `tag`, `scrum_name`, `pages_involved`, `feature_id`, `parent_node`, `created_by`, `created_date`, `last_updated_by`, `last_updated_date`, `is_deleted`) VALUES
-(1, 'Dummy cards test 1', 'Some long description ', 'Assist', 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', 0x312e204c6f67696e0d0a322e204e6176696761746520746f2041737369737420636f6e736f6c650d0a332e2056657269667920636861740d0a342e204c6f676f7574, 0x312e205375636365737366756c206c6f67696e0d0a322e204e6f206572726f7273206f6e2041737369737420636f6e736f6c650d0a332e2041626c6520746f20696e74657261637420776974682076697369746f720d0a342e20436c6f73652063686174, 'Automation', 2, 'Not Planned', 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', 'smoke,regression', 'E2E Squad', 0x6f6e65546f4f6e6543686174436f6e74726f6c6c65722e6a732c61646d696e436f6e74726f6c6c65722e6a732c777261705570436f6e74726f6c6c65722e6a73, NULL, 'Cards', 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', '2022-07-07 02:40:40', 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', '2022-07-07 02:40:40', 0),
-(2, 'Dummy cards test 2', 'Some long description ', 'Assist', 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', '', '', 'Automation', 2, 'Not Planned', 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', 'smoke,regression', 'E2E Squad', NULL, NULL, 'Cards', 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', '2022-07-07 02:40:40', 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', '2022-07-07 02:40:40', 0);
+(1, 'Dummy cards test 1', 'Some long description ', 'Assist', 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', 0x4c6f67696e3e3e4e6176696761746520746f2041737369737420636f6e736f6c653e3e56657269667920636861743e3e4c6f676f7574, 0x5375636365737366756c206c6f67696e3e3e4e6f206572726f7273206f6e2041737369737420636f6e736f6c653e3e41626c6520746f20696e74657261637420776974682076697369746f723e3e436c6f73652063686174, 'Automation', 2, 'Not Planned', 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', 'smoke,regression', 'E2E Squad', 0x6f6e65546f4f6e6543686174436f6e74726f6c6c65722e6a732c61646d696e436f6e74726f6c6c65722e6a732c777261705570436f6e74726f6c6c65722e6a73, '17XYZ3', 'Cards', 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', '2022-07-07 02:40:40', 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', '2022-07-07 02:40:40', 0),
+(2, 'Dummy cards test 2', 'Some long description ', 'Assist', 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', '', '', 'Automation', 2, 'In Progress', 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', 'smoke,regression', 'E2E Squad', NULL, NULL, 'Cards', 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', '2022-07-07 02:40:40', 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', '2022-07-07 02:40:40', 0);
 
 -- --------------------------------------------------------
 
