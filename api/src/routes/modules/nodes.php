@@ -140,7 +140,7 @@ function getNodeData($node_type, $parent_node, $db){
         $sub_array['node_name'] = $currNode;
         $sub_array['parent_node'] = $row['parent_node'];
 
-        $tests = $db->query("SELECT name FROM tcm_tests where parent_node='$currNode'")->fetchAll(PDO::FETCH_OBJ);
+        $tests = $db->query("SELECT id, name FROM tcm_tests where parent_node='$currNode'")->fetchAll(PDO::FETCH_OBJ);
         $sub_array['tests'] = $tests;
         $sub_array['nodes'] = array_values(getNodeData($node_type,$row['node_name'],$db));
         $output[] = $sub_array;

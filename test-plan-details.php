@@ -16,8 +16,31 @@ $site_name_url = $_SESSION['site-url'] . '/api/site_options/site_name';
 $data = json_decode($cta->httpGet($site_name_url), true);
 $site_name = $data[0]['option_value'];
 
-$name = $_REQUEST['name'];
-$tests_url = $_SESSION['site-url'] . '/api/tests?name='.$name;
+$id = $_REQUEST['test_id'];
+if(isset($_REQUEST['name']) || isset($_REQUEST['steps']) || isset($_REQUEST['existing_features'])){
+    $url = $_SESSION['site-url'] . '/api/tests/'.$id;
+    $payload = new stdClass();
+    if(isset($_REQUEST['name'])){
+        $payload->name = $_REQUEST['name'];
+        $payload->product = $_REQUEST['product'];
+        $payload->priority = $_REQUEST['priority'];
+        $payload->automation_status = $_REQUEST['automation_status'];
+        $payload->scrum_name = $_REQUEST['scrum_name'];
+        $payload->description = $_REQUEST['description'];
+        $payload->tag = $_REQUEST['tags'];
+    }
+    if(isset($_REQUEST['steps'])){
+        $payload->steps = implode('>>',$_REQUEST['steps']);
+        $payload->expected_output = implode('>>',$_REQUEST['expected_output']);
+    }
+    if(isset($_REQUEST['existing_features'])){
+        $payload->feature_id = $_REQUEST['existing_features'].','.$_REQUEST['feature_id'];
+    }
+    $result = $cta->httpPatchWithAuth($url,json_encode($payload),$_SESSION['auth-phrase']);
+    //echo 'URL : '.$url.'<br>Payload : '.json_encode($payload).'<br>Result : '.$result;
+}
+
+$tests_url = $_SESSION['site-url'] . '/api/tests?test_id='.$id;
 $tests = json_decode($cta->httpGetWithAuth($tests_url,$_SESSION['auth-phrase']), true);
 $test = $tests[0];
 
@@ -206,13 +229,14 @@ $features = json_decode($cta->httpGetWithAuth($features_url,$_SESSION['auth-phra
                                                                         </div>
                                                                     </div> -->
                                                                     <div class="widget-content widget-content-area">
-                                                                        <form class="needs-validation" novalidate
-                                                                            action="javascript:void(0);">
+                                                                        <form
+                                                                            action="test-plan-details?test_id=<?php echo $test['id'] ?>"
+                                                                            method="POST">
                                                                             <div class="form-row">
                                                                                 <div class="col-md-3 mb-4">
                                                                                     <label>Test ID</label>
                                                                                     <input type="text"
-                                                                                        class="form-control" name="id"
+                                                                                        class="form-control"
                                                                                         placeholder="Test ID"
                                                                                         value="<?php echo $test['id']; ?>"
                                                                                         readonly>
@@ -261,7 +285,8 @@ $features = json_decode($cta->httpGetWithAuth($features_url,$_SESSION['auth-phra
                                                                                 <div class="col-md-3 mb-4">
                                                                                     <label>Priority</label>
                                                                                     <select
-                                                                                        class="form-control selectpicker">
+                                                                                        class="form-control selectpicker"
+                                                                                        name="priority">
                                                                                         <option
                                                                                             <?php if($test['priority']==1){echo 'selected="selected"'; } ?>>
                                                                                             1</option>
@@ -276,7 +301,8 @@ $features = json_decode($cta->httpGetWithAuth($features_url,$_SESSION['auth-phra
                                                                                 <div class="col-md-3 mb-4">
                                                                                     <label>Automation status</label>
                                                                                     <select
-                                                                                        class="form-control selectpicker">
+                                                                                        class="form-control selectpicker"
+                                                                                        name="automation_status">
                                                                                         <option
                                                                                             <?php if($test['automation_status']=='Not Planned'){echo 'selected="selected"'; } ?>>
                                                                                             Not Planned</option>
@@ -319,7 +345,8 @@ $features = json_decode($cta->httpGetWithAuth($features_url,$_SESSION['auth-phra
                                                                                         class="widget-content widget-content-area text-center tags-content">
                                                                                         <div>
                                                                                             <input type="text" id="tags"
-                                                                                                name="tags">
+                                                                                                name="tags"
+                                                                                                class="form-control">
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
@@ -336,8 +363,7 @@ $features = json_decode($cta->httpGetWithAuth($features_url,$_SESSION['auth-phra
                                                     <div class="tab-pane fade" id="step-definition" role="tabpanel"
                                                         aria-labelledby="step-definition-tab">
 
-                                                        <form class="needs-validation" novalidate
-                                                            action="javascript:void(0);">
+                                                        <form method="POST">
                                                             <div class="invoice-detail-items">
                                                                 <div class="table-responsive">
                                                                     <table class="table table-bordered item-table">
@@ -494,21 +520,24 @@ $features = json_decode($cta->httpGetWithAuth($features_url,$_SESSION['auth-phra
                                                                     </div>
 
                                                                     <!-- Modal -->
-                                                                    <div class="modal fade" id="addContactModal"
-                                                                        tabindex="-1" role="dialog"
-                                                                        aria-labelledby="addContactModalTitle"
-                                                                        aria-hidden="true" data-focus="false">
-                                                                        <div class="modal-dialog modal-dialog-centered"
-                                                                            role="document">
-                                                                            <div class="modal-content">
-                                                                                <div class="modal-body">
-                                                                                    <i class="flaticon-cancel-12 close"
-                                                                                        data-dismiss="modal"></i>
-                                                                                    <div class="add-contact-box">
-                                                                                        <div
-                                                                                            class="add-contact-content">
-                                                                                            <form
-                                                                                                id="addContactModalTitle">
+
+                                                                    <form action="test-plan-details?test_id=<?php echo $test['id']; ?>" method="POST">
+                                                                        <div class="modal fade" id="addContactModal"
+                                                                            tabindex="-1" role="dialog"
+                                                                            aria-labelledby="addContactModalTitle"
+                                                                            aria-hidden="true" data-focus="false">
+                                                                            <div class="modal-dialog modal-dialog-centered"
+                                                                                role="document">
+                                                                                <div class="modal-content">
+                                                                                    <div class="modal-body">
+                                                                                        <i class="flaticon-cancel-12 close"
+                                                                                            data-dismiss="modal"></i>
+                                                                                        <div class="add-contact-box">
+                                                                                            <div
+                                                                                                class="add-contact-content">
+                                                                                                <input type="hidden"
+                                                                                                    name="existing_features"
+                                                                                                    value="<?php echo $test['feature_id']; ?>" />
                                                                                                 <div class="form-group">
                                                                                                     <label
                                                                                                         for="autocomplete-dynamic">Features:</label>
@@ -516,7 +545,7 @@ $features = json_decode($cta->httpGetWithAuth($features_url,$_SESSION['auth-phra
                                                                                                     <select
                                                                                                         class="form-control basic"
                                                                                                         id="features"
-                                                                                                        name="features">
+                                                                                                        name="feature_id">
                                                                                                         <?php 
                                                                                                             $distinctValues = array();
                                                                                                             foreach((array) $features as $feature){ 
@@ -528,26 +557,23 @@ $features = json_decode($cta->httpGetWithAuth($features_url,$_SESSION['auth-phra
                                                                                                             ?>
                                                                                                     </select>
                                                                                                 </div>
-
-                                                                                            </form>
+                                                                                            </div>
                                                                                         </div>
                                                                                     </div>
-                                                                                </div>
-                                                                                <div class="modal-footer">
-                                                                                    <button id="btn-edit"
-                                                                                        class="float-left btn">Save</button>
+                                                                                    <div class="modal-footer">
+                                                                                        <button class="btn"
+                                                                                            data-dismiss="modal"> <i
+                                                                                                class="flaticon-delete-1"></i>
+                                                                                            Discard</button>
 
-                                                                                    <button class="btn"
-                                                                                        data-dismiss="modal"> <i
-                                                                                            class="flaticon-delete-1"></i>
-                                                                                        Discard</button>
-
-                                                                                    <button id="btn-add"
-                                                                                        class="btn">Add</button>
+                                                                                        <button id="btn-add" class="btn"
+                                                                                            type="submit">Add</button>
+                                                                                    </div>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
-                                                                    </div>
+
+                                                                    </form>
                                                                 </div>
                                                             </div>
 
@@ -595,7 +621,11 @@ $features = json_decode($cta->httpGetWithAuth($features_url,$_SESSION['auth-phra
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                                <?php if($test['feature_id']!=''){?>
+                                                                <?php if($test['feature_id']!=''){ 
+                                                                    $features_url = $_SESSION['site-url'] . '/api/features?feature_id='.$test['feature_id'];
+                                                                    $features = json_decode($cta->httpGetWithAuth($features_url,$_SESSION['auth-phrase']), true);
+                                                                    
+                                                                    foreach($features as $feature){?>
                                                                 <div class="items">
                                                                     <div class="item-content">
                                                                         <div class="user-profile">
@@ -609,7 +639,7 @@ $features = json_decode($cta->httpGetWithAuth($features_url,$_SESSION['auth-phra
                                                                                         class="new-control-indicator"></span>
                                                                                 </label>
                                                                             </div>
-                                                                            <?php if(str_contains($test['feature_type'],'New')){?>
+                                                                            <?php if(str_contains($feature['feature_type'],'New')){?>
                                                                             <svg viewBox="0 0 24 24" width="40"
                                                                                 height="40" stroke="currentColor"
                                                                                 stroke-width="2" fill="none"
@@ -639,27 +669,27 @@ $features = json_decode($cta->httpGetWithAuth($features_url,$_SESSION['auth-phra
                                                                             <?php } ?>
                                                                             <div class="user-meta-info">
                                                                                 <p class="user-name"
-                                                                                    data-name="<?php echo $test['feature_id']; ?>">
-                                                                                    <?php echo $test['feature_id']; ?>
+                                                                                    data-name="<?php echo $feature['feature_id']; ?>">
+                                                                                    <?php echo $feature['feature_id']; ?>
                                                                                 </p>
                                                                                 <p class="user-work"
-                                                                                    data-occupation="<?php echo $test['feature_name']; ?>">
-                                                                                    <?php echo $test['feature_name']; ?>
+                                                                                    data-occupation="<?php echo $test['name']; ?>">
+                                                                                    <?php echo $feature['name']; ?>
                                                                                 </p>
                                                                             </div>
                                                                         </div>
                                                                         <div class="user-location">
                                                                             <p class="info-title">Type: </p>
                                                                             <p class="usr-email-addr"
-                                                                                data-email="<?php echo $test['feature_type']; ?>">
-                                                                                <?php echo $test['feature_type']; ?>
+                                                                                data-email="<?php echo $feature['feature_type']; ?>">
+                                                                                <?php echo $feature['feature_type']; ?>
                                                                             </p>
                                                                         </div>
                                                                         <div class="user-phone">
                                                                             <p class="info-title">Status: </p>
                                                                             <p class="usr-location"
-                                                                                data-location="<?php echo $test['feature_status']; ?>">
-                                                                                <?php echo $test['feature_status']; ?>
+                                                                                data-location="<?php echo $feature['status']; ?>">
+                                                                                <?php echo $feature['status']; ?>
                                                                             </p>
                                                                         </div>
                                                                         <div class="action-btn">
@@ -693,7 +723,7 @@ $features = json_decode($cta->httpGetWithAuth($features_url,$_SESSION['auth-phra
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                                <?php } else {echo '<div class="items">No requirements associated</div>';}?>
+                                                                <?php } } else {echo '<div class="items">No requirements associated</div>';}?>
                                                             </div>
 
                                                         </div>
@@ -733,7 +763,6 @@ $features = json_decode($cta->httpGetWithAuth($features_url,$_SESSION['auth-phra
         App.init();
     });
     </script>
-    <script src="assets/js/custom.js"></script>
     <script src="plugins/treeview/custom-jstree.js"></script>
     <script src="plugins/select2/select2.min.js"></script>
     <script src="plugins/select2/custom-select2.js"></script>
@@ -754,6 +783,7 @@ $features = json_decode($cta->httpGetWithAuth($features_url,$_SESSION['auth-phra
     </script>
     <script src="plugins/jquery-ui/jquery-ui.min.js"></script>
     <script src="assets/js/apps/contact.js"></script>
+    <script src="assets/js/custom.js"></script>
 </body>
 
 </html>

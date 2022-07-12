@@ -5,9 +5,21 @@ use \Psr\Http\Message\ResponseInterface as Response;
 
 //Get
 $app->get('/features', function (Request $request, Response $response, array $args) {
-    $getFeatures = "SELECT * FROM `tcm_features` WHERE is_deleted=0 AND `created_date` > DATE_SUB(now(), INTERVAL 6 MONTH) ORDER BY name";
+    $getFeatures = "SELECT * FROM `tcm_features` WHERE is_deleted=0 AND `created_date` > DATE_SUB(now(), INTERVAL 6 MONTH)";
 
+    
+    $feature_ids = $request->getQueryParam('feature_id', $default = null);
+    if ($feature_ids != null) {
+        $features = explode(',',$feature_ids);
+        $featureList = "'".$features[0]."'";
+        for($i=1;$i<sizeof($features);$i++){
+            $featureList .= ",'".$features[$i]."'";
+        }
+        $getFeatures .= " AND feature_id IN ( $featureList )";
+    }
 
+    $getFeatures .= " ORDER BY `created_date` DESC";
+    //echo 'Query : '.$getFeatures;
     try {
         $db = new db();
         $db = $db->connect();

@@ -11,7 +11,7 @@
             }
             if(sizeof($node['tests'])>0){
                 for($i=0; $i<sizeof($node['tests']); $i++)
-                echo '<li><a href="test-plan-details?name='.$node['tests'][$i]['name'].'">'.$node['tests'][$i]['name'].'</a></li>';
+                echo '<li><a href="test-plan-details?test_id='.$node['tests'][$i]['id'].'">'.$node['tests'][$i]['name'].'</a></li>';
             }
             echo '</ul></li>';
         }

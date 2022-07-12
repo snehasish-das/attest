@@ -9,6 +9,11 @@ $app->get('/tests', function (Request $request, Response $response, array $args)
     FROM `tcm_tests` tt JOIN `tcm_users` tu ON tt.author=tu.id LEFT OUTER JOIN `tcm_features` tf ON tf.feature_id=tt.feature_id
     WHERE tt.is_deleted=0";
 
+    $id = $request->getQueryParam('test_id', $default = null);
+    if ($id != null) {
+        $getTests .= " AND tt.id = '$id'";
+    }
+
     $parent_node = $request->getQueryParam('parent_node', $default = null);
     if ($parent_node != null) {
         $getTests .= " AND parent_node = '$parent_node'";

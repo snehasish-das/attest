@@ -138,7 +138,7 @@ $tests = json_decode($cta->httpGetWithAuth($tests_url,$_SESSION['auth-phrase']),
                                                     if(isset($tests)){
                                                     foreach((array) $tests as $test){ ?>
                                                     <tr>
-                                                        <td><?php echo '<a class="link" href="test-plan-details?name='.$test['name'].'"><span class="taskBoard-number">'.$test['name'].'</span></a>'; ?></td>
+                                                        <td><?php echo '<a class="link" href="test-plan-details?test_id='.$test['id'].'"><span class="taskBoard-number">'.$test['name'].'</span></a>'; ?></td>
                                                         <td><?php echo $test['product']; ?></td>
                                                         <td><?php echo $test['user_name']; ?></td>
                                                         <td><?php echo $test['test_type']; ?></td>
