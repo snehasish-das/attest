@@ -170,3 +170,5 @@ document.getElementsByClassName('additem')[0].addEventListener('click', function
     deleteItemRow();
   
   })
+  
+  deleteItemRow();

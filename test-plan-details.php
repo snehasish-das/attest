@@ -83,7 +83,6 @@ $features = json_decode($cta->httpGetWithAuth($features_url,$_SESSION['auth-phra
     <!-- BEGIN PAGE LEVEL CUSTOM STYLES -->
     <link href="assets/css/components/tabs-accordian/custom-tabs.css" rel="stylesheet" type="text/css" />
     <link href="plugins/tagInput/tags-input.css" rel="stylesheet" type="text/css" />
-    <link href="assets/css/apps/invoice-edit.css" rel="stylesheet" type="text/css" />
     <style>
     .tags-input-wrapper input {
         margin: 0 auto;
@@ -92,6 +91,7 @@ $features = json_decode($cta->httpGetWithAuth($features_url,$_SESSION['auth-phra
     <link rel="stylesheet" type="text/css" href="assets/css/forms/theme-checkbox-radio.css">
     <link href="plugins/jquery-ui/jquery-ui.min.css" rel="stylesheet" type="text/css" />
     <link href="assets/css/apps/contacts.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/apps/invoice-edit.css" rel="stylesheet" type="text/css" />
     <!-- END PAGE LEVEL CUSTOM STYLES -->
 
 </head>
@@ -351,7 +351,7 @@ $features = json_decode($cta->httpGetWithAuth($features_url,$_SESSION['auth-phra
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
-                                                                            <button class="btn btn-primary mt-3"
+                                                                            <button class="btn btn-primary btn-sm"
                                                                                 type="submit">Update</button>
                                                                         </form>
 
@@ -363,9 +363,10 @@ $features = json_decode($cta->httpGetWithAuth($features_url,$_SESSION['auth-phra
                                                     <div class="tab-pane fade" id="step-definition" role="tabpanel"
                                                         aria-labelledby="step-definition-tab">
 
-                                                        <form method="POST">
-                                                            <div class="invoice-detail-items">
+                                                        <div class="invoice-detail-items">
                                                                 <div class="table-responsive">
+                                                                    <form action="test-plan-details?test_id=<?php echo $test['id'] ?>"
+                                                                            method="POST" id="steps-form">
                                                                     <table class="table table-bordered item-table">
                                                                         <thead>
                                                                             <tr>
@@ -375,37 +376,14 @@ $features = json_decode($cta->httpGetWithAuth($features_url,$_SESSION['auth-phra
                                                                             </tr>
                                                                         </thead>
                                                                         <tbody>
-                                                                            <?php 
+                                                                        <?php 
                                                                             $steps = explode('>>',$test['steps']);
                                                                             $expected_output = explode('>>',$test['expected_output']);
                                                                             for($i=0;$i<sizeof($steps);$i++){?>
                                                                             <tr>
                                                                                 <td class="delete-item-row">
                                                                                     <ul class="table-controls">
-                                                                                        <a href="javascript:void(0);"
-                                                                                            class="delete-item"
-                                                                                            data-toggle="tooltip"
-                                                                                            data-placement="top"
-                                                                                            title=""
-                                                                                            data-original-title="Delete"><svg
-                                                                                                xmlns="http://www.w3.org/2000/svg"
-                                                                                                width="24" height="24"
-                                                                                                viewBox="0 0 24 24"
-                                                                                                fill="none"
-                                                                                                stroke="currentColor"
-                                                                                                stroke-width="2"
-                                                                                                stroke-linecap="round"
-                                                                                                stroke-linejoin="round"
-                                                                                                class="feather feather-x-circle">
-                                                                                                <circle cx="12" cy="12"
-                                                                                                    r="10"></circle>
-                                                                                                <line x1="15" y1="9"
-                                                                                                    x2="9" y2="15">
-                                                                                                </line>
-                                                                                                <line x1="9" y1="9"
-                                                                                                    x2="15" y2="15">
-                                                                                                </line>
-                                                                                            </svg></a>
+                                                                                        <li><a href="javascript:void(0);" class="delete-item" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x-circle"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg></a></li>
                                                                                     </ul>
                                                                                 </td>
                                                                                 <td class="description"><textarea
@@ -422,13 +400,11 @@ $features = json_decode($cta->httpGetWithAuth($features_url,$_SESSION['auth-phra
                                                                             <?php } ?>
                                                                         </tbody>
                                                                     </table>
-                                                                    <button class="btn btn-secondary additem btn-sm">Add
-                                                                        Step</button>
+                                                                    </form>
                                                                 </div>
+                                                                <button class="btn btn-primary btn-sm" type="submit" onclick="document.getElementById('steps-form').submit();">Update</button>
+                                                                <button class="btn btn-secondary additem btn-sm">Add Step</button>
                                                             </div>
-                                                            <button class="btn btn-primary mt-3"
-                                                                type="submit">Update</button>
-                                                        </form>
                                                     </div>
                                                     <div class="tab-pane fade" id="requirement" role="tabpanel"
                                                         aria-labelledby="requirement-tab">
