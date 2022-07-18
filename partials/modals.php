@@ -55,8 +55,8 @@
     </form>
 
     <!-- Add Test plan node Modal -->
-    <form id="addTestplanNode" action="./actions/addNode.php" method="POST" novalidate>
-        <div class="modal fade" id="addTestplanFolderModal" tabindex="-1" role="dialog" aria-hidden="true"
+    <form id="addTestlabNode" action="./actions/addNode.php" method="POST" novalidate>
+        <div class="modal fade" id="addTestlabFolderModal" tabindex="-1" role="dialog" aria-hidden="true"
             data-focus="false">
             <div class="modal-dialog modal-dialog-centered" role="dialog">
                 <div class="modal-content">
@@ -71,7 +71,7 @@
                             <div class="compose-content">
                                 <h5 class="task-heading">Add Node</h5>
                                 <div class="form-group mb-4">
-                                    <input type="hidden" value="testplan" name="node_type" />
+                                    <input type="hidden" value="testlab" name="node_type" />
                                     <input type="text" class="form-control" id="node_name" name="node_name"
                                         aria-describedby="nodeNameHelp" placeholder="Node name" required>
                                     <small id="nodeNameHelp" class="form-text text-muted">You wont be able to update
@@ -81,10 +81,10 @@
                                     <select class="form-control basic" id="parent_node" name="parent_node">
                                         <?php 
                                         $distinctValues = array();
-                                        foreach((array) $_SESSION['testplanNodes'] as $testplanNode){ 
-                                            if(array_search($testplanNode['node_name'], $distinctValues) == ''){
-                                                array_push($distinctValues,$testplanNode['node_name']);
-                                                echo '<option>'.$testplanNode['node_name'].'</option>';
+                                        foreach((array) $_SESSION['testlabNodes'] as $testlabNode){ 
+                                            if(array_search($testlabNode['node_name'], $distinctValues) == ''){
+                                                array_push($distinctValues,$testlabNode['node_name']);
+                                                echo '<option>'.$testlabNode['node_name'].'</option>';
                                             }
                                         } 
                                         ?>

@@ -6,8 +6,8 @@ $_SESSION['site-url']=BASE_URL;
 @$currUrl = end(explode('/',$_SERVER['REQUEST_URI']));
 $redirect = $currUrl == '' ? 'index' : $currUrl; 
 if (!isset($_SESSION['user-details'])) {
-	header("Location: login?redirect=".$redirect);
-	exit();
+    header("Location: login?redirect=".$redirect);
+    exit();
 }
 require_once 'api/src/functions.php';
 
@@ -424,8 +424,8 @@ $site_name = $data[0]['option_value'];
                                                                 </svg>
                                                             </div>
                                                             <div class="">
-                                                                <p class="w-value">31.6K</p>
-                                                                <h5 class="">Followers</h5>
+                                                                <p class="w-value">1.6K</p>
+                                                                <h5 class="">Test Scenarios</h5>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -455,8 +455,8 @@ $site_name = $data[0]['option_value'];
                                                                 </svg>
                                                             </div>
                                                             <div class="">
-                                                                <p class="w-value">1,900</p>
-                                                                <h5 class="">Referral</h5>
+                                                                <p class="w-value">100</p>
+                                                                <h5 class="">Executions</h5>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -484,7 +484,7 @@ $site_name = $data[0]['option_value'];
                                                             </div>
                                                             <div class="">
                                                                 <p class="w-value">18.2%</p>
-                                                                <h5 class="">Engagement</h5>
+                                                                <h5 class="">Automation</h5>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -495,158 +495,6 @@ $site_name = $data[0]['option_value'];
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 layout-spacing">
-                                        <div class="widget widget-card-two">
-                                            <div class="widget-content">
-
-                                                <div class="media">
-                                                    <div class="w-img">
-                                                        <img src="assets/img/90x90.jpg" alt="avatar">
-                                                    </div>
-                                                    <div class="media-body">
-                                                        <h6>Dev Summit - New York</h6>
-                                                        <p class="meta-date-time">Bronx, NY</p>
-                                                    </div>
-                                                </div>
-
-                                                <div class="card-bottom-section">
-                                                    <h5>4 Members Going</h5>
-                                                    <div class="img-group">
-                                                        <img src="assets/img/90x90.jpg" alt="avatar">
-                                                        <img src="assets/img/90x90.jpg" alt="avatar">
-                                                        <img src="assets/img/90x90.jpg" alt="avatar">
-                                                        <img src="assets/img/90x90.jpg" alt="avatar">
-                                                    </div>
-                                                    <a href="javascript:void(0);" class="btn">View Details</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 layout-spacing">
-                                        <div class="widget widget-five">
-
-                                            <div class="widget-heading">
-
-                                                <a href="javascript:void(0)" class="task-info">
-
-                                                    <div class="usr-avatar">
-                                                        <span>FD</span>
-                                                    </div>
-
-                                                    <div class="w-title">
-
-                                                        <h5>Figma Design</h5>
-                                                        <span>Design Reset</span>
-
-                                                    </div>
-
-                                                </a>
-
-                                                <div class="task-action">
-                                                    <div class="dropdown">
-                                                        <a class="dropdown-toggle" href="#" role="button"
-                                                            id="pendingTask" data-toggle="dropdown" aria-haspopup="true"
-                                                            aria-expanded="false">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                                height="24" viewBox="0 0 24 24" fill="none"
-                                                                stroke="currentColor" stroke-width="2"
-                                                                stroke-linecap="round" stroke-linejoin="round"
-                                                                class="feather feather-more-horizontal">
-                                                                <circle cx="12" cy="12" r="1"></circle>
-                                                                <circle cx="19" cy="12" r="1"></circle>
-                                                                <circle cx="5" cy="12" r="1"></circle>
-                                                            </svg>
-                                                        </a>
-
-                                                        <div class="dropdown-menu dropdown-menu-right"
-                                                            aria-labelledby="pendingTask"
-                                                            style="will-change: transform;">
-                                                            <a class="dropdown-item" href="javascript:void(0);">View
-                                                                Project</a>
-                                                            <a class="dropdown-item" href="javascript:void(0);">Edit
-                                                                Project</a>
-                                                            <a class="dropdown-item" href="javascript:void(0);">Mark as
-                                                                Done</a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                            </div>
-
-
-                                            <div class="widget-content">
-
-                                                <p>Doloribus nisi vel suscipit modi, optio ex repudiandae voluptatibus
-                                                    officiis commodi. Nesciunt quas aut neque incidunt!</p>
-
-                                                <div class="progress-data">
-
-                                                    <div class="progress-info">
-                                                        <div class="task-count"><svg xmlns="http://www.w3.org/2000/svg"
-                                                                width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                                                stroke="currentColor" stroke-width="2"
-                                                                stroke-linecap="round" stroke-linejoin="round"
-                                                                class="feather feather-check-square">
-                                                                <polyline points="9 11 12 14 22 4"></polyline>
-                                                                <path
-                                                                    d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11">
-                                                                </path>
-                                                            </svg>
-                                                            <p>5 Tasks</p>
-                                                        </div>
-                                                        <div class="progress-stats">
-                                                            <p>86.2%</p>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="progress">
-                                                        <div class="progress-bar bg-primary" role="progressbar"
-                                                            style="width: 65%" aria-valuenow="90" aria-valuemin="0"
-                                                            aria-valuemax="100"></div>
-                                                    </div>
-
-                                                </div>
-
-                                                <div class="meta-info">
-
-                                                    <div class="due-time">
-                                                        <p><svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                                height="24" viewBox="0 0 24 24" fill="none"
-                                                                stroke="currentColor" stroke-width="2"
-                                                                stroke-linecap="round" stroke-linejoin="round"
-                                                                class="feather feather-clock">
-                                                                <circle cx="12" cy="12" r="10"></circle>
-                                                                <polyline points="12 6 12 12 16 14"></polyline>
-                                                            </svg> 3 Days Left</p>
-                                                    </div>
-
-
-                                                    <div class="avatar--group">
-
-                                                        <div class="avatar translateY-axis more-group">
-                                                            <span class="avatar-title">+6</span>
-                                                        </div>
-                                                        <div class="avatar translateY-axis">
-                                                            <img alt="avatar" src="assets/img/90x90.jpg" />
-                                                        </div>
-                                                        <div class="avatar translateY-axis">
-                                                            <img alt="avatar" src="assets/img/90x90.jpg" />
-                                                        </div>
-                                                        <div class="avatar translateY-axis">
-                                                            <img alt="avatar" src="assets/img/90x90.jpg" />
-                                                        </div>
-
-                                                    </div>
-
-                                                </div>
-
-
-                                            </div>
-
                                         </div>
                                     </div>
                                 </div>

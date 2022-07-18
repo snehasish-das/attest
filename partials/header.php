@@ -32,15 +32,6 @@
                     </svg></a>
 
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="customDropdown">
-                    <a class="dropdown-item" data-img-value="flag-de3" data-value="German"
-                        href="javascript:void(0);"><img src="assets/img/flag-de3.svg" class="flag-width" alt="flag">
-                        German</a>
-                    <a class="dropdown-item" data-img-value="flag-sp" data-value="Spanish"
-                        href="javascript:void(0);"><img src="assets/img/flag-sp.svg" class="flag-width" alt="flag">
-                        Spanish</a>
-                    <a class="dropdown-item" data-img-value="flag-fr3" data-value="French"
-                        href="javascript:void(0);"><img src="assets/img/flag-fr3.svg" class="flag-width" alt="flag">
-                        French</a>
                     <a class="dropdown-item" data-img-value="user-x" data-value="Logout"
                         href="logout"><img src="assets/img/user-x.svg" class="flag-width" alt="flag">
                         Logout</a>
