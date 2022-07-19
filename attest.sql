@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 12, 2022 at 07:50 AM
+-- Generation Time: Jul 19, 2022 at 11:42 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -59,9 +59,9 @@ CREATE TABLE `tcm_nodes` (
   `node_name` varchar(40) NOT NULL,
   `parent_node` varchar(40) DEFAULT NULL,
   `node_type` enum('testlab','testplan') NOT NULL DEFAULT 'testplan',
-  `created_by` varchar(40) NOT NULL,
+  `created_by` varchar(40) NOT NULL DEFAULT 'Seed Data',
   `created_date` timestamp NOT NULL DEFAULT current_timestamp(),
-  `last_updated_by` varchar(40) NOT NULL,
+  `last_updated_by` varchar(40) NOT NULL DEFAULT 'Seed Data',
   `last_updated_date` timestamp NOT NULL DEFAULT current_timestamp(),
   `is_deleted` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -74,7 +74,11 @@ INSERT INTO `tcm_nodes` (`id`, `node_name`, `parent_node`, `node_type`, `created
 ('0cc0142c-001d-11ed-b09d-0c9a3ce20ee5', 'New Testplan Node', 'Answers', 'testplan', 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', '2022-07-10 06:53:48', 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', '2022-07-10 06:53:48', 0),
 ('2733a58e-001c-11ed-b09d-0c9a3ce20ee5', 'TestPlan Node 1', 'Answers', 'testplan', 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', '2022-07-10 06:47:23', 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', '2022-07-10 06:47:23', 0),
 ('29699302-fdb1-11ec-ba34-0c9a3ce20ee5', 'Open Channel', 'Messaging', 'testplan', 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', '2022-07-07 02:50:24', 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', '2022-07-07 02:50:24', 0),
-('82affcb1-fd9c-11ec-ba34-0c9a3ce20ee5', 'Cards', 'Assist', 'testplan', 'Snehasish', '2022-07-07 02:26:22', 'Snehasish', '2022-07-07 02:26:22', 0),
+('44c00fc3-0655-11ed-b99c-0c9a3ce20ee5', 'Feature runs', NULL, 'testlab', 'Seed Data', '2022-07-18 04:51:21', 'Seed Data', '2022-07-18 04:51:21', 0),
+('82affcb1-fd9c-11ec-ba34-0c9a3ce20ee5', 'Cards', 'Assist', 'testplan', 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', '2022-07-07 02:26:22', 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', '2022-07-07 02:26:22', 0),
+('93de6338-0654-11ed-b99c-0c9a3ce20ee5', 'Release', NULL, 'testlab', 'Seed Data', '2022-07-18 04:45:42', 'Seed Data', '2022-07-18 04:45:42', 0),
+('ad8d2d4b-0654-11ed-b99c-0c9a3ce20ee5', 'Adhoc Runs', NULL, 'testlab', 'Seed Data', '2022-07-18 04:47:07', 'Seed Data', '2022-07-18 04:47:07', 0),
+('c9f81d8d-065a-11ed-b99c-0c9a3ce20ee5', 'Test adhoc run', 'Adhoc Runs', 'testlab', 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', '2022-07-18 05:30:52', 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', '2022-07-18 05:30:52', 0),
 ('da8b5ae8-fd9a-11ec-ba34-0c9a3ce20ee5', 'Answers', NULL, 'testplan', 'Seed Data', '2022-07-07 02:16:47', 'Seed Data', '2022-07-07 02:16:47', 0),
 ('da8b65fc-fd9a-11ec-ba34-0c9a3ce20ee5', 'Conversation', NULL, 'testplan', 'Seed Data', '2022-07-07 02:16:47', 'Seed Data', '2022-07-07 02:16:47', 0),
 ('da8b666b-fd9a-11ec-ba34-0c9a3ce20ee5', 'Messaging', NULL, 'testplan', 'Seed Data', '2022-07-07 02:16:47', 'Seed Data', '2022-07-07 02:16:47', 0),
@@ -110,13 +114,11 @@ INSERT INTO `tcm_options` (`id`, `option_key`, `option_value`, `extra`) VALUES
 
 CREATE TABLE `tcm_releases` (
   `id` bigint(20) NOT NULL,
-  `name` varchar(64) NOT NULL,
-  `description` varchar(128) DEFAULT NULL,
   `parent_node` varchar(40) NOT NULL,
   `test_id` bigint(20) NOT NULL,
-  `test_status` varchar(16) NOT NULL DEFAULT 'PASSED',
-  `execution_date` date NOT NULL,
-  `test_run_type` varchar(40) NOT NULL DEFAULT 'Automation',
+  `test_status` enum('Not Started','Passed','Failed') DEFAULT 'Passed',
+  `execution_date` date DEFAULT NULL,
+  `test_run_type` varchar(40) DEFAULT 'Automation',
   `bug_no` varchar(16) DEFAULT NULL,
   `test_run_link` varchar(256) DEFAULT NULL,
   `created_by` varchar(40) NOT NULL,
@@ -125,6 +127,14 @@ CREATE TABLE `tcm_releases` (
   `last_updated_date` timestamp NOT NULL DEFAULT current_timestamp(),
   `is_deleted` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `tcm_releases`
+--
+
+INSERT INTO `tcm_releases` (`id`, `parent_node`, `test_id`, `test_status`, `execution_date`, `test_run_type`, `bug_no`, `test_run_link`, `created_by`, `created_date`, `last_updated_by`, `last_updated_date`, `is_deleted`) VALUES
+(6, 'Test adhoc run', 1, 'Not Started', '2022-07-19', NULL, NULL, NULL, 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', '2022-07-19 07:37:47', 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', '2022-07-19 07:37:47', 0),
+(7, 'Test adhoc run', 2, 'Not Started', '2022-07-19', NULL, NULL, NULL, 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', '2022-07-19 07:37:47', 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', '2022-07-19 07:37:47', 0);
 
 -- --------------------------------------------------------
 
@@ -161,8 +171,8 @@ CREATE TABLE `tcm_tests` (
 --
 
 INSERT INTO `tcm_tests` (`id`, `name`, `description`, `product`, `author`, `steps`, `expected_output`, `test_type`, `priority`, `automation_status`, `automation_author`, `tag`, `scrum_name`, `pages_involved`, `feature_id`, `parent_node`, `created_by`, `created_date`, `last_updated_by`, `last_updated_date`, `is_deleted`) VALUES
-(1, 'Dummy cards test 1', 'Some long description ', 'Assist', 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', 0x4c6f67696e3e3e4e6176696761746520746f2041737369737420636f6e736f6c653e3e56657269667920636861743e3e4c6f676f7574, 0x5375636365737366756c206c6f67696e3e3e4e6f206572726f7273206f6e2041737369737420636f6e736f6c653e3e41626c6520746f20696e74657261637420776974682076697369746f723e3e436c6f73652063686174, 'Automation', 2, 'Not Planned', 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', 'smoke,regression', 'E2E Squad', 0x6f6e65546f4f6e6543686174436f6e74726f6c6c65722e6a732c61646d696e436f6e74726f6c6c65722e6a732c777261705570436f6e74726f6c6c65722e6a73, '17XYZ3', 'Cards', 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', '2022-07-07 02:40:40', 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', '2022-07-07 02:40:40', 0),
-(2, 'Dummy cards test 2', 'Some long description ', 'Assist', 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', '', '', 'Automation', 2, 'In Progress', 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', 'smoke,regression', 'E2E Squad', NULL, NULL, 'Cards', 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', '2022-07-07 02:40:40', 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', '2022-07-07 02:40:40', 0);
+(1, 'Dummy cards test 1', 'Some long description ', 'Assist', 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', 0x4c6f67696e3e3e4e6176696761746520746f2041737369737420636f6e736f6c653e3e56657269667920636861743e3e4c6f676f75743e3e, 0x5375636365737366756c206c6f67696e3e3e4e6f206572726f7273206f6e2041737369737420636f6e736f6c653e3e41626c6520746f20696e74657261637420776974682076697369746f723e3e436c6f736520636861743e3e, 'Automation', 2, 'Not Planned', 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', 'smoke,regression', 'E2E Squad', 0x6f6e65546f4f6e6543686174436f6e74726f6c6c65722e6a732c61646d696e436f6e74726f6c6c65722e6a732c777261705570436f6e74726f6c6c65722e6a73, '17XYZ3', 'Cards', 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', '2022-07-07 02:40:40', 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', '2022-07-07 02:40:40', 0),
+(2, 'Some Meaningful Name', 'Some long description qwsdefg', 'Assist', 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', 0x5374657020776974686f7574206578706563743e3e, 0x3e3e45787065637420776974686f75742073746570, 'Automation', 1, 'Not Planned', 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', 'regression,smoke', 'E2E', NULL, ',,17XYZ3,17XYZ3,17XY', 'Cards', 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', '2022-07-07 02:40:40', 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', '2022-07-07 02:40:40', 0);
 
 -- --------------------------------------------------------
 
@@ -220,8 +230,7 @@ ALTER TABLE `tcm_options`
 --
 ALTER TABLE `tcm_releases`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `name` (`name`,`test_id`),
-  ADD KEY `tl_parent_node` (`parent_node`);
+  ADD UNIQUE KEY `parent_node` (`parent_node`,`test_id`) USING BTREE;
 
 --
 -- Indexes for table `tcm_tests`
@@ -254,7 +263,7 @@ ALTER TABLE `tcm_options`
 -- AUTO_INCREMENT for table `tcm_releases`
 --
 ALTER TABLE `tcm_releases`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `tcm_tests`
