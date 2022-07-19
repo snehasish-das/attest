@@ -41,3 +41,18 @@ a.link{
 #myUL .caret::before{
     vertical-align: sub;
 }
+
+.select-test-button{
+    margin-top: 50px;
+    margin-left: -15px;
+    color: #3E8E9E;
+    background-color: #d1e5e9;
+    position: absolute;
+    display: inline-block;
+    align-self: center;
+    justify-content: center;
+    border-radius: 10px;
+    padding: 7px;
+    box-shadow: 0px 0px 20px -10px #3e8e9e;
+    margin-right: 12px;
+}
