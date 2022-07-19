@@ -56,3 +56,10 @@ a.link{
     box-shadow: 0px 0px 20px -10px #3e8e9e;
     margin-right: 12px;
 }
+
+.table-action{
+    position: absolute;
+}
+.table-action:before {
+    content: 'Row ';
+  }
