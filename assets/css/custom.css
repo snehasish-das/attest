@@ -37,3 +37,7 @@ a.link{
     font-weight: 600;
     color: #61b6cd;
 }
+
+#myUL .caret::before{
+    vertical-align: sub;
+}

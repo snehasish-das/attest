@@ -4,9 +4,16 @@ use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 
 //Get
-$app->get('/releases/{name}', function (Request $request, Response $response, array $args) {
-    $name = $args['name'];
-    $getReleases = "SELECT * FROM `tcm_releases` WHERE `name`='$name' AND is_deleted=0 ORDER BY test_id";
+$app->get('/releases/{parent_node}', function (Request $request, Response $response, array $args) {
+    $parent_node = $args['parent_node'];
+    $getReleases = "SELECT tr.`name`, tr.`test_id`, tt.`name` as test_name, tt.`product`, tt.`priority`, tt.`tag`, tt.`scrum_name`, tr.`test_status`, tr.`execution_date`, tr.`bug_no`, tr.`test_run_link`, FROM `tcm_releases` tr, `tcm_tests` tt 
+    WHERE tt.id=tr.test_id AND tr.`parent_node`='$parent_node' AND tr.is_deleted=0 ORDER BY `execution_date`";
+
+
+    // $parent_node = $request->getQueryParam('parent_node', $default = null);
+    // if ($parent_node != null) {
+    //     $getReleases .= " AND parent_node = '$parent_node'";
+    // }
 
     try {
         $db = new db();

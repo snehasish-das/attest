@@ -64,7 +64,7 @@
             </a>
         </li>
 
-        <li class="menu" <?php  if(str_contains($currUrl,'test-lab')) { echo 'active'; }?>>
+        <li class="menu <?php  if(str_contains($currUrl,'test-lab')) { echo 'active'; }?>">
             <a href="#testlab" data-active="<?php echo (str_contains($currUrl,'test-lab')) ? 'true' : 'false'  ?>"
                 class="menu-toggle">
                 <div class="base-menu">
@@ -80,7 +80,7 @@
             </a>
         </li>
 
-        <li class="menu menu-single" <?php  if(str_contains($currUrl,'requirements')) { echo 'active'; }?>>
+        <li class="menu menu-single <?php  if(str_contains($currUrl,'requirements')) { echo 'active'; }?>">
             <a href="requirements" data-active="<?php echo (str_contains($currUrl,'requirements')) ? 'true' : 'false'  ?>"
                 class="menu-toggle">
                 <div class="base-menu">
@@ -100,7 +100,7 @@
             </a>
         </li>
 
-        <li class="menu menu-single" <?php  if(str_contains($currUrl,'releases')) { echo 'active'; }?>>
+        <li class="menu menu-single <?php  if(str_contains($currUrl,'releases')) { echo 'active'; }?>">
             <a href="releases" data-active="<?php echo (str_contains($currUrl,'releases')) ? 'true' : 'false'  ?>"
                 class="menu-toggle">
                 <div class="base-menu">
@@ -117,7 +117,7 @@
             </a>
         </li>
 
-        <li class="menu menu-single" <?php  if(str_contains($currUrl,'reports')) { echo 'active'; }?>>
+        <li class="menu menu-single <?php  if(str_contains($currUrl,'reports')) { echo 'active'; }?>">
             <a href="reports" data-active="<?php echo (str_contains($currUrl,'reports')) ? 'true' : 'false'  ?>"
                 class="menu-toggle">
                 <div class="base-menu">
@@ -137,7 +137,7 @@
     </ul>
 </nav>
 
-<div id="compact_submenuSidebar" class="submenu-sidebar ps ps--active-x">
+<div id="compact_submenuSidebar" class="submenu-sidebar">
     <div class="submenu" id="testplan">
         <div class="actions">
             <a data-toggle="modal" data-target="#addTestplanFolderModal">
