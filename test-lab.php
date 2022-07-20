@@ -176,6 +176,17 @@ $releases = json_decode($cta->httpGetWithAuth($releases_url,$_SESSION['auth-phra
                                                                     <line x1="15" y1="9" x2="9" y2="15"></line>
                                                                     <line x1="9" y1="9" x2="15" y2="15"></line>
                                                                 </svg></a>
+
+                                                            <a href="#runTestModal" class="bs-tooltip"
+                                                                data-original-title="Run Test" data-toggle="modal"
+                                                                data-testid="<?php echo $release['test_id']; ?>"><svg
+                                                                    viewBox="0 0 24 24" width="24" height="24"
+                                                                    stroke="currentColor" stroke-width="2" fill="none"
+                                                                    stroke-linecap="round" stroke-linejoin="round"
+                                                                    class="css-i6dzq1">
+                                                                    <circle cx="12" cy="12" r="10"></circle>
+                                                                    <polygon points="10 8 16 12 10 16 10 8"></polygon>
+                                                                </svg></a>
                                                         </td>
                                                         <td><?php echo '<a class="link" href="test-plan-details?test_id='.$release['test_id'].'"><span class="taskBoard-number">'.$release['test_id'].'</span></a>'; ?>
                                                         </td>
@@ -183,9 +194,12 @@ $releases = json_decode($cta->httpGetWithAuth($releases_url,$_SESSION['auth-phra
                                                         <td><?php echo $release['product']; ?></td>
                                                         <td><?php echo $release['priority']; ?></td>
                                                         <td><?php echo $release['execution_date']; ?></td>
-                                                        <td><?php if(str_contains($release['test_status'],'Failed')){ echo '<span class="badge badge-danger">'; } else if(str_contains($release['test_status'],'Not')){ echo '<span class="badge badge-warning">'; } else { echo '<span class="badge badge-success">'; } echo $release['test_status'].'</span>'; ?></td>
-                                                        <td><?php if($release['bug_no']!='') {echo '<a href="#" target="_blank">'.$release['bug_no'].'</a>';} ?></td>
-                                                        <td><?php if($release['test_run_link']!='') {echo '<a class="link" href="'.$release['test_run_link'].'" target="_blank"><span class="w-profile-content">click here</span></a>';} ?></td>
+                                                        <td><?php if(str_contains($release['test_status'],'Failed')){ echo '<span class="badge badge-danger">'; } else if(str_contains($release['test_status'],'Not')){ echo '<span class="badge badge-warning">'; } else { echo '<span class="badge badge-success">'; } echo $release['test_status'].'</span>'; ?>
+                                                        </td>
+                                                        <td><?php if($release['bug_no']!='') {echo '<a href="#" target="_blank">'.$release['bug_no'].'</a>';} ?>
+                                                        </td>
+                                                        <td><?php if($release['test_run_link']!='') {echo '<a class="link" href="'.$release['test_run_link'].'" target="_blank"><span class="w-profile-content">click here</span></a>';} ?>
+                                                        </td>
                                                         <td><?php echo $release['tag']; ?></td>
                                                         <td><?php echo $release['scrum_name']; ?></td>
                                                     </tr>
@@ -215,6 +229,59 @@ $releases = json_decode($cta->httpGetWithAuth($releases_url,$_SESSION['auth-phra
         </div>
         <!--  END CONTENT AREA  -->
     </div>
+
+    <!-- Run Test from Testlab Modal -->
+    <form id="runTestForm" action="./actions/runTest.php" method="POST" novalidate>
+        <div class="modal fade" id="runTestModal" tabindex="-1" role="dialog" aria-hidden="true" data-focus="false">
+            <div class="modal-dialog modal-dialog-centered" role="dialog">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            class="feather feather-x close" data-dismiss="modal">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                        <div class="compose-box">
+                            <div class="compose-content">
+                                <h5 class="task-heading">Run Test</h5>
+                                <div class="form-group mb-4">
+                                    <input type="hidden" id="testid" name="test_id" />
+                                    <input type="hidden" id="parent_node" name="parent_node"
+                                        value="<?php echo $parent_node; ?>" />
+                                    <input type="hidden" id="redirect_uri" name="redirect_uri"
+                                        value="<?php echo $_SERVER['REQUEST_URI']; ?>" />
+                                    <select class="form-control selectpicker" name="test_status">
+                                        <option value="Not started">Not started</option>
+                                        <option value="Passed">Passed</option>
+                                        <option value="Failed">Failed</option>
+                                    </select>
+                                    <small id="testStatusHelp" class="form-text text-muted">Update Test Status</small>
+                                </div>
+                                <div class="form-group mb-4">
+                                    <input type="text" class="form-control" id="bug_no" name="bug_no"
+                                        placeholder="Jira ID" />
+                                    <small id="bugNoHelp" class="form-text text-muted">Mandatory when the test is
+                                        failed.</small>
+                                </div>
+                                <div class="form-group mb-4">
+                                    <input type="text" class="form-control" id="test_run_link" name="test_run_link" placeholder="http://" />
+                                    <small id="testRunLinkHelp" class="form-text text-muted">Please provide the
+                                        automation
+                                        test run link, if applicable</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Save</button>
+                        <button class="btn" data-dismiss="modal"> Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
     <!-- END MAIN CONTAINER -->
     <?php require_once './partials/modals.php'; ?>
 
@@ -245,35 +312,60 @@ $releases = json_decode($cta->httpGetWithAuth($releases_url,$_SESSION['auth-phra
     <script src="plugins/table/datatable/datatables.js"></script>
     <!-- NOTE TO Use Copy CSV Excel PDF Print Options You Must Include These Files  -->
     <script src="plugins/table/datatable/button-ext/dataTables.buttons.min.js"></script>
-    <script src="plugins/table/datatable/button-ext/jszip.min.js"></script>    
+    <script src="plugins/table/datatable/button-ext/jszip.min.js"></script>
     <script src="plugins/table/datatable/button-ext/buttons.html5.min.js"></script>
     <script src="plugins/table/datatable/button-ext/buttons.print.min.js"></script>
     <script>
-        $('#html5-extension').DataTable( {
-            "dom": "<'dt--top-section'<'row'<'col-sm-12 col-md-6 d-flex justify-content-md-start justify-content-center'B><'col-sm-12 col-md-6 d-flex justify-content-md-end justify-content-center mt-md-0 mt-3'f>>>" +
-        "<'table-responsive'tr>" +
-        "<'dt--bottom-section d-sm-flex justify-content-sm-between text-center'<'dt--pages-count  mb-sm-0 mb-3'i><'dt--pagination'p>>",
-            buttons: {
-                buttons: [
-                    { extend: 'copy', className: 'btn btn-sm' },
-                    { extend: 'csv', className: 'btn btn-sm' },
-                    { extend: 'excel', className: 'btn btn-sm' },
-                    { extend: 'print', className: 'btn btn-sm' }
-                ]
+    $('#html5-extension').DataTable({
+        "dom": "<'dt--top-section'<'row'<'col-sm-12 col-md-6 d-flex justify-content-md-start justify-content-center'B><'col-sm-12 col-md-6 d-flex justify-content-md-end justify-content-center mt-md-0 mt-3'f>>>" +
+            "<'table-responsive'tr>" +
+            "<'dt--bottom-section d-sm-flex justify-content-sm-between text-center'<'dt--pages-count  mb-sm-0 mb-3'i><'dt--pagination'p>>",
+        buttons: {
+            buttons: [{
+                    extend: 'copy',
+                    className: 'btn btn-sm'
+                },
+                {
+                    extend: 'csv',
+                    className: 'btn btn-sm'
+                },
+                {
+                    extend: 'excel',
+                    className: 'btn btn-sm'
+                },
+                {
+                    extend: 'print',
+                    className: 'btn btn-sm'
+                }
+            ]
+        },
+        "oLanguage": {
+            "oPaginate": {
+                "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>',
+                "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>'
             },
-            "oLanguage": {
-                "oPaginate": { "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>', "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>' },
-                "sInfo": "Showing page _PAGE_ of _PAGES_",
-                "sSearch": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
-                "sSearchPlaceholder": "Search...",
-               "sLengthMenu": "Results :  _MENU_",
-            },
-            "stripeClasses": [],
-            "lengthMenu": [7, 10, 20, 50],
-            "pageLength": 7 
-        } );
+            "sInfo": "Showing page _PAGE_ of _PAGES_",
+            "sSearch": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
+            "sSearchPlaceholder": "Search...",
+            "sLengthMenu": "Results :  _MENU_",
+        },
+        "stripeClasses": [],
+        "lengthMenu": [7, 10, 20, 50],
+        "pageLength": 7
+    });
+
+    // Execute something when the modal window is shown.
+    $('#runTestModal').on('show.bs.modal', function (event) {
+    var button = $(event.relatedTarget); // Button that triggered the modal
+    var testid = button.data('testid'); // Extract info from data-* attributes
+    // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+    // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+    var modal = $(this);
+    modal.find('.modal-body input#testid').val(testid);
+    });
     </script>
     <!-- END PAGE LEVEL CUSTOM SCRIPTS -->
+
 </body>
 
 </html>
