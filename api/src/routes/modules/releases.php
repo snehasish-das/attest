@@ -80,8 +80,11 @@ $app->patch('/releases/{parent_node}/{test_id}', function (Request $request, Res
     $execution_date = $request->getParam('execution_date');
     if ($execution_date != '') {
         $execution_date = date_format($execution_date,"Y-m-d");
-        $updateQuery .= ", `execution_date`='$execution_date'";
     }
+    else{        
+        $execution_date = date_create()->format('Y-m-d');
+    }
+    $updateQuery .= ", `execution_date`='$execution_date'";
     $test_run_type = $request->getParam('test_run_type');
     if ($test_run_type != '') {
         $updateQuery .= ", `test_run_type`='$test_run_type'";
@@ -121,7 +124,7 @@ $app->delete('/releases/{parent_node}/{test_id}', function (Request $request, Re
     $parent_node = $args['parent_node'];
     $test_id = $args['test_id'];
     $emp_id = $_SESSION['id'];
-    $deleteQuery = "DELETE from `tcm_releases` SET `is_deleted`=1, `last_updated_by`='$emp_id' WHERE `test_id`='$test_id' AND `parent_node`='$parent_node'";
+    $deleteQuery = "DELETE from `tcm_releases` WHERE `test_id`='$test_id' AND `parent_node`='$parent_node'";
 
     try {
         $db = new db();

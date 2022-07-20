@@ -57,7 +57,7 @@ $('.widget-content .warning.confirm').on('click', function () {
       if (result.value) {
         swal(
           'Deleted!',
-          'Your file has been deleted.',
+          'Test has been removed.',
           'success'
         )
       }

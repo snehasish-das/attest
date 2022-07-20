@@ -16,7 +16,23 @@ $site_name_url = $_SESSION['site-url'] . '/api/site_options/site_name';
 $data = json_decode($cta->httpGet($site_name_url), true);
 $site_name = $data[0]['option_value'];
 
+
 $parent_node = $_REQUEST['node'];
+/**
+ * Delete the test from Release
+ */
+if(isset($_REQUEST['test-id'])){
+    $delete_url=$_SESSION['site-url'] . '/api/releases/'.$parent_node.'/'.$_REQUEST['test-id'];
+    $delete = json_decode($cta->httpDeleteWithAuth($delete_url,$_SESSION['auth-phrase']), true);
+    //echo 'URL: '.$delete_url.'<br>Result : '.$delete;
+    $url = explode('&',$_SERVER['REQUEST_URI'])[0];
+    header("Location:".$url);
+    exit();
+}
+
+/**
+ * Display release tests
+ */
 $releases_url = $_SESSION['site-url'] . '/api/releases/'.$parent_node;
 $releases = json_decode($cta->httpGetWithAuth($releases_url,$_SESSION['auth-phrase']), true);
 //echo 'URL : '.$releases_url.'Data : '.$releases[0]['test_id'];
@@ -54,7 +70,14 @@ $releases = json_decode($cta->httpGetWithAuth($releases_url,$_SESSION['auth-phra
     <link rel="stylesheet" type="text/css" href="plugins/table/datatable/dt-global_style.css">
     <link href="assets/css/components/custom-list-group.css" rel="stylesheet" type="text/css">
     <!-- END PAGE LEVEL CUSTOM STYLES -->
-
+    <!-- Icons Css -->
+    <!-- <link href="https://themesbrand.com/skote/layouts/assets/css/icons.min.css" rel="stylesheet" type="text/css" /> -->
+    
+    <script src="plugins/sweetalerts/promise-polyfill.js"></script>
+    <link href="plugins/sweetalerts/sweetalert2.min.css" rel="stylesheet" type="text/css" />
+    <link href="plugins/sweetalerts/sweetalert.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/components/custom-sweetalert.css" rel="stylesheet" type="text/css" />
+    
     <link href="assets/css/custom.css" rel="stylesheet" type="text/css" />
 
 </head>
@@ -120,7 +143,7 @@ $releases = json_decode($cta->httpGetWithAuth($releases_url,$_SESSION['auth-phra
 
                                     <div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
                                         <div class="widget-content widget-content-area br-6">
-                                            <table id="html5-extension" class="table table-hover non-hover"
+                                            <table id="html5-extension" class="table table-hover non-hover table-editable table-edits"
                                                 style="width:100%">
                                                 <thead>
                                                     <tr>
@@ -142,10 +165,11 @@ $releases = json_decode($cta->httpGetWithAuth($releases_url,$_SESSION['auth-phra
                                                     if(isset($releases)){
                                                     foreach((array) $releases as $release){ ?>
                                                     <tr>
-                                                        <td class="text-center"><a href="javascript:void(0);"
+                                                        <td class="text-center">
+                                                            <a onclick="if (! confirm('Are you sure you want to delete <?php echo $release['test_name']; ?> ?')) return false;" href="<?php echo $_SERVER['REQUEST_URI'].'&test-id='.$release['test_id']; ?>"
                                                                 class="bs-tooltip" data-toggle="tooltip"
                                                                 data-placement="top" title=""
-                                                                data-original-title="Delete"><svg
+                                                                data-original-title="Remove"><svg
                                                                     xmlns="http://www.w3.org/2000/svg" width="24"
                                                                     height="24" viewBox="0 0 24 24" fill="none"
                                                                     stroke="currentColor" stroke-width="2"
@@ -161,11 +185,11 @@ $releases = json_decode($cta->httpGetWithAuth($releases_url,$_SESSION['auth-phra
                                                         <td><?php echo $release['product']; ?></td>
                                                         <td><?php echo $release['priority']; ?></td>
                                                         <td><?php echo $release['execution_date']; ?></td>
-                                                        <td class="text-center">
+                                                        <td data-field="test_status" class="text-center">
                                                             <?php if(str_contains($release['test_status'],'Passed')){ echo '<div class="t-dot bg-success" data-toggle="tooltip" data-placement="top" title="" data-original-title="'.$release['test_status'].'"></div>'; }else if(str_contains($release['test_status'],'Failed')){ echo '<div class="t-dot bg-danger" data-toggle="tooltip" data-placement="top" title="" data-original-title="'.$release['test_status'].'"></div>'; }else{ echo '<div class="t-dot bg-warning" data-toggle="tooltip" data-placement="top" title="" data-original-title="'.$release['test_status'].'"></div>'; } ?>
                                                         </td>
-                                                        <td><?php echo $release['bug_no']; ?></td>
-                                                        <td><?php echo $release['test_run_link']; ?></td>
+                                                        <td data-field="bug_no" ><?php echo $release['bug_no']; ?></td>
+                                                        <td data-field="test_run_link" ><?php echo $release['test_run_link']; ?></td>
                                                         <td><?php echo $release['tag']; ?></td>
                                                         <td><?php echo $release['scrum_name']; ?></td>
                                                     </tr>
@@ -266,9 +290,26 @@ $releases = json_decode($cta->httpGetWithAuth($releases_url,$_SESSION['auth-phra
         "lengthMenu": [7, 10, 20, 50],
         "pageLength": 7
     });
+
+    $('.widget-content .warning.confirm').on('click', function () {
+        swal({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Delete',
+            padding: '2em'
+        }).then(function(result) {
+            if (! confirm()) return false;
+        })
+    });
+
     </script>
     <!-- END PAGE LEVEL CUSTOM SCRIPTS -->
 
+    <!-- <script src="assets/js/elements/table-edits.min.js"></script>
+    <script src="assets/js/elements/table-editable.int.js"></script> -->
+    <script src="plugins/sweetalerts/sweetalert2.min.js"></script>
 </body>
 
 </html>
