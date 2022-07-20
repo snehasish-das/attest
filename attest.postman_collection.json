@@ -1,0 +1,391 @@
+{
+	"info": {
+		"_postman_id": "0eaa058a-eaf6-444c-8a21-43ff43f09cdd",
+		"name": "attest",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Nodes",
+			"item": [
+				{
+					"name": "Get Nodes",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "Welcome123$",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "snehasish.das@247.ai",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{hostname}}/nodes?node_type=testplan",
+							"host": [
+								"{{hostname}}"
+							],
+							"path": [
+								"nodes"
+							],
+							"query": [
+								{
+									"key": "node_type",
+									"value": "testplan"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Node",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "Welcome123$",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "snehasish.das@247.ai",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"node_name\":\"TestPlan Node 1\",\r\n    \"parent_node\":\"Answers\",\r\n    \"node_type\":\"testplan\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{hostname}}/nodes",
+							"host": [
+								"{{hostname}}"
+							],
+							"path": [
+								"nodes"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "login",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "Welcome123$",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "snehasish.das@247.ai",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{hostname}}/users/login",
+							"host": [
+								"{{hostname}}"
+							],
+							"path": [
+								"users",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Tests",
+			"item": [
+				{
+					"name": "Get Tests",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "Welcome123$",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "snehasish.das@247.ai",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{hostname}}/tests?test_id=2",
+							"host": [
+								"{{hostname}}"
+							],
+							"path": [
+								"tests"
+							],
+							"query": [
+								{
+									"key": "test_id",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Features",
+			"item": [
+				{
+					"name": "Get Features",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "Welcome123$",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "snehasish.das@247.ai",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{hostname}}/features?feature_id=17XYZ3,ABC123",
+							"host": [
+								"{{hostname}}"
+							],
+							"path": [
+								"features"
+							],
+							"query": [
+								{
+									"key": "feature_id",
+									"value": "17XYZ3,ABC123"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Releases",
+			"item": [
+				{
+					"name": "Add Tests to Release",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "Welcome123$",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "snehasish.das@247.ai",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"parent_node\": \"Test adhoc run\",\r\n    \"test_id\": \"1\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{hostname}}/releases",
+							"host": [
+								"{{hostname}}"
+							],
+							"path": [
+								"releases"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get tests in release",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "Welcome123$",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "snehasish.das@247.ai",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{hostname}}/releases/Test adhoc run",
+							"host": [
+								"{{hostname}}"
+							],
+							"path": [
+								"releases",
+								"Test adhoc run"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Test from release",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "Welcome123$",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "snehasish.das@247.ai",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{hostname}}/releases/Test adhoc run/1",
+							"host": [
+								"{{hostname}}"
+							],
+							"path": [
+								"releases",
+								"Test adhoc run",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "Welcome123$",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "snehasish.das@247.ai",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"test_status\": \"Failed\",\r\n    \"bug_no\": \"CXPC-123\",\r\n    \"test_run_link\": \"http://some.link\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{hostname}}/releases/Test adhoc run/1",
+							"host": [
+								"{{hostname}}"
+							],
+							"path": [
+								"releases",
+								"Test adhoc run",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Hello",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{hostname}}/hello/Snehasish",
+					"host": [
+						"{{hostname}}"
+					],
+					"path": [
+						"hello",
+						"Snehasish"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
