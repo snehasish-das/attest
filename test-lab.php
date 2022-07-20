@@ -72,12 +72,7 @@ $releases = json_decode($cta->httpGetWithAuth($releases_url,$_SESSION['auth-phra
     <!-- END PAGE LEVEL CUSTOM STYLES -->
     <!-- Icons Css -->
     <!-- <link href="https://themesbrand.com/skote/layouts/assets/css/icons.min.css" rel="stylesheet" type="text/css" /> -->
-    
-    <script src="plugins/sweetalerts/promise-polyfill.js"></script>
-    <link href="plugins/sweetalerts/sweetalert2.min.css" rel="stylesheet" type="text/css" />
-    <link href="plugins/sweetalerts/sweetalert.css" rel="stylesheet" type="text/css" />
-    <link href="assets/css/components/custom-sweetalert.css" rel="stylesheet" type="text/css" />
-    
+
     <link href="assets/css/custom.css" rel="stylesheet" type="text/css" />
 
 </head>
@@ -143,7 +138,8 @@ $releases = json_decode($cta->httpGetWithAuth($releases_url,$_SESSION['auth-phra
 
                                     <div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
                                         <div class="widget-content widget-content-area br-6">
-                                            <table id="html5-extension" class="table table-hover non-hover table-editable table-edits"
+                                            <table id="html5-extension"
+                                                class="table table-hover non-hover table-editable table-edits"
                                                 style="width:100%">
                                                 <thead>
                                                     <tr>
@@ -166,7 +162,8 @@ $releases = json_decode($cta->httpGetWithAuth($releases_url,$_SESSION['auth-phra
                                                     foreach((array) $releases as $release){ ?>
                                                     <tr>
                                                         <td class="text-center">
-                                                            <a onclick="if (! confirm('Are you sure you want to delete <?php echo $release['test_name']; ?> ?')) return false;" href="<?php echo $_SERVER['REQUEST_URI'].'&test-id='.$release['test_id']; ?>"
+                                                            <a onclick="if (! confirm('Are you sure you want to delete <?php echo $release['test_name']; ?> ?')) return false;"
+                                                                href="<?php echo $_SERVER['REQUEST_URI'].'&test-id='.$release['test_id']; ?>"
                                                                 class="bs-tooltip" data-toggle="tooltip"
                                                                 data-placement="top" title=""
                                                                 data-original-title="Remove"><svg
@@ -178,18 +175,17 @@ $releases = json_decode($cta->httpGetWithAuth($releases_url,$_SESSION['auth-phra
                                                                     <circle cx="12" cy="12" r="10"></circle>
                                                                     <line x1="15" y1="9" x2="9" y2="15"></line>
                                                                     <line x1="9" y1="9" x2="15" y2="15"></line>
-                                                                </svg></a></td>
+                                                                </svg></a>
+                                                        </td>
                                                         <td><?php echo '<a class="link" href="test-plan-details?test_id='.$release['test_id'].'"><span class="taskBoard-number">'.$release['test_id'].'</span></a>'; ?>
                                                         </td>
                                                         <td><?php echo $release['test_name']; ?></td>
                                                         <td><?php echo $release['product']; ?></td>
                                                         <td><?php echo $release['priority']; ?></td>
                                                         <td><?php echo $release['execution_date']; ?></td>
-                                                        <td data-field="test_status" class="text-center">
-                                                            <?php if(str_contains($release['test_status'],'Passed')){ echo '<div class="t-dot bg-success" data-toggle="tooltip" data-placement="top" title="" data-original-title="'.$release['test_status'].'"></div>'; }else if(str_contains($release['test_status'],'Failed')){ echo '<div class="t-dot bg-danger" data-toggle="tooltip" data-placement="top" title="" data-original-title="'.$release['test_status'].'"></div>'; }else{ echo '<div class="t-dot bg-warning" data-toggle="tooltip" data-placement="top" title="" data-original-title="'.$release['test_status'].'"></div>'; } ?>
-                                                        </td>
-                                                        <td data-field="bug_no" ><?php echo $release['bug_no']; ?></td>
-                                                        <td data-field="test_run_link" ><?php echo $release['test_run_link']; ?></td>
+                                                        <td><?php if(str_contains($release['test_status'],'Failed')){ echo '<span class="badge badge-danger">'; } else if(str_contains($release['test_status'],'Not')){ echo '<span class="badge badge-warning">'; } else { echo '<span class="badge badge-success">'; } echo $release['test_status'].'</span>'; ?></td>
+                                                        <td><?php if($release['bug_no']!='') {echo '<a href="#" target="_blank">'.$release['bug_no'].'</a>';} ?></td>
+                                                        <td><?php if($release['test_run_link']!='') {echo '<a class="link" href="'.$release['test_run_link'].'" target="_blank"><span class="w-profile-content">click here</span></a>';} ?></td>
                                                         <td><?php echo $release['tag']; ?></td>
                                                         <td><?php echo $release['scrum_name']; ?></td>
                                                     </tr>
@@ -249,67 +245,35 @@ $releases = json_decode($cta->httpGetWithAuth($releases_url,$_SESSION['auth-phra
     <script src="plugins/table/datatable/datatables.js"></script>
     <!-- NOTE TO Use Copy CSV Excel PDF Print Options You Must Include These Files  -->
     <script src="plugins/table/datatable/button-ext/dataTables.buttons.min.js"></script>
-    <script src="plugins/table/datatable/button-ext/jszip.min.js"></script>
+    <script src="plugins/table/datatable/button-ext/jszip.min.js"></script>    
     <script src="plugins/table/datatable/button-ext/buttons.html5.min.js"></script>
     <script src="plugins/table/datatable/button-ext/buttons.print.min.js"></script>
     <script>
-    $('#html5-extension').DataTable({
-        "dom": "<'dt--top-section'<'row'<'col-sm-12 col-md-6 d-flex justify-content-md-start justify-content-center'B><'col-sm-12 col-md-6 d-flex justify-content-md-end justify-content-center mt-md-0 mt-3'f>>>" +
-            "<'table-responsive'tr>" +
-            "<'dt--bottom-section d-sm-flex justify-content-sm-between text-center'<'dt--pages-count  mb-sm-0 mb-3'i><'dt--pagination'p>>",
-        buttons: {
-            buttons: [{
-                    extend: 'copy',
-                    className: 'btn btn-sm'
-                },
-                {
-                    extend: 'csv',
-                    className: 'btn btn-sm'
-                },
-                {
-                    extend: 'excel',
-                    className: 'btn btn-sm'
-                },
-                {
-                    extend: 'print',
-                    className: 'btn btn-sm'
-                }
-            ]
-        },
-        "oLanguage": {
-            "oPaginate": {
-                "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>',
-                "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>'
+        $('#html5-extension').DataTable( {
+            "dom": "<'dt--top-section'<'row'<'col-sm-12 col-md-6 d-flex justify-content-md-start justify-content-center'B><'col-sm-12 col-md-6 d-flex justify-content-md-end justify-content-center mt-md-0 mt-3'f>>>" +
+        "<'table-responsive'tr>" +
+        "<'dt--bottom-section d-sm-flex justify-content-sm-between text-center'<'dt--pages-count  mb-sm-0 mb-3'i><'dt--pagination'p>>",
+            buttons: {
+                buttons: [
+                    { extend: 'copy', className: 'btn btn-sm' },
+                    { extend: 'csv', className: 'btn btn-sm' },
+                    { extend: 'excel', className: 'btn btn-sm' },
+                    { extend: 'print', className: 'btn btn-sm' }
+                ]
             },
-            "sInfo": "Showing page _PAGE_ of _PAGES_",
-            "sSearch": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
-            "sSearchPlaceholder": "Search...",
-            "sLengthMenu": "Results :  _MENU_",
-        },
-        "stripeClasses": [],
-        "lengthMenu": [7, 10, 20, 50],
-        "pageLength": 7
-    });
-
-    $('.widget-content .warning.confirm').on('click', function () {
-        swal({
-            title: 'Are you sure?',
-            text: "You won't be able to revert this!",
-            type: 'warning',
-            showCancelButton: true,
-            confirmButtonText: 'Delete',
-            padding: '2em'
-        }).then(function(result) {
-            if (! confirm()) return false;
-        })
-    });
-
+            "oLanguage": {
+                "oPaginate": { "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>', "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>' },
+                "sInfo": "Showing page _PAGE_ of _PAGES_",
+                "sSearch": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
+                "sSearchPlaceholder": "Search...",
+               "sLengthMenu": "Results :  _MENU_",
+            },
+            "stripeClasses": [],
+            "lengthMenu": [7, 10, 20, 50],
+            "pageLength": 7 
+        } );
     </script>
     <!-- END PAGE LEVEL CUSTOM SCRIPTS -->
-
-    <!-- <script src="assets/js/elements/table-edits.min.js"></script>
-    <script src="assets/js/elements/table-editable.int.js"></script> -->
-    <script src="plugins/sweetalerts/sweetalert2.min.js"></script>
 </body>
 
 </html>

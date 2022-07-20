@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 19, 2022 at 11:42 AM
+-- Generation Time: Jul 20, 2022 at 06:58 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -118,7 +118,7 @@ CREATE TABLE `tcm_releases` (
   `test_id` bigint(20) NOT NULL,
   `test_status` enum('Not Started','Passed','Failed') DEFAULT 'Passed',
   `execution_date` date DEFAULT NULL,
-  `test_run_type` varchar(40) DEFAULT 'Automation',
+  `test_run_type` enum('Manual','Automation') DEFAULT 'Manual',
   `bug_no` varchar(16) DEFAULT NULL,
   `test_run_link` varchar(256) DEFAULT NULL,
   `created_by` varchar(40) NOT NULL,
@@ -133,8 +133,8 @@ CREATE TABLE `tcm_releases` (
 --
 
 INSERT INTO `tcm_releases` (`id`, `parent_node`, `test_id`, `test_status`, `execution_date`, `test_run_type`, `bug_no`, `test_run_link`, `created_by`, `created_date`, `last_updated_by`, `last_updated_date`, `is_deleted`) VALUES
-(6, 'Test adhoc run', 1, 'Not Started', '2022-07-19', NULL, NULL, NULL, 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', '2022-07-19 07:37:47', 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', '2022-07-19 07:37:47', 0),
-(7, 'Test adhoc run', 2, 'Not Started', '2022-07-19', NULL, NULL, NULL, 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', '2022-07-19 07:37:47', 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', '2022-07-19 07:37:47', 0);
+(19, 'Test adhoc run', 1, 'Not Started', '2022-07-20', NULL, NULL, NULL, 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', '2022-07-20 04:31:06', 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', '2022-07-20 04:31:06', 0),
+(20, 'Test adhoc run', 2, 'Passed', '2022-07-20', NULL, NULL, NULL, 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', '2022-07-20 04:31:06', 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', '2022-07-20 04:31:06', 0);
 
 -- --------------------------------------------------------
 
@@ -263,7 +263,7 @@ ALTER TABLE `tcm_options`
 -- AUTO_INCREMENT for table `tcm_releases`
 --
 ALTER TABLE `tcm_releases`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `tcm_tests`
