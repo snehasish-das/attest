@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 20, 2022 at 06:58 AM
+-- Generation Time: Jul 20, 2022 at 09:24 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -133,8 +133,8 @@ CREATE TABLE `tcm_releases` (
 --
 
 INSERT INTO `tcm_releases` (`id`, `parent_node`, `test_id`, `test_status`, `execution_date`, `test_run_type`, `bug_no`, `test_run_link`, `created_by`, `created_date`, `last_updated_by`, `last_updated_date`, `is_deleted`) VALUES
-(19, 'Test adhoc run', 1, 'Not Started', '2022-07-20', NULL, NULL, NULL, 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', '2022-07-20 04:31:06', 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', '2022-07-20 04:31:06', 0),
-(20, 'Test adhoc run', 2, 'Passed', '2022-07-20', NULL, NULL, NULL, 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', '2022-07-20 04:31:06', 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', '2022-07-20 04:31:06', 0);
+(19, 'Test adhoc run', 1, 'Failed', '2022-07-20', NULL, 'CXPC-123', 'http://some.link', 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', '2022-07-20 04:31:06', 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', '2022-07-20 04:31:06', 0),
+(20, 'Test adhoc run', 2, 'Passed', '2022-07-20', NULL, 'CXPC-123', NULL, 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', '2022-07-20 04:31:06', 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', '2022-07-20 04:31:06', 0);
 
 -- --------------------------------------------------------
 
