@@ -179,7 +179,10 @@ $releases = json_decode($cta->httpGetWithAuth($releases_url,$_SESSION['auth-phra
 
                                                             <a href="#runTestModal" class="bs-tooltip"
                                                                 data-original-title="Run Test" data-toggle="modal"
-                                                                data-testid="<?php echo $release['test_id']; ?>"><svg
+                                                                data-test_id="<?php echo $release['test_id']; ?>"
+                                                                data-test_status="<?php echo $release['test_status']; ?>"
+                                                                data-bug_no="<?php echo $release['bug_no']; ?>"
+                                                                data-test_run_link="<?php echo $release['test_run_link']; ?>"><svg
                                                                     viewBox="0 0 24 24" width="24" height="24"
                                                                     stroke="currentColor" stroke-width="2" fill="none"
                                                                     stroke-linecap="round" stroke-linejoin="round"
@@ -251,7 +254,7 @@ $releases = json_decode($cta->httpGetWithAuth($releases_url,$_SESSION['auth-phra
                                         value="<?php echo $parent_node; ?>" />
                                     <input type="hidden" id="redirect_uri" name="redirect_uri"
                                         value="<?php echo $_SERVER['REQUEST_URI']; ?>" />
-                                    <select class="form-control selectpicker" name="test_status">
+                                    <select class="form-control selectpicker" name="test_status" id="test_status">
                                         <option value="Not started">Not started</option>
                                         <option value="Passed">Passed</option>
                                         <option value="Failed">Failed</option>
@@ -356,12 +359,21 @@ $releases = json_decode($cta->httpGetWithAuth($releases_url,$_SESSION['auth-phra
 
     // Execute something when the modal window is shown.
     $('#runTestModal').on('show.bs.modal', function (event) {
-    var button = $(event.relatedTarget); // Button that triggered the modal
-    var testid = button.data('testid'); // Extract info from data-* attributes
-    // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
-    // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
-    var modal = $(this);
-    modal.find('.modal-body input#testid').val(testid);
+        // Button that triggered the modal
+        var a = $(event.relatedTarget); 
+
+        // Extract info from data-* attributes
+        var testid = a.data('test_id'); 
+        var test_status = a.data('test_status'); 
+        var bug_no = a.data('bug_no'); 
+        var test_run_link = a.data('test_run_link'); 
+        // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+        // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+        var modal = $(this);
+        modal.find('.modal-body input#testid').val(testid);
+        modal.find('.modal-body select#test_status').val(test_status);
+        modal.find('.modal-body input#bug_no').val(bug_no);
+        modal.find('.modal-body input#test_run_link').val(test_run_link);
     });
     </script>
     <!-- END PAGE LEVEL CUSTOM SCRIPTS -->
