@@ -253,12 +253,29 @@ $features = json_decode($cta->httpGetWithAuth($features_url,$_SESSION['auth-phra
                                                                                 </div>
                                                                                 <div class="col-md-3 mb-4">
                                                                                     <label>Product</label>
-                                                                                    <input type="text"
-                                                                                        class="form-control"
-                                                                                        name="product"
-                                                                                        placeholder="Product name"
-                                                                                        value="<?php echo $test['product']; ?>"
-                                                                                        required>
+
+                                                                                    <select
+                                                                                        class="form-control selectpicker"
+                                                                                        name="product">
+                                                                                        <option value="Answers"
+                                                                                            <?php if($test['product']=='Answers'){echo 'selected="selected"'; } ?>>
+                                                                                            Answers</option>
+                                                                                        <option value="Assist"
+                                                                                            <?php if($test['product']=='Assist'){echo 'selected="selected"'; } ?>>
+                                                                                            Assist</option>
+                                                                                        <option value="Butterfly"
+                                                                                            <?php if($test['product']=='Butterfly'){echo 'selected="selected"'; } ?>>
+                                                                                            Butterfly</option>
+                                                                                        <option value="Conversation"
+                                                                                            <?php if($test['product']=='Conversation'){echo 'selected="selected"'; } ?>>
+                                                                                            Conversation</option>
+                                                                                        <option value="Messaging"
+                                                                                            <?php if($test['product']=='Messaging'){echo 'selected="selected"'; } ?>>
+                                                                                            Messaging</option>
+                                                                                        <option value="Voice"
+                                                                                            <?php if($test['product']=='Voice'){echo 'selected="selected"'; } ?>>
+                                                                                            Voice</option>
+                                                                                    </select>
                                                                                     <div class="valid-feedback">
                                                                                     </div>
                                                                                 </div>
@@ -364,9 +381,10 @@ $features = json_decode($cta->httpGetWithAuth($features_url,$_SESSION['auth-phra
                                                         aria-labelledby="step-definition-tab">
 
                                                         <div class="invoice-detail-items">
-                                                                <div class="table-responsive">
-                                                                    <form action="test-plan-details?test_id=<?php echo $test['id'] ?>"
-                                                                            method="POST" id="steps-form">
+                                                            <div class="table-responsive">
+                                                                <form
+                                                                    action="test-plan-details?test_id=<?php echo $test['id'] ?>"
+                                                                    method="POST" id="steps-form">
                                                                     <table class="table table-bordered item-table">
                                                                         <thead>
                                                                             <tr>
@@ -376,14 +394,39 @@ $features = json_decode($cta->httpGetWithAuth($features_url,$_SESSION['auth-phra
                                                                             </tr>
                                                                         </thead>
                                                                         <tbody>
-                                                                        <?php 
+                                                                            <?php 
                                                                             $steps = explode('>>',$test['steps']);
                                                                             $expected_output = explode('>>',$test['expected_output']);
                                                                             for($i=0;$i<sizeof($steps);$i++){?>
                                                                             <tr>
                                                                                 <td class="delete-item-row">
                                                                                     <ul class="table-controls">
-                                                                                        <li><a href="javascript:void(0);" class="delete-item" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x-circle"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg></a></li>
+                                                                                        <li><a href="javascript:void(0);"
+                                                                                                class="delete-item"
+                                                                                                data-toggle="tooltip"
+                                                                                                data-placement="top"
+                                                                                                title=""
+                                                                                                data-original-title="Delete"><svg
+                                                                                                    xmlns="http://www.w3.org/2000/svg"
+                                                                                                    width="24"
+                                                                                                    height="24"
+                                                                                                    viewBox="0 0 24 24"
+                                                                                                    fill="none"
+                                                                                                    stroke="currentColor"
+                                                                                                    stroke-width="2"
+                                                                                                    stroke-linecap="round"
+                                                                                                    stroke-linejoin="round"
+                                                                                                    class="feather feather-x-circle">
+                                                                                                    <circle cx="12"
+                                                                                                        cy="12" r="10">
+                                                                                                    </circle>
+                                                                                                    <line x1="15" y1="9"
+                                                                                                        x2="9" y2="15">
+                                                                                                    </line>
+                                                                                                    <line x1="9" y1="9"
+                                                                                                        x2="15" y2="15">
+                                                                                                    </line>
+                                                                                                </svg></a></li>
                                                                                     </ul>
                                                                                 </td>
                                                                                 <td class="description"><textarea
@@ -400,11 +443,13 @@ $features = json_decode($cta->httpGetWithAuth($features_url,$_SESSION['auth-phra
                                                                             <?php } ?>
                                                                         </tbody>
                                                                     </table>
-                                                                    </form>
-                                                                </div>
-                                                                <button class="btn btn-primary btn-sm" type="submit" onclick="document.getElementById('steps-form').submit();">Update</button>
-                                                                <button class="btn btn-secondary additem btn-sm">Add Step</button>
+                                                                </form>
                                                             </div>
+                                                            <button class="btn btn-primary btn-sm" type="submit"
+                                                                onclick="document.getElementById('steps-form').submit();">Update</button>
+                                                            <button class="btn btn-secondary additem btn-sm">Add
+                                                                Step</button>
+                                                        </div>
                                                     </div>
                                                     <div class="tab-pane fade" id="requirement" role="tabpanel"
                                                         aria-labelledby="requirement-tab">
@@ -497,7 +542,9 @@ $features = json_decode($cta->httpGetWithAuth($features_url,$_SESSION['auth-phra
 
                                                                     <!-- Modal -->
 
-                                                                    <form action="test-plan-details?test_id=<?php echo $test['id']; ?>" method="POST">
+                                                                    <form
+                                                                        action="test-plan-details?test_id=<?php echo $test['id']; ?>"
+                                                                        method="POST">
                                                                         <div class="modal fade" id="addContactModal"
                                                                             tabindex="-1" role="dialog"
                                                                             aria-labelledby="addContactModalTitle"

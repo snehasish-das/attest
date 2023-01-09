@@ -54,14 +54,6 @@ $app->post('/tests', function (Request $request, Response $response) {
     if ($author == '') {
         $author = $_SESSION['id'];
     }
-    $steps = $request->getParam('steps');
-    if ($steps == '') {
-        return $response->withStatus(400)->write('{"error" : {"text": "Steps is mandatory" }}');
-    }
-    $expected_output = $request->getParam('expected_output');
-    if ($expected_output == '') {
-        return $response->withStatus(400)->write('{"error" : {"text": "Expected output is mandatory" }}');
-    }
     $test_type = $request->getParam('test_type');
     $priority = $request->getParam('priority');
     if ($priority == '') {
@@ -72,37 +64,24 @@ $app->post('/tests', function (Request $request, Response $response) {
         return $response->withStatus(400)->write('{"error" : {"text": "Parent node is mandatory" }}');
     }
     $automation_status = $request->getParam('automation_status');
-    $automation_author = $request->getParam('automation_author');
-    if ($automation_author == '') {
-        $automation_author = $_SESSION['id'];
-    }
-    $tag = $request->getParam('tag');
     $scrum_name = $request->getParam('scrum_name');
-    $pages_involved = $request->getParam('pages_involved');
-    $feature_id = $request->getParam('feature_id');
     try {
         $db = new db();
         $db = $db->connect();
         
-        $addQuery = "INSERT INTO `tcm_tests` (`name`, `description`, `product`, `author`, `steps`, `expected_output`, `test_type`, `priority`, `parent_node`, `automation_status`, `automation_author`, `tag`, `scrum_name`, `pages_involved`, `feature_id`, `created_by`, `last_updated_by`) VALUES (:name, :description, :product, :author, :steps, :expected_output, :test_type, :priority, :parent_node, :automation_status, :automation_author, :tag, :scrum_name, :pages_involved, :feature_id, :created_by, :last_updated_by)";
+        $addQuery = "INSERT INTO `tcm_tests` (`name`, `description`, `product`, `author`, `test_type`, `priority`, `parent_node`, `automation_status`, `scrum_name`, `created_by`, `last_updated_by`) VALUES (:name, :description, :product, :author, :test_type, :priority, :parent_node, :automation_status, :scrum_name, :created_by, :last_updated_by)";
 
         $stmt = $db->prepare($addQuery);
         $stmt->bindParam(':name', $name);
         $stmt->bindParam(':description', $description);
         $stmt->bindParam(':product', $product);
         $stmt->bindParam(':author', $author);
-        $stmt->bindParam(':steps', $steps);
-        $stmt->bindParam(':expected_output', $expected_output);
         $stmt->bindParam(':test_type', $test_type);
         $stmt->bindParam(':priority', $priority);
         $stmt->bindParam(':product', $product);
         $stmt->bindParam(':parent_node', $parent_node);
         $stmt->bindParam(':automation_status', $automation_status);
-        $stmt->bindParam(':automation_author', $automation_author);
-        $stmt->bindParam(':tag', $tag);
         $stmt->bindParam(':scrum_name', $scrum_name);
-        $stmt->bindParam(':pages_involved', $pages_involved);
-        $stmt->bindParam(':feature_id', $feature_id);
         $stmt->bindParam(':created_by', $_SESSION['id']);
         $stmt->bindParam(':last_updated_by', $_SESSION['id']);
 
@@ -158,6 +137,10 @@ $app->patch('/tests/{id}', function (Request $request, Response $response, array
     $automation_status = $request->getParam('automation_status');
     if ($automation_status != '') {
         $updateQuery .= ", `automation_status`='$automation_status'";
+    }
+    $automation_script_path = $request->getParam('automation_script_path');
+    if ($automation_status != '') {
+        $updateQuery .= ", `automation_script_path`='$automation_script_path'";
     }
     $automation_author = $request->getParam('automation_author');
     if ($automation_author != '') {

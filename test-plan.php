@@ -119,6 +119,26 @@ $tests = json_decode($cta->httpGetWithAuth($tests_url,$_SESSION['auth-phrase']),
 
                                     <div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
                                         <div class="widget-content widget-content-area br-6">
+                                            <div class="dt--top-section close dropdown d-inline-block">
+                                                <a class="dropdown-toggle" href="#" role="button" id="pendingTask"
+                                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                        viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                        class="feather feather-more-vertical">
+                                                        <circle cx="12" cy="12" r="1"></circle>
+                                                        <circle cx="12" cy="5" r="1"></circle>
+                                                        <circle cx="12" cy="19" r="1"></circle>
+                                                    </svg>
+                                                </a>
+
+                                                <div class="dropdown-menu" aria-labelledby="pendingTask"
+                                                    style="will-change: transform; position: absolute; transform: translate3d(105px, 0, 0px); top: 0px; left: 0px;">
+                                                    <a class="dropdown-item" href="javascript:void(0);" data-toggle="modal" data-target="#addNewTestModal">Add new test</a>
+                                                    <a class="dropdown-item" href="javascript:void(0);">Delete Folder</a>
+                                                    <!--a class="dropdown-item" href="javascript:void(0);">Mark as Done</a-->
+                                                </div>
+                                            </div>
                                             <table id="html5-extension" class="table table-hover non-hover"
                                                 style="width:100%">
                                                 <thead>
@@ -138,12 +158,14 @@ $tests = json_decode($cta->httpGetWithAuth($tests_url,$_SESSION['auth-phrase']),
                                                     if(isset($tests)){
                                                     foreach((array) $tests as $test){ ?>
                                                     <tr>
-                                                        <td><?php echo '<a class="link" href="test-plan-details?test_id='.$test['id'].'"><span class="taskBoard-number">'.$test['name'].'</span></a>'; ?></td>
+                                                        <td><?php echo '<a class="link" href="test-plan-details?test_id='.$test['id'].'"><span class="taskBoard-number">'.$test['name'].'</span></a>'; ?>
+                                                        </td>
                                                         <td><?php echo $test['product']; ?></td>
                                                         <td><?php echo $test['user_name']; ?></td>
                                                         <td><?php echo $test['test_type']; ?></td>
                                                         <td><?php echo $test['priority']; ?></td>
-                                                        <td><?php if(str_contains($test['automation_status'],'Not')){ echo '<span class="badge badge-danger">'; } else if(str_contains($test['automation_status'],'In Progress')){ echo '<span class="badge badge-warning">'; } else { echo '<span class="badge badge-primary">'; } echo $test['automation_status'].'</span>'; ?></td>
+                                                        <td><?php if(str_contains($test['automation_status'],'Not')){ echo '<span class="badge badge-danger">'; } else if(str_contains($test['automation_status'],'In Progress')){ echo '<span class="badge badge-warning">'; } else { echo '<span class="badge badge-primary">'; } echo $test['automation_status'].'</span>'; ?>
+                                                        </td>
                                                         <td><?php echo $test['tag']; ?></td>
                                                         <!-- <td>
                                                             <div class="btn-group">
@@ -224,39 +246,53 @@ $tests = json_decode($cta->httpGetWithAuth($tests_url,$_SESSION['auth-phrase']),
     <script src="assets/js/forms/bootstrap_validation/bs_validation_script.js"></script>
     <!-- BEGIN MODAL FORM -->
 
-    
+
 
     <!-- BEGIN PAGE LEVEL CUSTOM SCRIPTS -->
     <script src="plugins/table/datatable/datatables.js"></script>
     <!-- NOTE TO Use Copy CSV Excel PDF Print Options You Must Include These Files  -->
     <script src="plugins/table/datatable/button-ext/dataTables.buttons.min.js"></script>
-    <script src="plugins/table/datatable/button-ext/jszip.min.js"></script>    
+    <script src="plugins/table/datatable/button-ext/jszip.min.js"></script>
     <script src="plugins/table/datatable/button-ext/buttons.html5.min.js"></script>
     <script src="plugins/table/datatable/button-ext/buttons.print.min.js"></script>
     <script>
-        $('#html5-extension').DataTable( {
-            "dom": "<'dt--top-section'<'row'<'col-sm-12 col-md-6 d-flex justify-content-md-start justify-content-center'B><'col-sm-12 col-md-6 d-flex justify-content-md-end justify-content-center mt-md-0 mt-3'f>>>" +
-        "<'table-responsive'tr>" +
-        "<'dt--bottom-section d-sm-flex justify-content-sm-between text-center'<'dt--pages-count  mb-sm-0 mb-3'i><'dt--pagination'p>>",
-            buttons: {
-                buttons: [
-                    { extend: 'copy', className: 'btn btn-sm' },
-                    { extend: 'csv', className: 'btn btn-sm' },
-                    { extend: 'excel', className: 'btn btn-sm' },
-                    { extend: 'print', className: 'btn btn-sm' }
-                ]
+    $('#html5-extension').DataTable({
+        "dom": "<'dt--top-section'<'row'<'col-sm-12 col-md-6 d-flex justify-content-md-start justify-content-center'B><'col-sm-12 col-md-6 d-flex justify-content-md-end justify-content-center mt-md-0 mt-3'f>>>" +
+            "<'table-responsive'tr>" +
+            "<'dt--bottom-section d-sm-flex justify-content-sm-between text-center'<'dt--pages-count  mb-sm-0 mb-3'i><'dt--pagination'p>>",
+        buttons: {
+            buttons: [{
+                    extend: 'copy',
+                    className: 'btn btn-sm'
+                },
+                {
+                    extend: 'csv',
+                    className: 'btn btn-sm'
+                },
+                {
+                    extend: 'excel',
+                    className: 'btn btn-sm'
+                },
+                {
+                    extend: 'print',
+                    className: 'btn btn-sm'
+                }
+            ]
+        },
+        "oLanguage": {
+            "oPaginate": {
+                "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>',
+                "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>'
             },
-            "oLanguage": {
-                "oPaginate": { "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>', "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>' },
-                "sInfo": "Showing page _PAGE_ of _PAGES_",
-                "sSearch": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
-                "sSearchPlaceholder": "Search...",
-               "sLengthMenu": "Results :  _MENU_",
-            },
-            "stripeClasses": [],
-            "lengthMenu": [7, 10, 20, 50],
-            "pageLength": 7 
-        } );
+            "sInfo": "Showing page _PAGE_ of _PAGES_",
+            "sSearch": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
+            "sSearchPlaceholder": "Search...",
+            "sLengthMenu": "Results :  _MENU_",
+        },
+        "stripeClasses": [],
+        "lengthMenu": [7, 10, 20, 50],
+        "pageLength": 7
+    });
     </script>
     <!-- END PAGE LEVEL CUSTOM SCRIPTS -->
 
