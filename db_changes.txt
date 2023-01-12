@@ -1,0 +1,3 @@
+ALTER TABLE `tcm_tests` ADD `automation_script_path` VARCHAR(256) NULL AFTER `automation_status`;
+
+ALTER TABLE `tcm_tests` CHANGE `steps` `steps` BLOB NULL, CHANGE `expected_output` `expected_output` BLOB NULL;

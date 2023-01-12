@@ -17,6 +17,7 @@ $data = json_decode($cta->httpGet($site_name_url), true);
 $site_name = $data[0]['option_value'];
 
 $parent_node = $_REQUEST['node'];
+$isRootNode = $_REQUEST['parent_node']==''?true:false;
 $tests_url = $_SESSION['site-url'] . '/api/tests?parent_node='.$parent_node;
 $tests = json_decode($cta->httpGetWithAuth($tests_url,$_SESSION['auth-phrase']), true);
 
@@ -135,7 +136,7 @@ $tests = json_decode($cta->httpGetWithAuth($tests_url,$_SESSION['auth-phrase']),
                                                 <div class="dropdown-menu" aria-labelledby="pendingTask"
                                                     style="will-change: transform; position: absolute; transform: translate3d(105px, 0, 0px); top: 0px; left: 0px;">
                                                     <a class="dropdown-item" href="javascript:void(0);" data-toggle="modal" data-target="#addNewTestModal">Add new test</a>
-                                                    <a class="dropdown-item" href="javascript:void(0);">Delete Folder</a>
+                                                    <?php if(!$isRootNode){ ?><a class="dropdown-item" href="javascript:void(0);">Delete Folder</a><?php } ?>
                                                     <!--a class="dropdown-item" href="javascript:void(0);">Mark as Done</a-->
                                                 </div>
                                             </div>

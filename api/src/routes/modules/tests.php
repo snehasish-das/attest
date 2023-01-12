@@ -63,13 +63,12 @@ $app->post('/tests', function (Request $request, Response $response) {
     if ($parent_node == '') {
         return $response->withStatus(400)->write('{"error" : {"text": "Parent node is mandatory" }}');
     }
-    $automation_status = $request->getParam('automation_status');
     $scrum_name = $request->getParam('scrum_name');
     try {
         $db = new db();
         $db = $db->connect();
         
-        $addQuery = "INSERT INTO `tcm_tests` (`name`, `description`, `product`, `author`, `test_type`, `priority`, `parent_node`, `automation_status`, `scrum_name`, `created_by`, `last_updated_by`) VALUES (:name, :description, :product, :author, :test_type, :priority, :parent_node, :automation_status, :scrum_name, :created_by, :last_updated_by)";
+        $addQuery = "INSERT INTO `tcm_tests` (`name`, `description`, `product`, `author`, `test_type`, `priority`, `parent_node`, `scrum_name`, `created_by`, `last_updated_by`) VALUES (:name, :description, :product, :author, :test_type, :priority, :parent_node, :scrum_name, :created_by, :last_updated_by)";
 
         $stmt = $db->prepare($addQuery);
         $stmt->bindParam(':name', $name);
@@ -80,7 +79,6 @@ $app->post('/tests', function (Request $request, Response $response) {
         $stmt->bindParam(':priority', $priority);
         $stmt->bindParam(':product', $product);
         $stmt->bindParam(':parent_node', $parent_node);
-        $stmt->bindParam(':automation_status', $automation_status);
         $stmt->bindParam(':scrum_name', $scrum_name);
         $stmt->bindParam(':created_by', $_SESSION['id']);
         $stmt->bindParam(':last_updated_by', $_SESSION['id']);

@@ -113,22 +113,9 @@
                         <div class="compose-content">
                             <h5 class="task-heading">Add new test</h5>
                             <div class="form-row">
-                                <div class="col-md-6 mb-4">
+                                <div class="col-md-12 mb-4">
                                     <label>Name</label>
-                                    <input type="text" class="form-control" name="name" placeholder="Name" required />
-                                    <div class="valid-feedback">
-                                    </div>
-                                </div>
-                                <div class="col-md-6 mb-4">
-                                    <label>Product</label>
-                                    <select class="form-control selectpicker" name="product">
-                                        <option value="Answers">Answers</option>
-                                        <option value="Assist">Assist</option>
-                                        <option value="Butterfly">Butterfly</option>
-                                        <option value="Conversation">Conversation</option>
-                                        <option value="Messaging">Messaging</option>
-                                        <option value="Voice">Voice</option>
-                                    </select>
+                                    <input type="text" class="form-control" name="name" placeholder="Verify if login is successful" required />
                                     <div class="valid-feedback">
                                     </div>
                                 </div>
@@ -152,13 +139,17 @@
                             </div>
                             <div class="form-row">
                                 <div class="col-md-6 mb-4">
-                                    <label>Automation status</label>
-                                    <select class="form-control selectpicker" name="automation_status">
-                                        <option value="Not Planned">Not Planned</option>
-                                        <option value="In Progress">In Progress</option>
-                                        <option value="Ready">Ready</option>
-                                        <option value="Not Applicable">Not Applicable</option>
+                                    <label>Product</label>
+                                    <select class="form-control selectpicker" name="product">
+                                        <option value="Answers">Answers</option>
+                                        <option value="Assist">Assist</option>
+                                        <option value="Butterfly">Butterfly</option>
+                                        <option value="Conversation">Conversation</option>
+                                        <option value="Messaging">Messaging</option>
+                                        <option value="Voice">Voice</option>
                                     </select>
+                                    <div class="valid-feedback">
+                                    </div>
                                 </div>
                                 <div class="col-md-6 mb-4">
                                     <label>Scrum Name</label>

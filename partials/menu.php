@@ -5,9 +5,9 @@
     function getTreeView($nodes,$node_type){
         foreach($nodes as $node){
             if($node_type=='testplan'){
-                echo '<li><span class="caret caret-down"></span><a class="menu-block-submenu" href="test-plan?node='.$node['node_name'].'">'.$node['node_name'].'</a><ul class="nested">';
+                echo '<li><span class="caret caret-down"></span><a class="menu-block-submenu" href="test-plan?node='.$node['node_name'].'&parent_node='.$node['parent_node'].'">'.$node['node_name'].'</a><ul class="nested">';
             }else{
-                echo '<li><span class="caret caret-down"></span><a class="menu-block-submenu" href="test-lab?node='.$node['node_name'].'">'.$node['node_name'].'</a><ul class="nested">';
+                echo '<li><span class="caret caret-down"></span><a class="menu-block-submenu" href="test-lab?node='.$node['node_name'].'&parent_node='.$node['parent_node'].'">'.$node['node_name'].'</a><ul class="nested">';
             }
             if(sizeof($node['nodes'])>0){
                 getTreeView($node['nodes'],$node_type);
