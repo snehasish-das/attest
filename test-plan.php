@@ -151,6 +151,7 @@ $tests = json_decode($cta->httpGetWithAuth($tests_url,$_SESSION['auth-phrase']),
                                                         <th>Priority</th>
                                                         <th>Automation Status</th>
                                                         <th>Tags</th>
+                                                        <th class="no-content">Actions</th>
                                                         <!-- <th class="dt-no-sorting"></th> -->
                                                     </tr>
                                                 </thead>
@@ -168,34 +169,11 @@ $tests = json_decode($cta->httpGetWithAuth($tests_url,$_SESSION['auth-phrase']),
                                                         <td><?php if(str_contains($test['automation_status'],'Not')){ echo '<span class="badge badge-danger">'; } else if(str_contains($test['automation_status'],'In Progress')){ echo '<span class="badge badge-warning">'; } else { echo '<span class="badge badge-primary">'; } echo $test['automation_status'].'</span>'; ?>
                                                         </td>
                                                         <td><?php echo $test['tag']; ?></td>
-                                                        <!-- <td>
-                                                            <div class="btn-group">
-                                                                <button type="button"
-                                                                    class="btn btn-dark btn-sm">Open</button>
-                                                                <button type="button"
-                                                                    class="btn btn-dark btn-sm dropdown-toggle dropdown-toggle-split"
-                                                                    id="dropdownMenuReference1" data-toggle="dropdown"
-                                                                    aria-haspopup="true" aria-expanded="false"
-                                                                    data-reference="parent">
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                                        height="24" viewBox="0 0 24 24" fill="none"
-                                                                        stroke="currentColor" stroke-width="2"
-                                                                        stroke-linecap="round" stroke-linejoin="round"
-                                                                        class="feather feather-chevron-down">
-                                                                        <polyline points="6 9 12 15 18 9"></polyline>
-                                                                    </svg>
-                                                                </button>
-                                                                <div class="dropdown-menu"
-                                                                    aria-labelledby="dropdownMenuReference1">
-                                                                    <a class="dropdown-item" href="#">Action</a>
-                                                                    <a class="dropdown-item" href="#">Another action</a>
-                                                                    <a class="dropdown-item" href="#">Something else
-                                                                        here</a>
-                                                                    <div class="dropdown-divider"></div>
-                                                                    <a class="dropdown-item" href="#">Separated link</a>
-                                                                </div>
-                                                            </div>
-                                                        </td> -->
+                                                        <td>
+                                                            <a href="./actions/deleteTest.php?parent_node=<?php echo $_REQUEST['node'] ?>&test_id=<?php echo $test['id'] ?>&ancestor_node=<?php echo $_REQUEST['parent_node'] ?>" onclick="return confirm('Are you sure? This cannot be reverted')">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2 table-cancel"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+                                                            </a>
+                                                        </td>
                                                     </tr>
                                                     <?php } 
                                                     } else{
@@ -295,6 +273,8 @@ $tests = json_decode($cta->httpGetWithAuth($tests_url,$_SESSION['auth-phrase']),
         "pageLength": 7
     });
     </script>
+    <script src="plugins/sweetalerts/sweetalert2.min.js"></script>
+    <!--script src="plugins/sweetalerts/custom-sweetalert.js"></script-->
     <!-- END PAGE LEVEL CUSTOM SCRIPTS -->
 
 </body>

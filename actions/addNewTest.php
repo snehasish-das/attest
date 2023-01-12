@@ -25,7 +25,7 @@
         $_SESSION['addTestplanNodeError'] = $result;
     }
 
-    header("Location:".$_SESSION['site-url'].'/test-plan?node='.$_REQUEST['parent_node']);
+    header("Location:".$_SESSION['site-url'].'/test-plan?node='.$_REQUEST['parent_node'].'&parent_node='.$_REQUEST['ancestor_node']);
     exit();
 
 ?>
