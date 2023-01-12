@@ -25,6 +25,8 @@ if(isset($_REQUEST['name']) || isset($_REQUEST['steps']) || isset($_REQUEST['exi
         $payload->product = $_REQUEST['product'];
         $payload->priority = $_REQUEST['priority'];
         $payload->automation_status = $_REQUEST['automation_status'];
+        $payload->automation_author = $_REQUEST['automation_author'];
+        $payload->automation_script_path = $_REQUEST['automation_script_path'];
         $payload->scrum_name = $_REQUEST['scrum_name'];
         $payload->description = $_REQUEST['description'];
         $payload->tag = $_REQUEST['tags'];
@@ -43,6 +45,9 @@ if(isset($_REQUEST['name']) || isset($_REQUEST['steps']) || isset($_REQUEST['exi
 $tests_url = $_SESSION['site-url'] . '/api/tests?test_id='.$id;
 $tests = json_decode($cta->httpGetWithAuth($tests_url,$_SESSION['auth-phrase']), true);
 $test = $tests[0];
+
+$users_url = $_SESSION['site-url'] . '/api/users';
+$users = json_decode($cta->httpGetWithAuth($users_url,$_SESSION['auth-phrase']), true);
 
 $tags = explode(',', $test['tag']);
 
@@ -281,12 +286,15 @@ $features = json_decode($cta->httpGetWithAuth($features_url,$_SESSION['auth-phra
                                                                                 </div>
                                                                                 <div class="col-md-3 mb-4">
                                                                                     <label>Author</label>
-                                                                                    <input type="text"
-                                                                                        class="form-control"
-                                                                                        name="author"
-                                                                                        placeholder="Author"
-                                                                                        value="<?php echo $test['user_name']; ?>"
-                                                                                        readonly>
+                                                                                    <select
+                                                                                        class="form-control selectpicker"
+                                                                                        name="author">
+                                                                                        <?php foreach ($users as $user){ ?>
+                                                                                        <option value="<?php echo $user['id']; ?>"
+                                                                                            <?php if($test['author']==$user['id']){echo 'selected="selected"'; } ?>>
+                                                                                            <?php echo $user['name']; ?></option>
+                                                                                        <?php } ?>
+                                                                                    </select>
                                                                                 </div>
                                                                             </div>
                                                                             <div class="form-row">
@@ -316,6 +324,19 @@ $features = json_decode($cta->httpGetWithAuth($features_url,$_SESSION['auth-phra
                                                                                     </select>
                                                                                 </div>
                                                                                 <div class="col-md-3 mb-4">
+                                                                                    <label>Scrum Name</label>
+                                                                                    <input type="text"
+                                                                                        class="form-control"
+                                                                                        name="scrum_name"
+                                                                                        placeholder="Scrum Name"
+                                                                                        value="<?php echo $test['scrum_name'] ?>" />
+                                                                                    <div class="valid-feedback">
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <hr />
+                                                                            <div class="form-row">
+                                                                                <div class="col-md-3 mb-3">
                                                                                     <label>Automation status</label>
                                                                                     <select
                                                                                         class="form-control selectpicker"
@@ -334,15 +355,28 @@ $features = json_decode($cta->httpGetWithAuth($features_url,$_SESSION['auth-phra
                                                                                             Not Applicable</option>
                                                                                     </select>
                                                                                 </div>
-                                                                                <div class="col-md-3 mb-4">
-                                                                                    <label>Scrum Name</label>
+                                                                                <div class="col-md-3 mb-3">
+                                                                                    <label>Automation Author</label>
+                                                                                    <select
+                                                                                        class="form-control selectpicker"
+                                                                                        name="automation_author">
+                                                                                        <option
+                                                                                            <?php if($test['automation_author']==''){echo 'selected="selected"'; } ?>>
+                                                                                            -SELECT-</option>
+                                                                                        <?php foreach ($users as $user){ ?>
+                                                                                        <option value="<?php echo $user['id']; ?>"
+                                                                                            <?php if($test['automation_author']==$user['id']){echo 'selected="selected"'; } ?>>
+                                                                                            <?php echo $user['name']; ?></option>
+                                                                                        <?php } ?>
+                                                                                    </select>
+                                                                                </div>
+                                                                                <div class="col-md-6 mb-6">
+                                                                                    <label>Automation script path</label>
                                                                                     <input type="text"
                                                                                         class="form-control"
-                                                                                        name="scrum_name"
-                                                                                        placeholder="Scrum Name"
-                                                                                        value="<?php echo $test['scrum_name'] ?>" />
-                                                                                    <div class="valid-feedback">
-                                                                                    </div>
+                                                                                        name="automation_script_path"
+                                                                                        placeholder="./tests/component/Answers/VerifyLogin.ts"
+                                                                                        value="<?php echo $test['automation_script_path']; ?>" />
                                                                                 </div>
                                                                             </div>
                                                                             <hr />

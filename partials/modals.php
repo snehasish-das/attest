@@ -98,7 +98,7 @@
 
 <!-- Add Test plan node Modal -->
 <form id="addNewTest" action="./actions/addNewTest.php" method="GET" novalidate>
-<input type="hidden" class="form-control" name="parent_node" value="<?php echo $_REQUEST['node']; ?>" required />
+    <input type="hidden" class="form-control" name="parent_node" value="<?php echo @$_REQUEST['node']; ?>" />
     <div class="modal fade" id="addNewTestModal" tabindex="-1" role="dialog" aria-hidden="true" data-focus="false">
         <div class="modal-dialog modal-dialog-centered" role="dialog">
             <div class="modal-content">
