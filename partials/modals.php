@@ -1,5 +1,5 @@
 <!-- Add Test plan node Modal -->
-<form id="addTestplanNode" action="./actions/addNode.php" method="POST" novalidate>
+<form id="addTestplanNode" action="./actions/addNode.php" method="POST">
     <div class="modal fade" id="addTestplanFolderModal" tabindex="-1" role="dialog" aria-hidden="true"
         data-focus="false">
         <div class="modal-dialog modal-dialog-centered" role="dialog">
@@ -47,7 +47,7 @@
 </form>
 
 <!-- Add Test plan node Modal -->
-<form id="addTestlabNode" action="./actions/addNode.php" method="POST" novalidate>
+<form id="addTestlabNode" action="./actions/addNode.php" method="POST">
     <div class="modal fade" id="addTestlabFolderModal" tabindex="-1" role="dialog" aria-hidden="true"
         data-focus="false">
         <div class="modal-dialog modal-dialog-centered" role="dialog">
@@ -95,9 +95,8 @@
 </form>
 
 
-
 <!-- Add Test plan node Modal -->
-<form id="addNewTest" action="./actions/addNewTest.php?ancestor_node=<?php echo @$_REQUEST['parent_node']; ?>" method="GET" novalidate>
+<form id="addNewTest" action="./actions/addNewTest.php?ancestor_node=<?php echo @$_REQUEST['parent_node']; ?>" method="POST">
     <input type="hidden" class="form-control" name="parent_node" value="<?php echo @$_REQUEST['node']; ?>" />
     <div class="modal fade" id="addNewTestModal" tabindex="-1" role="dialog" aria-hidden="true" data-focus="false">
         <div class="modal-dialog modal-dialog-centered" role="dialog">
@@ -170,6 +169,43 @@
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-primary">Save</button>
+                    <button class="btn" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+<!-- Execute Automation Tests Modal -->
+<form id="executeAutomationTests" action="./actions/executeAutomationTests.php?ancestor_node=<?php echo @$_REQUEST['parent_node']; ?>" method="GET">
+    <input type="hidden" class="form-control" name="parent_node" value="<?php echo @$_REQUEST['node']; ?>" />
+    <div class="modal fade" id="executeAutomationTestsModal" tabindex="-1" role="dialog" aria-hidden="true" data-focus="false">
+        <div class="modal-dialog modal-dialog-centered" role="dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="feather feather-x close" data-dismiss="modal">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                    <div class="compose-box">
+                        <div class="compose-content">
+                            <h5 class="task-heading">Execute Automation Tests via Jenkins</h5>
+                            <div class="form-row">
+                                <div class="col-md-12 mb-4">
+                                    <label>Home url</label>
+                                    <input type="text" class="form-control" name="name" placeholder="https://staging.247-inc.net/home" required />
+                                    <div class="valid-feedback">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Submit</button>
                     <button class="btn" data-dismiss="modal">Close</button>
                 </div>
             </div>

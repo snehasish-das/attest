@@ -138,6 +138,24 @@ $releases = json_decode($cta->httpGetWithAuth($releases_url,$_SESSION['auth-phra
 
                                     <div class="col-xl-12 col-lg-12 col-sm-12  layout-spacing">
                                         <div class="widget-content widget-content-area br-6">
+                                            <div class="dt--top-section close dropdown d-inline-block">
+                                                <a class="dropdown-toggle" href="#" role="button" id="pendingTask"
+                                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                        viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                        class="feather feather-more-vertical">
+                                                        <circle cx="12" cy="12" r="1"></circle>
+                                                        <circle cx="12" cy="5" r="1"></circle>
+                                                        <circle cx="12" cy="19" r="1"></circle>
+                                                    </svg>
+                                                </a>
+
+                                                <div class="dropdown-menu" aria-labelledby="pendingTask"
+                                                    style="will-change: transform; position: absolute; transform: translate3d(105px, 0, 0px); top: 0px; left: 0px;">
+                                                    <a class="dropdown-item" href="javascript:void(0);" data-toggle="modal" data-target="#executeAutomationTestsModal">Execute Automation Tests</a>
+                                                </div>
+                                            </div>
                                             <table id="html5-extension"
                                                 class="table table-hover non-hover table-editable table-edits"
                                                 style="width:100%">
