@@ -8,7 +8,7 @@ $app->get('/releases/{parent_node}', function (Request $request, Response $respo
     $parent_node = $args['parent_node'];
     $getReleases = "SELECT tr.`test_id`, tt.`name` as test_name, tt.`test_type`, tt.`product`, tt.`priority`, tt.`tag`, tt.`scrum_name`, tt.`automation_script_path`, tt.`automation_author`, tt.`automation_status`, tr.`test_status`, tr.`execution_date`, tr.`bug_no`, tr.`test_run_link` FROM `tcm_releases` tr, `tcm_tests` tt 
     WHERE tt.id=tr.test_id AND tr.`parent_node`='$parent_node' AND tr.is_deleted=0 ORDER BY `execution_date`";
-
+ 
     try {
         $db = new db();
         $db = $db->connect();
