@@ -95,9 +95,10 @@
 </form>
 
 
-<!-- Add Test plan node Modal -->
-<form id="addNewTest" action="./actions/addNewTest.php?ancestor_node=<?php echo @$_REQUEST['parent_node']; ?>" method="POST">
+<!-- Add Test Modal -->
+<form id="addNewTest" action="./actions/addNewTest.php" method="POST">
     <input type="hidden" class="form-control" name="parent_node" value="<?php echo @$_REQUEST['node']; ?>" />
+    <input type="hidden" class="form-control" name="ancestor_node" value="<?php echo @$_REQUEST['parent_node']; ?>" />
     <div class="modal fade" id="addNewTestModal" tabindex="-1" role="dialog" aria-hidden="true" data-focus="false">
         <div class="modal-dialog modal-dialog-centered" role="dialog">
             <div class="modal-content">
@@ -178,8 +179,9 @@
 
 
 <!-- Execute Automation Tests Modal -->
-<form id="executeAutomationTests" action="./actions/executeAutomationTests.php?ancestor_node=<?php echo @$_REQUEST['parent_node']; ?>" method="GET">
+<form id="executeAutomationTests" action="./actions/executeAutomationTests.php" method="GET">
     <input type="hidden" class="form-control" name="parent_node" value="<?php echo @$_REQUEST['node']; ?>" />
+    <input type="hidden" class="form-control" name="ancestor_node" value="<?php echo @$_REQUEST['parent_node']; ?>" />
     <div class="modal fade" id="executeAutomationTestsModal" tabindex="-1" role="dialog" aria-hidden="true" data-focus="false">
         <div class="modal-dialog modal-dialog-centered" role="dialog">
             <div class="modal-content">
@@ -196,7 +198,7 @@
                             <div class="form-row">
                                 <div class="col-md-12 mb-4">
                                     <label>Home url</label>
-                                    <input type="text" class="form-control" name="name" placeholder="https://staging.247-inc.net/home" required />
+                                    <input type="text" class="form-control" name="home_url" placeholder="https://staging.247-inc.net/home" required />
                                     <div class="valid-feedback">
                                     </div>
                                 </div>
