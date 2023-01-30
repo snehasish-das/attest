@@ -26,6 +26,8 @@ $app->get('/tests', function (Request $request, Response $response, array $args)
 
     $getTests .= " ORDER BY tt.name";
 
+    //echo 'Query : '. $getTests;
+
     try {
         $db = new db();
         $db = $db->connect();
