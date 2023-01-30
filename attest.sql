@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 20, 2022 at 09:24 AM
+-- Generation Time: Jan 30, 2023 at 07:29 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -75,10 +75,12 @@ INSERT INTO `tcm_nodes` (`id`, `node_name`, `parent_node`, `node_type`, `created
 ('2733a58e-001c-11ed-b09d-0c9a3ce20ee5', 'TestPlan Node 1', 'Answers', 'testplan', 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', '2022-07-10 06:47:23', 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', '2022-07-10 06:47:23', 0),
 ('29699302-fdb1-11ec-ba34-0c9a3ce20ee5', 'Open Channel', 'Messaging', 'testplan', 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', '2022-07-07 02:50:24', 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', '2022-07-07 02:50:24', 0),
 ('44c00fc3-0655-11ed-b99c-0c9a3ce20ee5', 'Feature runs', NULL, 'testlab', 'Seed Data', '2022-07-18 04:51:21', 'Seed Data', '2022-07-18 04:51:21', 0),
+('4bdcb09c-97bb-11ed-9c18-00059a3c7a00', 'Assist Admin tests', 'Adhoc Runs', 'testlab', 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', '2023-01-19 05:37:01', 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', '2023-01-19 05:37:01', 0),
 ('82affcb1-fd9c-11ec-ba34-0c9a3ce20ee5', 'Cards', 'Assist', 'testplan', 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', '2022-07-07 02:26:22', 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', '2022-07-07 02:26:22', 0),
 ('93de6338-0654-11ed-b99c-0c9a3ce20ee5', 'Release', NULL, 'testlab', 'Seed Data', '2022-07-18 04:45:42', 'Seed Data', '2022-07-18 04:45:42', 0),
 ('ad8d2d4b-0654-11ed-b99c-0c9a3ce20ee5', 'Adhoc Runs', NULL, 'testlab', 'Seed Data', '2022-07-18 04:47:07', 'Seed Data', '2022-07-18 04:47:07', 0),
 ('c9f81d8d-065a-11ed-b99c-0c9a3ce20ee5', 'Test adhoc run', 'Adhoc Runs', 'testlab', 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', '2022-07-18 05:30:52', 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', '2022-07-18 05:30:52', 0),
+('cfae4e58-97b9-11ed-9c18-00059a3c7a00', 'Admin console', 'Assist', 'testplan', 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', '2023-01-19 05:26:23', 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', '2023-01-19 05:26:23', 0),
 ('da8b5ae8-fd9a-11ec-ba34-0c9a3ce20ee5', 'Answers', NULL, 'testplan', 'Seed Data', '2022-07-07 02:16:47', 'Seed Data', '2022-07-07 02:16:47', 0),
 ('da8b65fc-fd9a-11ec-ba34-0c9a3ce20ee5', 'Conversation', NULL, 'testplan', 'Seed Data', '2022-07-07 02:16:47', 'Seed Data', '2022-07-07 02:16:47', 0),
 ('da8b666b-fd9a-11ec-ba34-0c9a3ce20ee5', 'Messaging', NULL, 'testplan', 'Seed Data', '2022-07-07 02:16:47', 'Seed Data', '2022-07-07 02:16:47', 0),
@@ -133,8 +135,16 @@ CREATE TABLE `tcm_releases` (
 --
 
 INSERT INTO `tcm_releases` (`id`, `parent_node`, `test_id`, `test_status`, `execution_date`, `test_run_type`, `bug_no`, `test_run_link`, `created_by`, `created_date`, `last_updated_by`, `last_updated_date`, `is_deleted`) VALUES
-(19, 'Test adhoc run', 1, 'Failed', '2022-07-20', NULL, 'CXPC-123', 'http://some.link', 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', '2022-07-20 04:31:06', 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', '2022-07-20 04:31:06', 0),
-(20, 'Test adhoc run', 2, 'Passed', '2022-07-20', NULL, 'CXPC-123', NULL, 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', '2022-07-20 04:31:06', 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', '2022-07-20 04:31:06', 0);
+(21, 'Adhoc Runs', 1, 'Passed', '2022-11-15', NULL, 'CXPC-1232', NULL, 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', '2022-07-21 07:03:06', 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', '2022-07-21 07:03:06', 0),
+(23, 'Adhoc Runs', 2, NULL, '2022-11-15', NULL, NULL, NULL, 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', '2022-11-15 05:51:13', 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', '2022-11-15 05:51:13', 0),
+(25, 'Feature runs', 1, NULL, '2022-12-22', NULL, NULL, NULL, 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', '2022-12-22 06:09:12', 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', '2022-12-22 06:09:12', 0),
+(26, 'Feature runs', 2, NULL, '2022-12-22', NULL, NULL, NULL, 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', '2022-12-22 06:09:12', 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', '2022-12-22 06:09:12', 0),
+(27, 'Assist Admin tests', 4, NULL, '2023-01-19', NULL, NULL, NULL, 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', '2023-01-19 05:37:16', 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', '2023-01-19 05:37:16', 0),
+(28, 'Assist Admin tests', 5, NULL, '2023-01-19', NULL, NULL, NULL, 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', '2023-01-19 05:37:16', 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', '2023-01-19 05:37:16', 0),
+(29, 'Assist Admin tests', 6, NULL, '2023-01-19', NULL, NULL, NULL, 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', '2023-01-19 05:37:16', 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', '2023-01-19 05:37:16', 0),
+(30, 'Assist Admin tests', 7, NULL, '2023-01-19', NULL, NULL, NULL, 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', '2023-01-19 05:37:16', 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', '2023-01-19 05:37:16', 0),
+(31, 'Assist Admin tests', 8, NULL, '2023-01-19', NULL, NULL, NULL, 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', '2023-01-19 05:37:16', 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', '2023-01-19 05:37:16', 0),
+(32, 'Test adhoc run', 3, 'Passed', '2023-01-24', NULL, 'CXPC-123', 'https://cicd.cloud.247-inc.net/job/certify-test-framework/job/TCM_Adhoc_Test_Run/6', 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', '2023-01-24 04:53:03', 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', '2023-01-24 04:53:03', 0);
 
 -- --------------------------------------------------------
 
@@ -148,11 +158,12 @@ CREATE TABLE `tcm_tests` (
   `description` varchar(128) DEFAULT NULL,
   `product` varchar(16) NOT NULL,
   `author` varchar(40) NOT NULL,
-  `steps` blob NOT NULL,
-  `expected_output` blob NOT NULL,
+  `steps` blob DEFAULT NULL,
+  `expected_output` blob DEFAULT NULL,
   `test_type` enum('Manual','Automation') DEFAULT 'Automation',
   `priority` int(11) NOT NULL,
   `automation_status` enum('Not Planned','In Progress','Ready','Not Applicable') DEFAULT 'Not Planned',
+  `automation_script_path` varchar(256) DEFAULT NULL,
   `automation_author` varchar(40) DEFAULT NULL,
   `tag` varchar(128) DEFAULT NULL,
   `scrum_name` varchar(40) DEFAULT NULL,
@@ -170,9 +181,15 @@ CREATE TABLE `tcm_tests` (
 -- Dumping data for table `tcm_tests`
 --
 
-INSERT INTO `tcm_tests` (`id`, `name`, `description`, `product`, `author`, `steps`, `expected_output`, `test_type`, `priority`, `automation_status`, `automation_author`, `tag`, `scrum_name`, `pages_involved`, `feature_id`, `parent_node`, `created_by`, `created_date`, `last_updated_by`, `last_updated_date`, `is_deleted`) VALUES
-(1, 'Dummy cards test 1', 'Some long description ', 'Assist', 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', 0x4c6f67696e3e3e4e6176696761746520746f2041737369737420636f6e736f6c653e3e56657269667920636861743e3e4c6f676f75743e3e, 0x5375636365737366756c206c6f67696e3e3e4e6f206572726f7273206f6e2041737369737420636f6e736f6c653e3e41626c6520746f20696e74657261637420776974682076697369746f723e3e436c6f736520636861743e3e, 'Automation', 2, 'Not Planned', 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', 'smoke,regression', 'E2E Squad', 0x6f6e65546f4f6e6543686174436f6e74726f6c6c65722e6a732c61646d696e436f6e74726f6c6c65722e6a732c777261705570436f6e74726f6c6c65722e6a73, '17XYZ3', 'Cards', 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', '2022-07-07 02:40:40', 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', '2022-07-07 02:40:40', 0),
-(2, 'Some Meaningful Name', 'Some long description qwsdefg', 'Assist', 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', 0x5374657020776974686f7574206578706563743e3e, 0x3e3e45787065637420776974686f75742073746570, 'Automation', 1, 'Not Planned', 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', 'regression,smoke', 'E2E', NULL, ',,17XYZ3,17XYZ3,17XY', 'Cards', 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', '2022-07-07 02:40:40', 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', '2022-07-07 02:40:40', 0);
+INSERT INTO `tcm_tests` (`id`, `name`, `description`, `product`, `author`, `steps`, `expected_output`, `test_type`, `priority`, `automation_status`, `automation_script_path`, `automation_author`, `tag`, `scrum_name`, `pages_involved`, `feature_id`, `parent_node`, `created_by`, `created_date`, `last_updated_by`, `last_updated_date`, `is_deleted`) VALUES
+(1, 'Verify chat', 'Verify user interaction with agent and vice versa', 'Assist', 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', 0x4c6f67696e3e3e4e6176696761746520746f2041737369737420636f6e736f6c653e3e56657269667920636861743e3e4c6f676f75743e3e, 0x5375636365737366756c206c6f67696e3e3e4e6f206572726f7273206f6e2041737369737420636f6e736f6c653e3e41626c6520746f20696e74657261637420776974682076697369746f723e3e436c6f736520636861743e3e, 'Automation', 2, 'Not Planned', NULL, 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', 'smoke,regression,E2Etest', 'E2E Squad', 0x6f6e65546f4f6e6543686174436f6e74726f6c6c65722e6a732c61646d696e436f6e74726f6c6c65722e6a732c777261705570436f6e74726f6c6c65722e6a73, '17XYZ3', 'Cards', 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', '2022-07-07 02:40:40', 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', '2022-07-07 02:40:40', 0),
+(2, 'Verify cards availability', 'Verify if the payment card created in card designed is available during chat', 'Assist', 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', 0x4c6f67696e20746f20746865206170706c69636174696f6e20616e64206e6176696761746520746f20636172642064657369676e65723e3e4372656174652061206e6577207061796d656e7420636172643e3e5665726966792074686520636861742073657373696f6e207769746820757365206f662063617264, 0x3e3e7061796d656e74206361726420746f2062652063726561746564207375636365737366756c6c792077697468204e616d652c206164647265737320616e642063617264206e756d6265723e3e, 'Automation', 1, 'Not Planned', NULL, 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', 'regression,smoke', 'E2E', NULL, ',,17XYZ3,17XYZ3,17XY', 'Cards', 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', '2022-07-07 02:40:40', 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', '2022-07-07 02:40:40', 0),
+(3, 'CoCoIne Sanity', '', 'Answers', 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', NULL, NULL, 'Automation', 1, 'Ready', './tests/integration/openchannel/OpenChannel.ts', 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', NULL, 'E2E', NULL, NULL, 'New Testplan Node', 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', '2023-01-12 09:32:03', 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', '2023-01-12 09:32:03', 0),
+(4, 'Create new Queue', '', 'Assist', 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', NULL, NULL, 'Automation', 1, 'Ready', './tests/component/assist/adminconsole/QueueTests.ts', 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', NULL, 'E2E', NULL, NULL, 'Admin console', 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', '2023-01-19 05:27:14', 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', '2023-01-19 05:27:14', 0),
+(5, 'Create new Skill', NULL, 'Assist', 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', NULL, NULL, 'Automation', 1, 'Ready', './tests/component/assist/adminconsole/SkillTests.ts', 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', NULL, 'E2E', NULL, NULL, 'Admin console', '', '2023-01-19 05:36:36', '', '2023-01-19 05:36:36', 0),
+(6, 'Create new Team', NULL, 'Assist', 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', NULL, NULL, 'Automation', 2, 'Ready', './tests/component/assist/adminconsole/TeamTests.ts', 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', NULL, 'E2E', NULL, NULL, 'Admin console', '', '2023-01-19 05:36:36', '', '2023-01-19 05:36:36', 0),
+(7, 'Create new User', NULL, 'Assist', 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', NULL, NULL, 'Automation', 3, 'Ready', './tests/component/assist/adminconsole/UserTests.ts', 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', NULL, 'E2E', NULL, NULL, 'Admin console', '', '2023-01-19 05:36:36', '', '2023-01-19 05:36:36', 0),
+(8, 'Update Skill', NULL, 'Assist', 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', NULL, NULL, 'Automation', 1, 'Ready', './tests/component/assist/adminconsole/SkillTests.ts', 'a1b2dc81-fb73-11ec-98ee-0c9a3ce20ee5', NULL, 'E2E', NULL, NULL, 'Admin console', '', '2023-01-19 05:36:36', '', '2023-01-19 05:36:36', 0);
 
 -- --------------------------------------------------------
 
@@ -263,13 +280,13 @@ ALTER TABLE `tcm_options`
 -- AUTO_INCREMENT for table `tcm_releases`
 --
 ALTER TABLE `tcm_releases`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT for table `tcm_tests`
 --
 ALTER TABLE `tcm_tests`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- Constraints for dumped tables
