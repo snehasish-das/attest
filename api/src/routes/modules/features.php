@@ -5,7 +5,8 @@ use \Psr\Http\Message\ResponseInterface as Response;
 
 //Get
 $app->get('/features', function (Request $request, Response $response, array $args) {
-    $getFeatures = "SELECT * FROM `tcm_features` WHERE is_deleted=0 AND `created_date` > DATE_SUB(now(), INTERVAL 6 MONTH)";
+    //$getFeatures = "SELECT * FROM `tcm_features` WHERE is_deleted=0 AND `created_date` > DATE_SUB(now(), INTERVAL 6 MONTH)";
+    $getFeatures = "SELECT * FROM `tcm_features` WHERE is_deleted=0";
 
     
     $feature_ids = $request->getQueryParam('feature_id', $default = null);
@@ -42,17 +43,21 @@ $app->post('/features', function (Request $request, Response $response) {
     }
 
     $description = $request->getParam('description');
+    $status = $request->getParam('status');
+    $feature_type = $request->getParam('feature_type');
     $is_multi_sprint = $request->getParam('is_multi_sprint');
     try {
         $db = new db();
         $db = $db->connect();
         
-        $addQuery = "INSERT INTO `tcm_features` (`feature_id`, `name`, `description`, `is_multi_sprint`, `created_by`, `last_updated_by`) VALUES (:feature_id, :name, :description, :is_multi_sprint, :created_by, :last_updated_by)";
+        $addQuery = "INSERT INTO `tcm_features` (`feature_id`, `name`, `status`, `feature_type`, `description`, `is_multi_sprint`, `created_by`, `last_updated_by`) VALUES (:feature_id, :name, :status, :feature_type, :description, :is_multi_sprint, :created_by, :last_updated_by)";
 
         $stmt = $db->prepare($addQuery);
         $stmt->bindParam(':feature_id', $feature_id);
         $stmt->bindParam(':name', $name);
         $stmt->bindParam(':description', $description);
+        $stmt->bindParam(':status', $status);
+        $stmt->bindParam(':feature_type', $feature_type);
         $stmt->bindParam(':is_multi_sprint', $is_multi_sprint);
         $stmt->bindParam(':created_by', $_SESSION['id']);
         $stmt->bindParam(':last_updated_by', $_SESSION['id']);

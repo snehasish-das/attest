@@ -80,8 +80,8 @@
             </a>
         </li>
 
-        <li class="menu menu-single <?php  if(str_contains($currUrl,'requirements')) { echo 'active'; }?>">
-            <a href="requirements" data-active="<?php echo (str_contains($currUrl,'requirements')) ? 'true' : 'false'  ?>"
+        <li class="menu menu-single <?php  if(str_contains($currUrl,'features')) { echo 'active'; }?>">
+            <a href="features" data-active="<?php echo (str_contains($currUrl,'features')) ? 'true' : 'false'  ?>"
                 class="menu-toggle">
                 <div class="base-menu">
                     <div class="base-icons">
@@ -95,7 +95,7 @@
                             <line x1="12" y1="22.08" x2="12" y2="12"></line>
                         </svg>
                     </div>
-                    <span>Requirements</span>
+                    <span>Features</span>
                 </div>
             </a>
         </li>
