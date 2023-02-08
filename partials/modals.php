@@ -214,3 +214,76 @@
         </div>
     </div>
 </form>
+
+
+
+<!-- Add Feature Modal -->
+<form id="addNewFeature" action="./actions/addNewFeature.php" method="POST">
+    <div class="modal fade" id="addNewFeatureModal" tabindex="-1" role="dialog" aria-hidden="true" data-focus="false">
+        <div class="modal-dialog modal-dialog-centered" role="dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="feather feather-x close" data-dismiss="modal">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                    <div class="compose-box">
+                        <div class="compose-content">
+                            <h5 class="task-heading">Add new feature</h5>
+                            <div class="form-row">
+                                <div class="col-md-12 mb-4">
+                                    <label>Name</label>
+                                    <input type="text" class="form-control" name="name" placeholder="Introducing cards to assist" required />
+                                    <div class="valid-feedback">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-md-6 mb-4">
+                                    <label>Feature Type</label>
+                                    <select class="form-control selectpicker" name="feature_type">
+                                        <option value="New Feature">New Feature</option>
+                                        <option value="Enhancement">Enhancement</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6 mb-4">
+                                    <label>Status</label>
+                                    <select class="form-control selectpicker" name="status">
+                                        <option value="Not Planned">Not Planned</option>
+                                        <option value="Not Started">Not Started</option>
+                                        <option value="In Progress">In Progress</option>
+                                        <option value="Partially Delivered">Partially Delivered</option>
+                                        <option value="Delivered">Delivered</option>
+                                        <option value="Cancelled">Cancelled</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-md-6 mb-4">
+                                    <label>Is Multi-Sprint</label>
+                                    <select class="form-control selectpicker" name="is_multi_sprint">
+                                        <option value="1">Yes</option>
+                                        <option value="0">No</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="form-row">
+                                <div class="col-md-12 mb-12">
+                                    <label>Description</label>
+                                    <textarea class="form-control" rows="3" name="description"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                    <button class="btn" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
