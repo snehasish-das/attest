@@ -100,7 +100,7 @@
             </a>
         </li>
 
-        <li class="menu menu-single <?php  if(str_contains($currUrl,'releases')) { echo 'active'; }?>">
+        <!-- <li class="menu menu-single <?php  if(str_contains($currUrl,'releases')) { echo 'active'; }?>">
             <a href="releases" data-active="<?php echo (str_contains($currUrl,'releases')) ? 'true' : 'false'  ?>"
                 class="menu-toggle">
                 <div class="base-menu">
@@ -115,7 +115,7 @@
                     <span>Releases</span>
                 </div>
             </a>
-        </li>
+        </li> -->
 
         <li class="menu menu-single <?php  if(str_contains($currUrl,'reports')) { echo 'active'; }?>">
             <a href="reports" data-active="<?php echo (str_contains($currUrl,'reports')) ? 'true' : 'false'  ?>"
