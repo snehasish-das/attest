@@ -33,7 +33,7 @@
     }
     echo '<br> Final Spec :' . $specs . ', count:'. $index;
 
-    $triggerJobUrl = $_SESSION['jenkins-url'].'/job/certify-test-framework/job/TCM_Adhoc_Test_Run/buildWithParameters?HOME='.$home_url.'&TESTS='.$specs;
+    $triggerJobUrl = $_SESSION['jenkins-url'].'/job/certify-test-framework/job/TCM_Adhoc_Test_Run/buildWithParameters?HOME='.$home_url.'&TESTS='.$specs.'&NODE_NAME='.$parent_node;
     $jenkins_auth = base64_encode($jenkins_user.':'.$jenkins_pwd);
     $result = json_decode($cta->httpPostWithAuthAndProxy($triggerJobUrl,null,$jenkins_auth), true);
 
