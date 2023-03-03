@@ -22,7 +22,7 @@ $app->get('/nodes', function (Request $request, Response $response, array $args)
 
 //Get root nodes
 $app->get('/nodes/root', function (Request $request, Response $response, array $args) {
-    $getRootNodes = "SELECT * FROM `tcm_nodes` WHERE is_deleted=0 AND parent_node is NULL";
+    $getRootNodes = "SELECT * FROM `tcm_nodes` WHERE is_deleted=0 AND parent_node is NULL AND node_type='testplan' ORDER BY node_name";
     //echo 'Query : '.$getRootNodes;
     try {
         $db = new db();

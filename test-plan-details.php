@@ -16,6 +16,9 @@ $site_name_url = $_SESSION['site-url'] . '/api/site_options/site_name';
 $data = json_decode($cta->httpGet($site_name_url), true);
 $site_name = $data[0]['option_value'];
 
+$rootnodes_url = $_SESSION['site-url'] . '/api/nodes/root';
+$rootnodes = json_decode($cta->httpGetWithAuth($rootnodes_url,$_SESSION['auth-phrase']), true);
+
 $id = $_REQUEST['test_id'];
 if(isset($_REQUEST['name']) || isset($_REQUEST['steps']) || isset($_REQUEST['existing_features'])){
     $url = $_SESSION['site-url'] . '/api/tests/'.$id;
@@ -262,24 +265,13 @@ $features = json_decode($cta->httpGetWithAuth($features_url,$_SESSION['auth-phra
                                                                                     <select
                                                                                         class="form-control selectpicker"
                                                                                         name="product">
-                                                                                        <option value="Answers"
-                                                                                            <?php if($test['product']=='Answers'){echo 'selected="selected"'; } ?>>
-                                                                                            Answers</option>
-                                                                                        <option value="Assist"
-                                                                                            <?php if($test['product']=='Assist'){echo 'selected="selected"'; } ?>>
-                                                                                            Assist</option>
-                                                                                        <option value="Butterfly"
-                                                                                            <?php if($test['product']=='Butterfly'){echo 'selected="selected"'; } ?>>
-                                                                                            Butterfly</option>
-                                                                                        <option value="Conversation"
-                                                                                            <?php if($test['product']=='Conversation'){echo 'selected="selected"'; } ?>>
-                                                                                            Conversation</option>
-                                                                                        <option value="Messaging"
-                                                                                            <?php if($test['product']=='Messaging'){echo 'selected="selected"'; } ?>>
-                                                                                            Messaging</option>
-                                                                                        <option value="Voice"
-                                                                                            <?php if($test['product']=='Voice'){echo 'selected="selected"'; } ?>>
-                                                                                            Voice</option>
+                                                                                        <?php foreach ($rootnodes as $rootnode){?>
+                                                                                        <option
+                                                                                            value="<?php echo $rootnode['node_name']; ?>"
+                                                                                            <?php if($test['product']==$rootnode['node_name']){echo 'selected="selected"'; } ?>>
+                                                                                            <?php echo $rootnode['node_name']; ?>
+                                                                                        </option>
+                                                                                        <?php } ?>
                                                                                     </select>
                                                                                     <div class="valid-feedback">
                                                                                     </div>
@@ -290,9 +282,11 @@ $features = json_decode($cta->httpGetWithAuth($features_url,$_SESSION['auth-phra
                                                                                         class="form-control selectpicker"
                                                                                         name="author">
                                                                                         <?php foreach ($users as $user){ ?>
-                                                                                        <option value="<?php echo $user['id']; ?>"
+                                                                                        <option
+                                                                                            value="<?php echo $user['id']; ?>"
                                                                                             <?php if($test['author']==$user['id']){echo 'selected="selected"'; } ?>>
-                                                                                            <?php echo $user['name']; ?></option>
+                                                                                            <?php echo $user['name']; ?>
+                                                                                        </option>
                                                                                         <?php } ?>
                                                                                     </select>
                                                                                 </div>
@@ -364,14 +358,17 @@ $features = json_decode($cta->httpGetWithAuth($features_url,$_SESSION['auth-phra
                                                                                             <?php if($test['automation_author']==''){echo 'selected="selected"'; } ?>>
                                                                                             -SELECT-</option>
                                                                                         <?php foreach ($users as $user){ ?>
-                                                                                        <option value="<?php echo $user['id']; ?>"
+                                                                                        <option
+                                                                                            value="<?php echo $user['id']; ?>"
                                                                                             <?php if($test['automation_author']==$user['id']){echo 'selected="selected"'; } ?>>
-                                                                                            <?php echo $user['name']; ?></option>
+                                                                                            <?php echo $user['name']; ?>
+                                                                                        </option>
                                                                                         <?php } ?>
                                                                                     </select>
                                                                                 </div>
                                                                                 <div class="col-md-6 mb-6">
-                                                                                    <label>Automation script path</label>
+                                                                                    <label>Automation script
+                                                                                        path</label>
                                                                                     <input type="text"
                                                                                         class="form-control"
                                                                                         name="automation_script_path"

@@ -1,3 +1,12 @@
+<?php
+session_start();
+require_once 'api/src/functions.php';
+
+$cta = new CallToAction();
+$rootnodes_url = $_SESSION['site-url'] . '/api/nodes/root';
+$rootnodes = json_decode($cta->httpGetWithAuth($rootnodes_url,$_SESSION['auth-phrase']), true);
+
+?>
 <!-- Add Test plan node Modal -->
 <form id="addTestplanNode" action="./actions/addNode.php" method="POST">
     <div class="modal fade" id="addTestplanFolderModal" tabindex="-1" role="dialog" aria-hidden="true"
@@ -141,12 +150,9 @@
                                 <div class="col-md-6 mb-4">
                                     <label>Product</label>
                                     <select class="form-control selectpicker" name="product">
-                                        <option value="Answers">Answers</option>
-                                        <option value="Assist">Assist</option>
-                                        <option value="Butterfly">Butterfly</option>
-                                        <option value="Conversation">Conversation</option>
-                                        <option value="Messaging">Messaging</option>
-                                        <option value="Voice">Voice</option>
+                                        <?php foreach ($rootnodes as $rootnode){
+                                            echo '<option value="'.$rootnode['node_name'].'">'.$rootnode['node_name'].'</option>';
+                                        } ?>
                                     </select>
                                     <div class="valid-feedback">
                                     </div>
