@@ -20,6 +20,23 @@ $app->get('/nodes', function (Request $request, Response $response, array $args)
 
 })->add(new UserMiddleware());
 
+//Get root nodes
+$app->get('/nodes/root', function (Request $request, Response $response, array $args) {
+    $getRootNodes = "SELECT * FROM `tcm_nodes` WHERE is_deleted=0 AND parent_node is NULL";
+    //echo 'Query : '.$getRootNodes;
+    try {
+        $db = new db();
+        $db = $db->connect();
+
+        $stmt = $db->query($getRootNodes);
+        $rootNodes = $stmt->fetchAll(PDO::FETCH_OBJ);
+        return $response->withStatus(200)->write(json_encode($rootNodes));
+    } catch (PDOException $e) {
+        return $response->withStatus(400)->write('{"error" : {"text": ' . $e->getMessage() . '}}');
+    }
+    $db = null;
+})->add(new UserMiddleware());
+
 // Create
 $app->post('/nodes', function (Request $request, Response $response) {
     $node_name = $request->getParam('node_name');
