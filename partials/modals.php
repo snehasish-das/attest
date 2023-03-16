@@ -179,7 +179,7 @@
 
 
 <!-- Execute Automation Tests Modal -->
-<form id="executeAutomationTests" action="./actions/executeAutomationTests.php" method="GET">
+<form id="executeAutomationTests" action="./actions/executeAutomationTests.php" method="POST">
     <input type="hidden" class="form-control" name="parent_node" value="<?php echo @$_REQUEST['node']; ?>" />
     <input type="hidden" class="form-control" name="ancestor_node" value="<?php echo @$_REQUEST['parent_node']; ?>" />
     <div class="modal fade" id="executeAutomationTestsModal" tabindex="-1" role="dialog" aria-hidden="true" data-focus="false">
