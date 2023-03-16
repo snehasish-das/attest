@@ -1,3 +1,6 @@
-ALTER TABLE `tcm_tests` ADD `automation_script_path` VARCHAR(256) NULL AFTER `automation_status`;
+ALTER TABLE `tcm_tests` ADD `test_category` ENUM('UI','REST','HYBRID') NOT NULL DEFAULT 'UI' AFTER `test_type`;
 
-ALTER TABLE `tcm_tests` CHANGE `steps` `steps` BLOB NULL, CHANGE `expected_output` `expected_output` BLOB NULL;
+SELECT `node_name`, MONTH(tt.`created_date`) as Month, count(tt.id) as `total` FROM `tcm_tests` tt RIGHT JOIN `tcm_nodes` tn ON `product`=`node_name`
+WHERE tn.`parent_node` is NULL AND tn.`node_type`='testplan'
+GROUP BY `node_name`, MONTH(tt.`created_date`)
+ORDER BY `node_name`;
