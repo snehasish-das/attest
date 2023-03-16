@@ -227,7 +227,7 @@ $site_name = $data[0]['option_value'];
 
                                                 <div class="header">
                                                     <div class="header-body">
-                                                        <h6>Bugs Status</h6>
+                                                        <h6>Open Bugs</h6>
                                                         <p class="meta-date">Mar 2023</p>
                                                     </div>
                                                 </div>
@@ -268,7 +268,7 @@ $site_name = $data[0]['option_value'];
                                                         <thead>
                                                             <tr>
                                                                 <th><div class="th-content">Node</div></th>
-                                                                <th><div class="th-content th-heading">Total Tests</div></th>
+                                                                <th><div class="th-content th-heading">Total</div></th>
                                                                 <th><div class="th-content th-heading">Passed</div></th>
                                                                 <th><div class="th-content">Failed</div></th>
                                                                 <th><div class="th-content">URL</div></th>
@@ -340,9 +340,9 @@ $site_name = $data[0]['option_value'];
                             </div>
                         </div>
                     </div>
-                    <div class="col-right">
-                        <?php require_once './partials/notifications.php'; ?>
-                    </div>
+                    <!-- <div class="col-right">
+                        <?php //require_once './partials/notifications.php'; ?>
+                    </div> -->
 
                 </div>
             </div>

@@ -1,5 +1,5 @@
 <?php
-session_start();
+@session_start();
 require_once 'api/src/functions.php';
 
 $cta = new CallToAction();
