@@ -209,3 +209,22 @@ $app->delete('/tests/{id}', function (Request $request, Response $response, arra
     }
     $db = null;
 })->add(new UserMiddleware());
+
+//Get Test History
+$app->get('/history/{id}', function (Request $request, Response $response, array $args) {
+    $id = $args['id'];
+    $emp_id = $_SESSION['id'];
+    $getTestHistory = "SELECT * FROM `tcm_releases` WHERE `test_id`='$id' AND `is_deleted`=0 ORDER BY `execution_date` DESC LIMIT 5";
+
+    try {
+        $db = new db();
+        $db = $db->connect();
+
+        $stmt = $db->query($getTestHistory);
+        $history = $stmt->fetchAll(PDO::FETCH_OBJ);
+        return $response->withStatus(200)->write(json_encode($history));
+    } catch (PDOException $e) {
+        return $response->withStatus(400)->write('{"error" : {"text": ' . $e->getMessage() . '}}');
+    }
+    $db = null;
+})->add(new UserMiddleware());

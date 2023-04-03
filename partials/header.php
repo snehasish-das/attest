@@ -34,9 +34,9 @@
                         <li class="breadcrumb-item"><a href="<?php $_SESSION['site-url'] ?>"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></a></li>
                         <li class="breadcrumb-item <?php if($header == 'DASHBOARD'){echo 'active';}?>"><a href="<?php $_SESSION['site-url'] ?>"><?php if($header =='TEST PLAN DETAILS'){ echo 'Test plan'; } else{ echo ucfirst(strtolower($header)); } ?></a></li>
                         <?php if($header != 'DASHBOARD'){ if(@$parent_node != ''){?>
-                        <li class="breadcrumb-item"><a href="<?php echo $endpoint.'?node='.$parent_node. '&parent_node='; ?>"><?php echo ucfirst(@$parent_node); ?></a></li>
+                        <li class="breadcrumb-item"><a href="<?php if (strpos($currUrl, 'plan') !== false) {echo $_SESSION['site-url'].'/test-plan?node='.$parent_node. '&parent_node=';} else {echo $_SESSION['site-url'].'/test-lab?node='.$parent_node. '&parent_node=';} ?>"><?php echo ucfirst(@$parent_node); ?></a></li>
                         <?php } ?>
-                        <li class="breadcrumb-item active" aria-current="page"><a href="<?php echo $endpoint.'?node='.$node.'&parent_node='.$parent_node; ?>"><?php echo ucfirst(@$node); ?></a></li>
+                        <li class="breadcrumb-item active" aria-current="page"><a href="<?php if (strpos($currUrl, 'plan') !== false) {echo $_SESSION['site-url'].'/test-plan?node='.$node. '&parent_node='.$parent_node;} else {echo $_SESSION['site-url'].'/test-lab?node='.$parent_node. '&parent_node='.$parent_node;} ?>"><?php echo ucfirst(@$node); ?></a></li>
                         <?php } ?>
                     </ol>
                 </nav>
