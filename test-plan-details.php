@@ -794,7 +794,7 @@ $features = json_decode($cta->httpGetWithAuth($features_url,$_SESSION['auth-phra
                         </div>
                     </div>
                     <div class="col-right">
-                        <?php require_once './partials/notifications.php'; ?>
+                        <?php //require_once './partials/notifications.php'; ?>
                     </div>
 
                 </div>
