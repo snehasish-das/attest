@@ -15,6 +15,26 @@ $cta = new CallToAction();
 $site_name_url = $_SESSION['site-url'] . '/api/site_options/site_name';
 $data = json_decode($cta->httpGet($site_name_url), true);
 $site_name = $data[0]['option_value'];
+
+
+//Tests by category
+$tests_url = $_SESSION['site-url'] . '/api/reports/tests-by-category';
+$tests = json_decode($cta->httpGetWithAuth($tests_url,$_SESSION['auth-phrase']), true);
+$count=0; $uiCount=0; $restCount=0; $hybridCount=0;
+foreach($tests as $test){
+    if($test['test_category'] == 'UI'){
+        $uiCount = $test['count'];
+        $count+= $test['count'];
+    }
+    if($test['test_category'] == 'REST'){
+        $restCount = $test['count'];
+        $count+= $test['count'];
+    }
+    if($test['test_category'] == 'HYBRID'){
+        $hybridCount = $test['count'];
+        $count+= $test['count'];
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -135,12 +155,12 @@ $site_name = $data[0]['option_value'];
                                                         <div class="w-browser-details">
                                                             <div class="w-browser-info">
                                                                 <h6>UI</h6>
-                                                                <p class="browser-count">65%</p>
+                                                                <p class="browser-count"><?php echo round(($uiCount/$count)*100)?>%</p>
                                                             </div>
                                                             <div class="w-browser-stats">
                                                                 <div class="progress">
                                                                     <div class="progress-bar bg-gradient-primary"
-                                                                        role="progressbar" style="width: 65%"
+                                                                        role="progressbar" style="width: <?php echo round(($uiCount/$count)*100)?>%"
                                                                         aria-valuenow="90" aria-valuemin="0"
                                                                         aria-valuemax="100"></div>
                                                                 </div>
@@ -164,13 +184,13 @@ $site_name = $data[0]['option_value'];
 
                                                             <div class="w-browser-info">
                                                                 <h6>API</h6>
-                                                                <p class="browser-count">25%</p>
+                                                                <p class="browser-count"><?php echo round(($restCount/$count)*100)?>%</p>
                                                             </div>
 
                                                             <div class="w-browser-stats">
                                                                 <div class="progress">
                                                                     <div class="progress-bar bg-gradient-danger"
-                                                                        role="progressbar" style="width: 35%"
+                                                                        role="progressbar" style="width: <?php echo round(($restCount/$count)*100)?>%"
                                                                         aria-valuenow="65" aria-valuemin="0"
                                                                         aria-valuemax="100"></div>
                                                                 </div>
@@ -199,13 +219,13 @@ $site_name = $data[0]['option_value'];
 
                                                             <div class="w-browser-info">
                                                                 <h6>Hybrid</h6>
-                                                                <p class="browser-count">15%</p>
+                                                                <p class="browser-count"><?php echo round(($hybridCount/$count)*100)?>%</p>
                                                             </div>
 
                                                             <div class="w-browser-stats">
                                                                 <div class="progress">
                                                                     <div class="progress-bar bg-gradient-warning"
-                                                                        role="progressbar" style="width: 15%"
+                                                                        role="progressbar" style="width: <?php echo round(($hybridCount/$count)*100)?>%"
                                                                         aria-valuenow="15" aria-valuemin="0"
                                                                         aria-valuemax="100"></div>
                                                                 </div>

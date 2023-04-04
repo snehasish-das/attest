@@ -138,11 +138,11 @@ $rootnodes = json_decode($cta->httpGetWithAuth($rootnodes_url,$_SESSION['auth-ph
                                     </select>
                                 </div>
                                 <div class="col-md-6 mb-4">
-                                    <label>Priority</label>
-                                    <select class="form-control selectpicker" name="priority">
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
+                                    <label>Test Category</label>
+                                    <select class="form-control selectpicker" name="test_category">
+                                        <option value="UI">UI</option>
+                                        <option value="REST">REST</option>
+                                        <option value="HYBRID">HYBRID</option>
                                     </select>
                                 </div>
                             </div>
@@ -157,6 +157,16 @@ $rootnodes = json_decode($cta->httpGetWithAuth($rootnodes_url,$_SESSION['auth-ph
                                     <div class="valid-feedback">
                                     </div>
                                 </div>
+                                <div class="col-md-6 mb-4">
+                                    <label>Priority</label>
+                                    <select class="form-control selectpicker" name="priority">
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-row">
                                 <div class="col-md-6 mb-4">
                                     <label>Scrum Name</label>
                                     <input type="text" class="form-control" name="scrum_name" placeholder="Scrum Name" />

@@ -12,8 +12,8 @@
     }
 
     if(isset($test)){
-        $parent_node = $test['product'];
-        $node = $test['parent_node'];
+        @$parent_node = $test['product'];
+        @$node = $test['parent_node'];
     }
 ?>
 

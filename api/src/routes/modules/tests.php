@@ -57,6 +57,7 @@ $app->post('/tests', function (Request $request, Response $response) {
         $author = $_SESSION['id'];
     }
     $test_type = $request->getParam('test_type');
+    $test_category = $request->getParam('test_category');
     $priority = $request->getParam('priority');
     if ($priority == '') {
         return $response->withStatus(400)->write('{"error" : {"text": "Priority is mandatory" }}');
@@ -70,7 +71,7 @@ $app->post('/tests', function (Request $request, Response $response) {
         $db = new db();
         $db = $db->connect();
         
-        $addQuery = "INSERT INTO `tcm_tests` (`name`, `description`, `product`, `author`, `test_type`, `priority`, `parent_node`, `scrum_name`, `created_by`, `last_updated_by`) VALUES (:name, :description, :product, :author, :test_type, :priority, :parent_node, :scrum_name, :created_by, :last_updated_by)";
+        $addQuery = "INSERT INTO `tcm_tests` (`name`, `description`, `product`, `author`, `test_type`, `test_category`, `priority`, `parent_node`, `scrum_name`, `created_by`, `last_updated_by`) VALUES (:name, :description, :product, :author, :test_type, :test_category, :priority, :parent_node, :scrum_name, :created_by, :last_updated_by)";
 
         $stmt = $db->prepare($addQuery);
         $stmt->bindParam(':name', $name);
@@ -78,6 +79,7 @@ $app->post('/tests', function (Request $request, Response $response) {
         $stmt->bindParam(':product', $product);
         $stmt->bindParam(':author', $author);
         $stmt->bindParam(':test_type', $test_type);
+        $stmt->bindParam(':test_category', $test_category);
         $stmt->bindParam(':priority', $priority);
         $stmt->bindParam(':product', $product);
         $stmt->bindParam(':parent_node', $parent_node);
@@ -129,6 +131,10 @@ $app->patch('/tests/{id}', function (Request $request, Response $response, array
     $test_type = $request->getParam('test_type');
     if ($test_type != '') {
         $updateQuery .= ", `test_type`='$test_type'";
+    }
+    $test_category = $request->getParam('test_category');
+    if ($test_category != '') {
+        $updateQuery .= ", `test_category`='$test_category'";
     }
     $priority = $request->getParam('priority');
     if ($priority != '') {

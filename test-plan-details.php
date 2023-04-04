@@ -27,6 +27,7 @@ if(isset($_REQUEST['name']) || isset($_REQUEST['steps']) || isset($_REQUEST['exi
         $payload->name = $_REQUEST['name'];
         $payload->product = $_REQUEST['product'];
         $payload->priority = $_REQUEST['priority'];
+        $payload->test_category = $_REQUEST['test_category'];
         $payload->automation_status = $_REQUEST['automation_status'];
         $payload->automation_author = $_REQUEST['automation_author'];
         $payload->automation_script_path = $_REQUEST['automation_script_path'];
@@ -275,18 +276,12 @@ $history = json_decode($cta->httpGetWithAuth($history_url,$_SESSION['auth-phrase
                                                                                 </div>
                                                                                 <div class="col-md-3 mb-4">
                                                                                     <label>Product</label>
-
-                                                                                    <select
-                                                                                        class="form-control selectpicker"
-                                                                                        name="product">
-                                                                                        <?php foreach ($rootnodes as $rootnode){?>
-                                                                                        <option
-                                                                                            value="<?php echo $rootnode['node_name']; ?>"
-                                                                                            <?php if($test['product']==$rootnode['node_name']){echo 'selected="selected"'; } ?>>
-                                                                                            <?php echo $rootnode['node_name']; ?>
-                                                                                        </option>
-                                                                                        <?php } ?>
-                                                                                    </select>
+                                                                                        <input type="text"
+                                                                                        class="form-control"
+                                                                                        name="product"
+                                                                                        placeholder="Product"
+                                                                                        value="<?php echo $test['product']; ?>"
+                                                                                        readonly>
                                                                                     <div class="valid-feedback">
                                                                                     </div>
                                                                                 </div>
@@ -316,18 +311,34 @@ $history = json_decode($cta->httpGetWithAuth($history_url,$_SESSION['auth-phrase
                                                                                         readonly>
                                                                                 </div>
                                                                                 <div class="col-md-3 mb-4">
+                                                                                    <label>Test Category</label>
+                                                                                    <select
+                                                                                        class="form-control selectpicker"
+                                                                                        name="test_category">
+                                                                                        <option
+                                                                                            <?php if($test['test_category']=='UI'){echo 'selected="selected"'; } ?> value="UI">
+                                                                                            UI</option>
+                                                                                        <option
+                                                                                            <?php if($test['test_category']=='REST'){echo 'selected="selected"'; } ?> value="REST">
+                                                                                            REST</option>
+                                                                                        <option
+                                                                                            <?php if($test['test_category']=='HYBRID'){echo 'selected="selected"'; } ?> value="HYBRID">
+                                                                                            HYBRID</option>
+                                                                                    </select>
+                                                                                </div>
+                                                                                <div class="col-md-3 mb-4">
                                                                                     <label>Priority</label>
                                                                                     <select
                                                                                         class="form-control selectpicker"
                                                                                         name="priority">
                                                                                         <option
-                                                                                            <?php if($test['priority']==1){echo 'selected="selected"'; } ?>>
+                                                                                            <?php if($test['priority']==1){echo 'selected="selected"'; } ?> value="1">
                                                                                             1</option>
                                                                                         <option
-                                                                                            <?php if($test['priority']==2){echo 'selected="selected"'; } ?>>
+                                                                                            <?php if($test['priority']==2){echo 'selected="selected"'; } ?> value="2">
                                                                                             2</option>
                                                                                         <option
-                                                                                            <?php if($test['priority']==3){echo 'selected="selected"'; } ?>>
+                                                                                            <?php if($test['priority']==3){echo 'selected="selected"'; } ?> value="3">
                                                                                             3</option>
                                                                                     </select>
                                                                                 </div>
@@ -350,16 +361,16 @@ $history = json_decode($cta->httpGetWithAuth($history_url,$_SESSION['auth-phrase
                                                                                         class="form-control selectpicker"
                                                                                         name="automation_status">
                                                                                         <option
-                                                                                            <?php if($test['automation_status']=='Not Planned'){echo 'selected="selected"'; } ?>>
+                                                                                            <?php if($test['automation_status']=='Not Planned'){echo 'selected="selected"'; } ?> value="Not Planned">
                                                                                             Not Planned</option>
                                                                                         <option
-                                                                                            <?php if($test['automation_status']=='In Progress'){echo 'selected="selected"'; } ?>>
+                                                                                            <?php if($test['automation_status']=='In Progress'){echo 'selected="selected"'; } ?> value="In Progress">
                                                                                             In Progress</option>
                                                                                         <option
-                                                                                            <?php if($test['automation_status']=='Ready'){echo 'selected="selected"'; } ?>>
+                                                                                            <?php if($test['automation_status']=='Ready'){echo 'selected="selected"'; } ?> value="Ready">
                                                                                             Ready</option>
                                                                                         <option
-                                                                                            <?php if($test['automation_status']=='Not Applicable'){echo 'selected="selected"'; } ?>>
+                                                                                            <?php if($test['automation_status']=='Not Applicable'){echo 'selected="selected"'; } ?> value="Not Applicable">
                                                                                             Not Applicable</option>
                                                                                     </select>
                                                                                 </div>
@@ -403,18 +414,14 @@ $history = json_decode($cta->httpGetWithAuth($history_url,$_SESSION['auth-phrase
                                                                             <div class="form-row">
                                                                                 <div class="col-md-12 mb-12">
                                                                                     <label>Tags</label>
-                                                                                    <div
-                                                                                        class="widget-content widget-content-area text-center tags-content">
+                                                                                    <div class="widget-content widget-content-area text-center tags-content">
                                                                                         <div>
-                                                                                            <input type="text" id="tags"
-                                                                                                name="tags"
-                                                                                                class="form-control">
+                                                                                            <input type="text" id="tags" name="tags" class="form-control">
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
-                                                                            <button class="btn btn-primary btn-sm"
-                                                                                type="submit">Update</button>
+                                                                            <button class="btn btn-primary btn-sm" type="submit">Update</button>
                                                                         </form>
 
                                                                     </div>

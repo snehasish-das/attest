@@ -148,6 +148,7 @@ $tests = json_decode($cta->httpGetWithAuth($tests_url,$_SESSION['auth-phrase']),
                                                         <th>Product</th>
                                                         <th>Author</th>
                                                         <th>Test Type</th>
+                                                        <th>Test Category</th>
                                                         <th>Priority</th>
                                                         <th>Automation Status</th>
                                                         <th>Tags</th>
@@ -165,6 +166,7 @@ $tests = json_decode($cta->httpGetWithAuth($tests_url,$_SESSION['auth-phrase']),
                                                         <td><?php echo $test['product']; ?></td>
                                                         <td><?php echo $test['user_name']; ?></td>
                                                         <td><?php echo $test['test_type']; ?></td>
+                                                        <td><?php echo $test['test_category']; ?></td>
                                                         <td><?php echo $test['priority']; ?></td>
                                                         <td><?php if(str_contains($test['automation_status'],'Not')){ echo '<span class="badge badge-danger">'; } else if(str_contains($test['automation_status'],'In Progress')){ echo '<span class="badge badge-warning">'; } else { echo '<span class="badge badge-primary">'; } echo $test['automation_status'].'</span>'; ?>
                                                         </td>

@@ -5,6 +5,7 @@
     $payload->name = $_REQUEST['name'];
     $payload->product = $_REQUEST['product'];
     $payload->test_type = $_REQUEST['test_type'];
+    $payload->test_category = $_REQUEST['test_category'];
     $payload->priority = $_REQUEST['priority'];
     $payload->automation_status = $_REQUEST['automation_status'];
     $payload->scrum_name = $_REQUEST['scrum_name'];
