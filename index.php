@@ -35,6 +35,30 @@ foreach($tests as $test){
         $count+= $test['count'];
     }
 }
+
+
+//Test runs by type
+$runs_url = $_SESSION['site-url'] . '/api/reports/test-runs-by-type';
+$runs = json_decode($cta->httpGetWithAuth($runs_url,$_SESSION['auth-phrase']), true);
+$count=0; $adhocCount=0; $featureCount=0; $releaseCount=0;
+foreach($runs as $run){
+    if(strtolower($run['parent_node']) == 'adhoc runs'){
+        echo '<br>Adhoc Runs: '. $adhocCount;
+        $adhocCount = $run['count'];
+        $count+= $run['count'];
+    }
+    if(strtolower($run['parent_node']) == 'feature runs'){
+        echo '<br>Feature Runs: '. $featureCount;
+        $featureCount = $run['count'];
+        $count+= $run['count'];
+    }
+    if(strtolower($run['parent_node']) == 'release runs'){
+        echo '<br>Release Runs: '. $releaseCount;
+        $releaseCount = $run['count'];
+        $count+= $run['count'];
+    }
+}
+echo '<br>Adhoc: '. $adhocCount .', Feature: '. $featureCount .', Release: '. $releaseCount;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -270,7 +294,7 @@ foreach($tests as $test){
                                                 <h5 class="">Test runs</h5>
                                             </div>
                                             <div class="widget-content">
-                                                <div id="chart-2" class=""></div>
+                                                <div id="test-runs" class=""></div>
                                             </div>
                                         </div>
                                     </div>
@@ -396,6 +420,119 @@ foreach($tests as $test){
     <script src="assets/js/forms/bootstrap_validation/bs_validation_script.js"></script>
     <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
 
+    <script>
+        
+  /*
+      ==================================
+          Test runs By Type | Options
+      ==================================
+  */
+  var options = {
+    chart: {
+      type: 'donut',
+      width: 380
+    },
+    colors: ['#2196f3', '#e2a03f', '#8738a7'],
+    dataLabels: {
+      enabled: false
+    },
+    legend: {
+      position: 'bottom',
+      horizontalAlign: 'center',
+      fontSize: '14px',
+      markers: {
+        width: 10,
+        height: 10,
+      },
+      itemMargin: {
+        horizontal: 0,
+        vertical: 8
+      }
+    },
+    plotOptions: {
+      pie: {
+        donut: {
+          size: '65%',
+          background: 'transparent',
+          labels: {
+            show: true,
+            name: {
+              show: true,
+              fontSize: '29px',
+              fontFamily: 'Nunito, sans-serif',
+              color: undefined,
+              offsetY: -10
+            },
+            value: {
+              show: true,
+              fontSize: '26px',
+              fontFamily: 'Nunito, sans-serif',
+              color: '20',
+              offsetY: 16,
+              formatter: function (val) {
+                return val
+              }
+            },
+            total: {
+              show: true,
+              showAlways: true,
+              label: 'Total',
+              color: '#888ea8',
+              formatter: function (w) {
+                return w.globals.seriesTotals.reduce(function (a, b) {
+                  return a + b
+                }, 0)
+              }
+            }
+          }
+        }
+      }
+    },
+    stroke: {
+      show: true,
+      width: 25,
+    },
+    series: [<?php echo $adhocCount.','.$releaseCount.','.$featureCount ?>],
+    labels: ['Adhoc', 'Release', 'Feature'],
+    responsive: [{
+      breakpoint: 1599,
+      options: {
+        chart: {
+          width: '350px',
+          height: '400px'
+        },
+        legend: {
+          position: 'bottom'
+        }
+      },
+
+      breakpoint: 1439,
+      options: {
+        chart: {
+          width: '250px',
+          height: '390px'
+        },
+        legend: {
+          position: 'bottom'
+        },
+        plotOptions: {
+          pie: {
+            donut: {
+              size: '65%',
+            }
+          }
+        }
+      },
+    }]
+  }
+  var chart = new ApexCharts(
+    document.querySelector("#test-runs"),
+    options
+  );
+
+  chart.render();
+
+    </script>
 </body>
 
 </html>

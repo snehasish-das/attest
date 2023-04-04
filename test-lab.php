@@ -195,7 +195,7 @@ $releases = json_decode($cta->httpGetWithAuth($releases_url,$_SESSION['auth-phra
                                                                     <line x1="9" y1="9" x2="15" y2="15"></line>
                                                                 </svg></a>
 
-                                                            <a href="#runTestModal" class="bs-tooltip"
+                                                            <!--a href="#runTestModal" class="bs-tooltip"
                                                                 data-original-title="Run Test" data-toggle="modal"
                                                                 data-test_id="<?php echo $release['test_id']; ?>"
                                                                 data-test_status="<?php echo $release['test_status']; ?>"
@@ -207,7 +207,7 @@ $releases = json_decode($cta->httpGetWithAuth($releases_url,$_SESSION['auth-phra
                                                                     class="css-i6dzq1">
                                                                     <circle cx="12" cy="12" r="10"></circle>
                                                                     <polygon points="10 8 16 12 10 16 10 8"></polygon>
-                                                                </svg></a>
+                                                                </svg></a-->
                                                         </td>
                                                         <td><?php echo '<a class="link" href="test-plan-details?test_id='.$release['test_id'].'"><span class="taskBoard-number">'.$release['test_id'].'</span></a>'; ?>
                                                         </td>
