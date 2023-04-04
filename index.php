@@ -40,22 +40,19 @@ foreach($tests as $test){
 //Test runs by type
 $runs_url = $_SESSION['site-url'] . '/api/reports/test-runs-by-type';
 $runs = json_decode($cta->httpGetWithAuth($runs_url,$_SESSION['auth-phrase']), true);
-$count=0; $adhocCount=0; $featureCount=0; $releaseCount=0;
+$adhocCount=0; $featureCount=0; $releaseCount=0;
 foreach($runs as $run){
     if(strtolower($run['parent_node']) == 'adhoc runs'){
         //echo '<br>Adhoc Runs: '. $adhocCount;
         $adhocCount = $run['count'];
-        $count+= $run['count'];
     }
     if(strtolower($run['parent_node']) == 'feature runs'){
         //echo '<br>Feature Runs: '. $featureCount;
         $featureCount = $run['count'];
-        $count+= $run['count'];
     }
     if(strtolower($run['parent_node']) == 'release runs'){
         //echo '<br>Release Runs: '. $releaseCount;
         $releaseCount = $run['count'];
-        $count+= $run['count'];
     }
 }
 //echo '<br>Adhoc: '. $adhocCount .', Feature: '. $featureCount .', Release: '. $releaseCount;
