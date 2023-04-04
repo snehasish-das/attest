@@ -43,22 +43,27 @@ $runs = json_decode($cta->httpGetWithAuth($runs_url,$_SESSION['auth-phrase']), t
 $count=0; $adhocCount=0; $featureCount=0; $releaseCount=0;
 foreach($runs as $run){
     if(strtolower($run['parent_node']) == 'adhoc runs'){
-        echo '<br>Adhoc Runs: '. $adhocCount;
+        //echo '<br>Adhoc Runs: '. $adhocCount;
         $adhocCount = $run['count'];
         $count+= $run['count'];
     }
     if(strtolower($run['parent_node']) == 'feature runs'){
-        echo '<br>Feature Runs: '. $featureCount;
+        //echo '<br>Feature Runs: '. $featureCount;
         $featureCount = $run['count'];
         $count+= $run['count'];
     }
     if(strtolower($run['parent_node']) == 'release runs'){
-        echo '<br>Release Runs: '. $releaseCount;
+        //echo '<br>Release Runs: '. $releaseCount;
         $releaseCount = $run['count'];
         $count+= $run['count'];
     }
 }
-echo '<br>Adhoc: '. $adhocCount .', Feature: '. $featureCount .', Release: '. $releaseCount;
+//echo '<br>Adhoc: '. $adhocCount .', Feature: '. $featureCount .', Release: '. $releaseCount;
+
+
+//Test runs by type
+$latest_runs_url = $_SESSION['site-url'] . '/api/reports/lastest-runs';
+$latestRuns = json_decode($cta->httpGetWithAuth($latest_runs_url,$_SESSION['auth-phrase']), true);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -155,6 +160,7 @@ echo '<br>Adhoc: '. $adhocCount .', Feature: '. $featureCount .', Release: '. $r
                             <div class="admin-data-content layout-top-spacing">
 
                                 <div class="row">
+                                    <!-- Tests by Category -->
                                     <div class="col-xl-7 col-lg-6 col-md-12 col-sm-12 col-12 layout-spacing">
                                         <div class="widget-four">
                                             <div class="widget-heading">
@@ -265,6 +271,7 @@ echo '<br>Adhoc: '. $adhocCount .', Feature: '. $featureCount .', Release: '. $r
                                         </div>
                                     </div>
 
+                                    <!-- Jira connector -->
                                     <div class="col-xl-5 col-lg-6 col-md-12 col-sm-12 col-12 layout-spacing">
                                         <div class="widget widget-five">
                                             <div class="widget-content">
@@ -288,6 +295,7 @@ echo '<br>Adhoc: '. $adhocCount .', Feature: '. $featureCount .', Release: '. $r
                                         </div>
                                     </div>
 
+                                    <!-- Test runs donut chart -->
                                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 layout-spacing">
                                         <div class="widget widget-chart-two">
                                             <div class="widget-heading">
@@ -299,6 +307,7 @@ echo '<br>Adhoc: '. $adhocCount .', Feature: '. $featureCount .', Release: '. $r
                                         </div>
                                     </div>
                                     
+                                    <!-- Latest Automation runs -->
                                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 layout-spacing">
                                         <div class="widget widget-table-three">
 
@@ -319,43 +328,15 @@ echo '<br>Adhoc: '. $adhocCount .', Feature: '. $featureCount .', Release: '. $r
                                                             </tr>
                                                         </thead>
                                                         <tbody>
+                                                            <?php foreach($latestRuns as $latestRun) {?>
                                                             <tr>
-                                                                <td><div class="td-content product-name"><div class="align-self-center"><p class="prd-name">Assist Admin tests</p><p class="prd-category text-primary">Adhoc Runs</p></div></div></td>
-                                                                <td><div class="td-content"><span class="pricing">10</span></div></td>
-                                                                <td><div class="td-content"><span class="discount-pricing">8</span></div></td>
-                                                                <td><div class="td-content">2</div></td>
-                                                                <td><div class="td-content"><a href="javascript:void(0);" class="text-info"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevrons-right"><polyline points="13 17 18 12 13 7"></polyline><polyline points="6 17 11 12 6 7"></polyline></svg> link</a></div></td>
+                                                                <td><div class="td-content product-name"><div class="align-self-center"><p class="prd-name"><?php echo $latestRun['node_name']; ?></p><p class="prd-category text-primary"><?php echo $latestRun['parent_node']; ?></p></div></div></td>
+                                                                <td><div class="td-content"><span class="pricing"><?php echo $latestRun['total']; ?></span></div></td>
+                                                                <td><div class="td-content"><span class="discount-pricing"><?php echo $latestRun['passed']; ?></span></div></td>
+                                                                <td><div class="td-content"><?php echo $latestRun['failed']; ?></div></td>
+                                                                <td><div class="td-content"><a href="<?php echo $latestRun['test_run_link']; ?>" class="text-info"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevrons-right"><polyline points="13 17 18 12 13 7"></polyline><polyline points="6 17 11 12 6 7"></polyline></svg> link</a></div></td>
                                                             </tr>
-                                                            <tr>
-                                                                <td><div class="td-content product-name"><div class="align-self-center"><p class="prd-name">Assist Admin tests</p><p class="prd-category text-primary">Adhoc Runs</p></div></div></td>
-                                                                <td><div class="td-content"><span class="pricing">10</span></div></td>
-                                                                <td><div class="td-content"><span class="discount-pricing">8</span></div></td>
-                                                                <td><div class="td-content">2</div></td>
-                                                                <td><div class="td-content"><a href="javascript:void(0);" class="text-info"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevrons-right"><polyline points="13 17 18 12 13 7"></polyline><polyline points="6 17 11 12 6 7"></polyline></svg> link</a></div></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td><div class="td-content product-name"><div class="align-self-center"><p class="prd-name">Assist Admin tests</p><p class="prd-category text-primary">Adhoc Runs</p></div></div></td>
-                                                                <td><div class="td-content"><span class="pricing">10</span></div></td>
-                                                                <td><div class="td-content"><span class="discount-pricing">8</span></div></td>
-                                                                <td><div class="td-content">2</div></td>
-                                                                <td><div class="td-content"><a href="javascript:void(0);" class="text-info"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevrons-right"><polyline points="13 17 18 12 13 7"></polyline><polyline points="6 17 11 12 6 7"></polyline></svg> link</a></div></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td><div class="td-content product-name"><div class="align-self-center"><p class="prd-name">Assist Admin tests</p><p class="prd-category text-primary">Adhoc Runs</p></div></div></td>
-                                                                <td><div class="td-content"><span class="pricing">10</span></div></td>
-                                                                <td><div class="td-content"><span class="discount-pricing">8</span></div></td>
-                                                                <td><div class="td-content">2</div></td>
-                                                                <td><div class="td-content"><a href="javascript:void(0);" class="text-info"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevrons-right"><polyline points="13 17 18 12 13 7"></polyline><polyline points="6 17 11 12 6 7"></polyline></svg> link</a></div></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td><div class="td-content product-name"><div class="align-self-center"><p class="prd-name">Assist Admin tests</p><p class="prd-category text-primary">Adhoc Runs</p></div></div></td>
-                                                                <td><div class="td-content"><span class="pricing">10</span></div></td>
-                                                                <td><div class="td-content"><span class="discount-pricing">8</span></div></td>
-                                                                <td><div class="td-content">2</div></td>
-                                                                <td><div class="td-content"><a href="javascript:void(0);" class="text-info"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevrons-right"><polyline points="13 17 18 12 13 7"></polyline><polyline points="6 17 11 12 6 7"></polyline></svg> link</a></div></td>
-                                                            </tr>
-   
-   
+                                                            <?php } ?>
                                                         </tbody>
                                                     </table>
                                                 </div>
