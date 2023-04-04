@@ -159,6 +159,7 @@ class CallToAction{
      */
     function httpPostWithAuthAndProxy($url,$payload,$auth){
         $proxy='127.0.0.1:3128';
+        //$proxy='http://proxy-east.infra.cloud.247-inc.net:3128';
         $ch = curl_init(str_replace(' ','%20',$url));
         curl_setopt($ch, CURLOPT_PROXY, $proxy);
         //echo "<br>Payload=".$payload;             
