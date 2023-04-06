@@ -17,12 +17,14 @@ $data = json_decode($cta->httpGet($site_name_url), true);
 $site_name = $data[0]['option_value'];
 
 
-$parent_node = $_REQUEST['node'];
+$currNode = $_REQUEST['node'];
+//echo 'Current Node : '.$currNode;
+
 /**
  * Delete the test from Release
  */
 if(isset($_REQUEST['test-id'])){
-    $delete_url=$_SESSION['site-url'] . '/api/releases/'.$parent_node.'/'.$_REQUEST['test-id'];
+    $delete_url=$_SESSION['site-url'] . '/api/releases/'.$currNode.'/'.$_REQUEST['test-id'];
     $delete = json_decode($cta->httpDeleteWithAuth($delete_url,$_SESSION['auth-phrase']), true);
     //echo 'URL: '.$delete_url.'<br>Result : '.$delete;
     $url = explode('&',$_SERVER['REQUEST_URI'])[0];
@@ -33,7 +35,7 @@ if(isset($_REQUEST['test-id'])){
 /**
  * Display release tests
  */
-$releases_url = $_SESSION['site-url'] . '/api/releases/'.$parent_node;
+$releases_url = $_SESSION['site-url'] . '/api/releases/'.$currNode;
 $releases = json_decode($cta->httpGetWithAuth($releases_url,$_SESSION['auth-phrase']), true);
 //echo 'URL : '.$releases_url.'Data : '.$releases[0]['test_id'];
 ?>
@@ -195,7 +197,7 @@ $releases = json_decode($cta->httpGetWithAuth($releases_url,$_SESSION['auth-phra
                                                                     <line x1="9" y1="9" x2="15" y2="15"></line>
                                                                 </svg></a>
 
-                                                            <!--a href="#runTestModal" class="bs-tooltip"
+                                                            <a href="#runTestModal" class="bs-tooltip"
                                                                 data-original-title="Run Test" data-toggle="modal"
                                                                 data-test_id="<?php echo $release['test_id']; ?>"
                                                                 data-test_status="<?php echo $release['test_status']; ?>"
@@ -207,7 +209,7 @@ $releases = json_decode($cta->httpGetWithAuth($releases_url,$_SESSION['auth-phra
                                                                     class="css-i6dzq1">
                                                                     <circle cx="12" cy="12" r="10"></circle>
                                                                     <polygon points="10 8 16 12 10 16 10 8"></polygon>
-                                                                </svg></a-->
+                                                                </svg></a>
                                                         </td>
                                                         <td><?php echo '<a class="link" href="test-plan-details?test_id='.$release['test_id'].'"><span class="taskBoard-number">'.$release['test_id'].'</span></a>'; ?>
                                                         </td>
@@ -269,7 +271,7 @@ $releases = json_decode($cta->httpGetWithAuth($releases_url,$_SESSION['auth-phra
                                 <div class="form-group mb-4">
                                     <input type="hidden" id="testid" name="test_id" />
                                     <input type="hidden" id="parent_node" name="parent_node"
-                                        value="<?php echo $parent_node; ?>" />
+                                        value="<?php echo $currNode; ?>" />
                                     <input type="hidden" id="redirect_uri" name="redirect_uri"
                                         value="<?php echo $_SERVER['REQUEST_URI']; ?>" />
                                     <select class="form-control selectpicker" name="test_status" id="test_status">
