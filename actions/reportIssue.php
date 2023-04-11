@@ -126,6 +126,6 @@
     $result = json_decode($cta->httpPatchWithAuth($url,json_encode($payload),$_SESSION['auth-phrase']), true);
     echo '<hr>URL : '.$url.'<br> Payload: '.json_encode($payload).'<br> Result : '.$result;
 
-    //header("Location:".$redirect_url);
-    //exit();
+    header("Location:".$redirect_url);
+    exit();
 ?>
