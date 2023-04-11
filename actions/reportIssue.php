@@ -118,7 +118,7 @@
         "update": {}
     }';
     $result = json_decode($cta->jiraPost($url,$payload,$jira_cookie,$jira_auth), true);
-    echo '<hr>URL : '.$url.'<br> Payload: '.$payload.'<br> Jira_ID : '.$result['key'].'<hr>';
+    echo '<hr>URL : '.$url.'<br> Payload: '.$payload.'<br> Jira_ID : '.$result['key'].'<hr> Auth: '. $jira_auth;
 
     $url = $_SESSION['site-url'] . '/api/releases/'.$_REQUEST['parent_node'].'/'.$_REQUEST['test_id'];
     $payload = new stdClass();
@@ -126,6 +126,6 @@
     $result = json_decode($cta->httpPatchWithAuth($url,json_encode($payload),$_SESSION['auth-phrase']), true);
     echo '<hr>URL : '.$url.'<br> Payload: '.json_encode($payload).'<br> Result : '.$result;
 
-    header("Location:".$redirect_url);
-    exit();
+    //header("Location:".$redirect_url);
+    //exit();
 ?>

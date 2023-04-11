@@ -186,11 +186,7 @@ class CallToAction{
      */
     function jiraPost($url,$payload,$cookie,$auth){
         $ch = curl_init(str_replace(' ','%20',$url));
-        //$proxy='127.0.0.1:3128';
-        //$proxy='http://proxy-east.infra.cloud.247-inc.net:3128';
-        curl_setopt($ch, CURLOPT_COOKIE, $cookie);
-        //curl_setopt($ch, CURLOPT_PROXY, $proxy);
-        //echo "<br>Payload=".$payload;             
+        curl_setopt($ch, CURLOPT_COOKIE, $cookie);  
 		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST"); 
         curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
         curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json','Authorization: Basic '. $auth));
