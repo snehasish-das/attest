@@ -323,7 +323,7 @@ $releases = json_decode($cta->httpGetWithAuth($releases_url,$_SESSION['auth-phra
 
 
     <!-- Log a bug from Testlab Modal -->
-    <form id="reportIssueForm" action="./actions/reportIssue.php" method="POST" novalidate>
+    <form id="reportIssueForm" action="./actions/reportIssue.php" method="POST">
         <div class="modal fade" id="reportIssueModal" tabindex="-1" role="dialog" aria-hidden="true" data-focus="false">
             <div class="modal-dialog modal-dialog-centered" role="dialog">
                 <div class="modal-content">
@@ -337,37 +337,48 @@ $releases = json_decode($cta->httpGetWithAuth($releases_url,$_SESSION['auth-phra
                         <div class="compose-box">
                             <div class="compose-content">
                                 <h5 class="task-heading">Log a bug</h5>
-                                <div class="form-group mb-4">
-                                    <input type="text" class="form-control" id="summary" name="summary"
-                                        placeholder="Payment card creation is not working" max="128" />
-                                </div>
-                                <div class="form-group mb-4">
-                                    <input type="hidden" id="testid" name="test_id" />
-                                    <input type="hidden" id="parent_node" name="parent_node"
-                                        value="<?php echo $currNode; ?>" />
-                                    <input type="hidden" id="test_name" name="test_name" />
-                                    <input type="hidden" id="redirect_uri" name="redirect_uri"
-                                        value="<?php echo $_SERVER['REQUEST_URI']; ?>" />
-                                    <select class="form-control selectpicker" name="product" id="test_status">
-                                        <option value="29042|5b3ef2eaab9cec2ed5a3cf83">Assist</option>
-                                        <option value="29043|6050c7e83adeca0067c9e638">Answers</option>
-                                        <option value="29033|557058:b80b8f1a-d44c-4356-bd74-cd91119ea4eb">Reporting</option>
-                                        <option value="29487|557058:b00e07bd-27a3-4936-8845-da5d74f4e83c">Self-Serve/MSS</option>
+                                <div class="form-row">
+                                        <input type="hidden" id="test_id" name="test_id" />
+                                        <input type="hidden" id="parent_node" name="parent_node"
+                                            value="<?php echo $currNode; ?>" />
+                                        <input type="hidden" id="test_name" name="test_name" />
+                                        <input type="hidden" id="test_run_link" name="test_run_link" />
+                                        <input type="hidden" id="redirect_uri" name="redirect_uri"
+                                            value="<?php echo $_SERVER['REQUEST_URI']; ?>" />
+                                    <div class="col-md-12 mb-4">
+                                        <label>Summary</label>
+                                        <input type="text" class="form-control" id="summary" name="summary"
+                                            placeholder="Payment card creation is not working" max="128" required />
+                                        <div class="valid-feedback">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 mb-4">
+                                        <label>Product</label>
+                                        <select class="form-control selectpicker" name="product_details" id="product_details">
+                                            <option value="29042|Assist|5b3ef2eaab9cec2ed5a3cf83">Assist</option>
+                                            <option value="29043|Answers|6050c7e83adeca0067c9e638">Answers</option>
+                                            <option value="29033|Reporting|557058:b80b8f1a-d44c-4356-bd74-cd91119ea4eb">Reporting</option>
+                                            <option value="29487|Self-Serve/MSS|557058:b00e07bd-27a3-4936-8845-da5d74f4e83c">Self-Serve/MSS</option>
+                                        </select>
+                                        <small id="productHelp" class="form-text text-muted">Assignee is auto-selectd based on product</small>
+                                        <div class="valid-feedback">
+                                        </div>
+                                    </div>
+                                <div class="col-md-12 mb-4">
+                                    <label>Priority</label>
+                                    <select class="form-control selectpicker" name="priority">
+                                        <option value="1">P1 (Critical)</option>
+                                        <option value="2">P2 (High)</option>
+                                        <option value="3">P3 (Medium)</option>
+                                        <option value="4">P4 (Low)</option>
                                     </select>
-                                    <small id="productHelp" class="form-text text-muted">Assignee is auto-selectd based on product</small>
                                 </div>
-                                <div class="form-group mb-4">
-                                    <input type="text" class="form-control" id="bug_no" name="bug_no"
-                                        placeholder="Jira ID" />
-                                    <small id="bugNoHelp" class="form-text text-muted">Mandatory when the test is
-                                        failed.</small>
                                 </div>
-                                <div class="form-group mb-4">
-                                    <input type="text" class="form-control" id="test_run_link" name="test_run_link"
-                                        placeholder="http://" />
-                                    <small id="testRunLinkHelp" class="form-text text-muted">Please provide the
-                                        automation
-                                        test run link, if applicable</small>
+                                <div class="form-row">
+                                    <div class="col-md-12 mb-12">
+                                        <label>Description</label>
+                                        <textarea class="form-control" rows="3" name="description" required></textarea>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -469,6 +480,23 @@ $releases = json_decode($cta->httpGetWithAuth($releases_url,$_SESSION['auth-phra
         modal.find('.modal-body input#testid').val(testid);
         modal.find('.modal-body select#test_status').val(test_status);
         modal.find('.modal-body input#bug_no').val(bug_no);
+        modal.find('.modal-body input#test_run_link').val(test_run_link);
+    });
+
+    // Set Jira modal values.
+    $('#reportIssueModal').on('show.bs.modal', function(event) {
+        // Button that triggered the modal
+        var a = $(event.relatedTarget);
+
+        // Extract info from data-* attributes
+        var test_id = a.data('test_id');
+        var test_name = a.data('test_name');
+        var test_run_link = a.data('test_run_link');
+        // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+        // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+        var modal = $(this);
+        modal.find('.modal-body input#test_id').val(test_id);
+        modal.find('.modal-body input#test_name').val(test_name);
         modal.find('.modal-body input#test_run_link').val(test_run_link);
     });
     </script>

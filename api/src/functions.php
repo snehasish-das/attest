@@ -179,6 +179,29 @@ class CallToAction{
             return $result;
     }
 
+    /**
+     * Pass the url and json encoded payload to call the POST API
+     * @param $url (POST URL) -- $url = 'http://localhost/tsplogic/resources/destinations/add';
+     * @param $payload (json encoded) -- e.g. $payload=json_encode(array_combine($key, $row),true);
+     */
+    function jiraPost($url,$payload,$cookie,$auth){
+        $ch = curl_init(str_replace(' ','%20',$url));
+        //$proxy='127.0.0.1:3128';
+        //$proxy='http://proxy-east.infra.cloud.247-inc.net:3128';
+        curl_setopt($ch, CURLOPT_COOKIE, $cookie);
+        //curl_setopt($ch, CURLOPT_PROXY, $proxy);
+        //echo "<br>Payload=".$payload;             
+		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST"); 
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json','Authorization: Basic '. $auth));
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+        //execute the POST request
+        $result = curl_exec($ch);
+        curl_close($ch);
+        return $result;
+    }
+
     public function httpPatchWithAuth($url, $payload,$auth){
 
 		$ch = curl_init(str_replace(' ','%20',$url));                                                                      
