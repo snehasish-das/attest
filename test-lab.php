@@ -155,7 +155,10 @@ $releases = json_decode($cta->httpGetWithAuth($releases_url,$_SESSION['auth-phra
 
                                                 <div class="dropdown-menu" aria-labelledby="pendingTask"
                                                     style="will-change: transform; position: absolute; transform: translate3d(105px, 0, 0px); top: 0px; left: 0px;">
-                                                    <a class="dropdown-item" href="javascript:void(0);" data-toggle="modal" data-target="#executeAutomationTestsModal">Execute Automation Tests</a>
+                                                    <a class="dropdown-item" href="javascript:void(0);"
+                                                        data-toggle="modal"
+                                                        data-target="#executeAutomationTestsModal">Execute Automation
+                                                        Tests</a>
                                                 </div>
                                             </div>
                                             <table id="html5-extension"
@@ -191,10 +194,13 @@ $releases = json_decode($cta->httpGetWithAuth($releases_url,$_SESSION['auth-phra
                                                                     height="24" viewBox="0 0 24 24" fill="none"
                                                                     stroke="currentColor" stroke-width="2"
                                                                     stroke-linecap="round" stroke-linejoin="round"
-                                                                    class="feather feather-x-circle table-cancel">
-                                                                    <circle cx="12" cy="12" r="10"></circle>
-                                                                    <line x1="15" y1="9" x2="9" y2="15"></line>
-                                                                    <line x1="9" y1="9" x2="15" y2="15"></line>
+                                                                    class="feather feather-trash-2 icon">
+                                                                    <polyline points="3 6 5 6 21 6"></polyline>
+                                                                    <path
+                                                                        d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2">
+                                                                    </path>
+                                                                    <line x1="10" y1="11" x2="10" y2="17"></line>
+                                                                    <line x1="14" y1="11" x2="14" y2="17"></line>
                                                                 </svg></a>
 
                                                             <a href="#runTestModal" class="bs-tooltip"
@@ -207,8 +213,10 @@ $releases = json_decode($cta->httpGetWithAuth($releases_url,$_SESSION['auth-phra
                                                                     stroke="currentColor" stroke-width="2" fill="none"
                                                                     stroke-linecap="round" stroke-linejoin="round"
                                                                     class="css-i6dzq1">
-                                                                    <circle cx="12" cy="12" r="10"></circle>
-                                                                    <polygon points="10 8 16 12 10 16 10 8"></polygon>
+                                                                    <path d="M12 20h9"></path>
+                                                                    <path
+                                                                        d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z">
+                                                                    </path>
                                                                 </svg></a>
                                                         </td>
                                                         <td><?php echo '<a class="link" href="test-plan-details?test_id='.$release['test_id'].'"><span class="taskBoard-number">'.$release['test_id'].'</span></a>'; ?>
@@ -219,7 +227,14 @@ $releases = json_decode($cta->httpGetWithAuth($releases_url,$_SESSION['auth-phra
                                                         <td><?php echo $release['execution_date']; ?></td>
                                                         <td><?php if(str_contains($release['test_status'],'Failed')){ echo '<span class="badge badge-danger">'; } else if(str_contains($release['test_status'],'Not')){ echo '<span class="badge badge-warning">'; } else { echo '<span class="badge badge-success">'; } echo $release['test_status'].'</span>'; ?>
                                                         </td>
-                                                        <td><?php if($release['bug_no']!='') {echo '<a href="#" target="_blank">'.$release['bug_no'].'</a>';} ?>
+                                                        <td><?php if($release['bug_no']!='') {echo '<a href="#" target="_blank" class="link">'.$release['bug_no'].'</a>';} else{ if(str_contains($release['test_status'],'Failed')){ ?>
+                                                            <a href="#reportIssueModal" class="bs-tooltip link"
+                                                            data-original-title="Report an issue" data-toggle="modal"
+                                                            data-test_id="<?php echo $release['test_id']; ?>"
+                                                            data-test_status="<?php echo $release['test_status']; ?>"
+                                                            data-test_name="<?php echo $release['test_name']; ?>"
+                                                            data-test_run_link="<?php echo $release['test_run_link']; ?>">Log a bug</a>
+                                                        <?php }} ?>
                                                         </td>
                                                         <td><?php if($release['test_run_link']!='') {echo '<a class="link" href="'.$release['test_run_link'].'" target="_blank"><span class="w-profile-content">click here</span></a>';} ?>
                                                         </td>
@@ -288,7 +303,68 @@ $releases = json_decode($cta->httpGetWithAuth($releases_url,$_SESSION['auth-phra
                                         failed.</small>
                                 </div>
                                 <div class="form-group mb-4">
-                                    <input type="text" class="form-control" id="test_run_link" name="test_run_link" placeholder="http://" />
+                                    <input type="text" class="form-control" id="test_run_link" name="test_run_link"
+                                        placeholder="http://" />
+                                    <small id="testRunLinkHelp" class="form-text text-muted">Please provide the
+                                        automation
+                                        test run link, if applicable</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Save</button>
+                        <button class="btn" data-dismiss="modal"> Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+
+    <!-- Log a bug from Testlab Modal -->
+    <form id="reportIssueForm" action="./actions/reportIssue.php" method="POST" novalidate>
+        <div class="modal fade" id="reportIssueModal" tabindex="-1" role="dialog" aria-hidden="true" data-focus="false">
+            <div class="modal-dialog modal-dialog-centered" role="dialog">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            class="feather feather-x close" data-dismiss="modal">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                        <div class="compose-box">
+                            <div class="compose-content">
+                                <h5 class="task-heading">Log a bug</h5>
+                                <div class="form-group mb-4">
+                                    <input type="text" class="form-control" id="summary" name="summary"
+                                        placeholder="Payment card creation is not working" max="128" />
+                                </div>
+                                <div class="form-group mb-4">
+                                    <input type="hidden" id="testid" name="test_id" />
+                                    <input type="hidden" id="parent_node" name="parent_node"
+                                        value="<?php echo $currNode; ?>" />
+                                    <input type="hidden" id="test_name" name="test_name" />
+                                    <input type="hidden" id="redirect_uri" name="redirect_uri"
+                                        value="<?php echo $_SERVER['REQUEST_URI']; ?>" />
+                                    <select class="form-control selectpicker" name="product" id="test_status">
+                                        <option value="29042|5b3ef2eaab9cec2ed5a3cf83">Assist</option>
+                                        <option value="29043|6050c7e83adeca0067c9e638">Answers</option>
+                                        <option value="29033|557058:b80b8f1a-d44c-4356-bd74-cd91119ea4eb">Reporting</option>
+                                        <option value="29487|557058:b00e07bd-27a3-4936-8845-da5d74f4e83c">Self-Serve/MSS</option>
+                                    </select>
+                                    <small id="productHelp" class="form-text text-muted">Assignee is auto-selectd based on product</small>
+                                </div>
+                                <div class="form-group mb-4">
+                                    <input type="text" class="form-control" id="bug_no" name="bug_no"
+                                        placeholder="Jira ID" />
+                                    <small id="bugNoHelp" class="form-text text-muted">Mandatory when the test is
+                                        failed.</small>
+                                </div>
+                                <div class="form-group mb-4">
+                                    <input type="text" class="form-control" id="test_run_link" name="test_run_link"
+                                        placeholder="http://" />
                                     <small id="testRunLinkHelp" class="form-text text-muted">Please provide the
                                         automation
                                         test run link, if applicable</small>
@@ -378,15 +454,15 @@ $releases = json_decode($cta->httpGetWithAuth($releases_url,$_SESSION['auth-phra
     });
 
     // Execute something when the modal window is shown.
-    $('#runTestModal').on('show.bs.modal', function (event) {
+    $('#runTestModal').on('show.bs.modal', function(event) {
         // Button that triggered the modal
-        var a = $(event.relatedTarget); 
+        var a = $(event.relatedTarget);
 
         // Extract info from data-* attributes
-        var testid = a.data('test_id'); 
-        var test_status = a.data('test_status'); 
-        var bug_no = a.data('bug_no'); 
-        var test_run_link = a.data('test_run_link'); 
+        var testid = a.data('test_id');
+        var test_status = a.data('test_status');
+        var bug_no = a.data('bug_no');
+        var test_run_link = a.data('test_run_link');
         // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
         // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
         var modal = $(this);
