@@ -5,8 +5,8 @@
     define('JENKINS_USER','snehasish.das@247.ai');
     define('JENKINS_PWD','114abfad369c314f5ad78546270daf2ea6');
     define('JIRA_URL','https://247inc.atlassian.net/rest');
-    define('JIRA_USER','snehasish.das@247.ai');
-    define('JIRA_PWD','ATATT3xFfGF0qP6XdARbgb4ROKHK3kbNhtLfWUdp4qcpRwBPvdzw8TG67Tp4eaPGNw9aKn6xwndbcj9cc5F3vyLPZrQXoTr0wGMEQTU-3RkgTcTwbf6T1uvIl0T9cjxqPtCi1ROOhLFywFBABPYVFc-qpyxQ3Uo2x9mhYLxG-WJLvc0cbftEAww=4ECF4476');
+    define('JIRA_USER','sowjanya.r@247.ai');
+    define('JIRA_PWD','ATATT3xFfGF0olYdahVE6XfnfgX25YOdlonMVbeNLvAzeshIChBsXmwwBuTJBpfeAYMU-IRs5i1-sEqqzGZbBnWfmPcJKv-GJoZflM5kiG6MeHFsyFxCy6BZlge60ptFN16rk7wDaj1mOGmOSBz5ftMwvMiLXWv91T8Dg_btp4BIFzrcVgn4bmU=6BC44857');
     define('JIRA_COOKIE', 'atlassian.xsrf.token=BFJ5-99LY-C2ZS-U889_356dc135bf83ccf55701bee345fd5b56ca094044_lin');
     
 ?>
