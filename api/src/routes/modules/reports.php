@@ -53,3 +53,26 @@ $app->get('/reports/lastest-runs', function (Request $request, Response $respons
     }
     $db = null;
 })->add(new UserMiddleware());
+
+//Jira most failures
+$app->get('/reports/most-failures', function (Request $request, Response $response, array $args) {
+    $getReport = "SELECT `test_id`, tt.`name`, tt.product, tt.priority, `execution_date`, `test_run_link`, tr.`bug_no`, COUNT(tr.test_id) as count FROM `tcm_releases` tr, `tcm_tests` tt WHERE tt.id=tr.test_id AND `test_status`='Failed' AND tr.bug_no <> ''";
+    //echo 'Query : '.$getReport;
+    $execution_date = $request->getParam('execution_date');
+    if ($execution_date == '') {
+        $execution_date = date('Y-m-d');
+    }
+    $getReport+=" AND execution_date='". $execution_date. "'"; //for a given exeuction date
+    $getReport+=" GROUP BY bug_no ORDER BY count DESC, test_id LIMIT 5"; //Limit to top 5 bugs
+    try {
+        $db = new db();
+        $db = $db->connect();
+
+        $stmt = $db->query($getReport);
+        $report = $stmt->fetchAll(PDO::FETCH_OBJ);
+        return $response->withStatus(200)->write(json_encode($report));
+    } catch (PDOException $e) {
+        return $response->withStatus(400)->write('{"error" : {"text": ' . $e->getMessage() . '}}');
+    }
+    $db = null;
+})->add(new UserMiddleware());
