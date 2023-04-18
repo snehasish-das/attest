@@ -23,7 +23,8 @@
 <nav id="compactSidebar">
     <ul class="menu-categories">
         <li class="menu menu-single <?php  if(str_contains($currUrl,'index') || $currUrl =='') { echo 'active'; }?>">
-            <a href="index" data-active="<?php echo (str_contains($currUrl,'index') || $currUrl =='') ? 'true' : 'false'  ?>"
+            <a href="index"
+                data-active="<?php echo (str_contains($currUrl,'index') || $currUrl =='') ? 'true' : 'false'  ?>"
                 class="menu-toggle">
                 <div class="base-menu">
                     <div class="base-icons">
@@ -117,8 +118,8 @@
             </a>
         </li> -->
 
-        <li class="menu menu-single <?php  if(str_contains($currUrl,'reports')) { echo 'active'; }?>">
-            <a href="reports" data-active="<?php echo (str_contains($currUrl,'reports')) ? 'true' : 'false'  ?>"
+        <li class="menu <?php  if(str_contains($currUrl,'reports')) { echo 'active'; }?>">
+            <a href="#reports" data-active="<?php echo (str_contains($currUrl,'reports')) ? 'true' : 'false'  ?>"
                 class="menu-toggle">
                 <div class="base-menu">
                     <div class="base-icons">
@@ -186,4 +187,20 @@
             ?>
         </ul>
     </div>
+
+
+    <div class="submenu" id="reports">
+        <ul class="submenu-list" data-parent-element="#uiKit">
+            <li>
+                <a href="#"> <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                            height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round" class="feather feather-git-commit">
+                            <circle cx="12" cy="12" r="4"></circle>
+                            <line x1="1.05" y1="12" x2="7" y2="12"></line>
+                            <line x1="17.01" y1="12" x2="22.96" y2="12"></line>
+                        </svg></span> Top bugs in last 10 runs </a>
+            </li>
+        </ul>
+    </div>
+
 </div>
