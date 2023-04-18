@@ -15,6 +15,8 @@
         @$parent_node = $test['product'];
         @$node = $test['parent_node'];
     }
+    @$parent_node = str_replace('-',' ',$parent_node);
+    @$node = str_replace('-',' ',$node);
 ?>
 
 <link href="assets/css/elements/breadcrumb.css" rel="stylesheet" type="text/css" />
