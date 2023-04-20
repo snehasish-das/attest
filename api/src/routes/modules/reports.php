@@ -78,7 +78,24 @@ $app->get('/reports/most-failures', function (Request $request, Response $respon
         $execution_date = date('Y-m-d');
     }
 
-    $getReport = "SELECT `execution_date`, `bug_no`, COUNT(test_id) as count, `parent_node` FROM `tcm_releases` WHERE `test_status`='Failed' AND bug_no <> '' AND execution_date='$execution_date' GROUP BY bug_no ORDER BY count DESC, test_id LIMIT 5";
+    $getReport = "SELECT `execution_date`, `bug_no`, COUNT(test_id) as count, `parent_node`, `test_run_link` FROM `tcm_releases` WHERE `test_status`='Failed' AND bug_no <> '' AND execution_date='$execution_date' GROUP BY bug_no ORDER BY count DESC, test_id LIMIT 5";
+    //echo 'Query : '.$getReport;
+    try {
+        $db = new db();
+        $db = $db->connect();
+
+        $stmt = $db->query($getReport);
+        $report = $stmt->fetchAll(PDO::FETCH_OBJ);
+        return $response->withStatus(200)->write(json_encode($report));
+    } catch (PDOException $e) {
+        return $response->withStatus(400)->write('{"error" : {"text": ' . $e->getMessage() . '}}');
+    }
+    $db = null;
+})->add(new UserMiddleware());
+
+//Frequest test failures
+$app->get('/reports/frequent-test-failures', function (Request $request, Response $response, array $args) {
+    $getReport = "SELECT tr.`test_id`, tt.`name`, tt.`product`, tu.`name` as author, tt.priority, tr.`execution_date`, tr.`parent_node`, tr.`test_run_link`, COUNT(tr.test_id) as count FROM `tcm_releases` tr, `tcm_tests` tt, `tcm_users` tu WHERE tt.`id`=tr.`test_id`AND tt.author=tu.id AND tr.`test_status`='Failed' AND tr.`execution_date` IN ( SELECT * FROM (SELECT DISTINCT `execution_date` FROM `tcm_releases` ORDER BY `execution_date` DESC LIMIT 10) as ed ) GROUP BY tr.test_id HAVING count>1 ORDER BY tr.`execution_date` DESC";
     //echo 'Query : '.$getReport;
     try {
         $db = new db();

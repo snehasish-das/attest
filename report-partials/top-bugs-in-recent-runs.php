@@ -26,7 +26,7 @@ $runs = json_decode($cta->httpGetWithAuth($runs_url,$_SESSION['auth-phrase']), t
         ?>
         <tr>
             <td><?php echo $run['execution_date']; ?></td>
-            <td><?php echo $bug['parent_node']; ?></td>
+            <td><a class="link" target="_blank" href="<?php echo $bug['test_run_link']; ?>"><?php echo $bug['parent_node']; ?></a></td>
             <td><?php echo $bug['bug_no']; ?></td>
             <td><?php echo $bug['count']; ?></td>
         </tr>
