@@ -10,6 +10,7 @@
     $parent_node = $_REQUEST['parent_node'];
     $ancestor_node = $_REQUEST['ancestor_node'];
     $home_url = $_REQUEST['home_url'];
+    $job_url = $_REQUEST['job_url'];
 
     require_once '../api/src/functions.php';
 
@@ -31,9 +32,12 @@
         $specs.='--spec '. $uniquePath .' ';
         $index++;
     }
-    echo '<br> Final Spec :' . $specs . ', count:'. $index;
+    //echo '<br> Final Spec :' . $specs . ', count:'. $index;
 
-    $triggerJobUrl = $_SESSION['jenkins-url'].'/job/certify-test-framework/job/TCM_Adhoc_Test_Run/buildWithParameters?HOME='.$home_url.'&TESTS='.$specs.'&NODE_NAME='.$parent_node;
+    $jenkinsJobUrl = ($job_url == '') ? $_SESSION['jenkins-url'].'/job/certify-test-framework/job/TCM_Adhoc_Test_Run' : $job_url;
+    $triggerJobUrl = $jenkinsJobUrl . '/buildWithParameters?HOME='.$home_url.'&TESTS='.$specs.'&NODE_NAME='.$parent_node;
+
+    echo '<br>Final URL : '.$triggerJobUrl;
     $jenkins_auth = base64_encode($jenkins_user.':'.$jenkins_pwd);
     $result = json_decode($cta->httpPostWithAuthAndProxy($triggerJobUrl,null,$jenkins_auth), true);
 

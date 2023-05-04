@@ -218,6 +218,12 @@ $rootnodes = json_decode($cta->httpGetWithAuth($rootnodes_url,$_SESSION['auth-ph
                                     <div class="valid-feedback">
                                     </div>
                                 </div>
+                                <div class="col-md-12 mb-4">
+                                    <label>Jenkins Job url</label>
+                                    <input type="text" class="form-control" name="job_url" placeholder="https://cicd.cloud.247-inc.net/job/certify-test-framework/job/TCM_Adhoc_Test_Run" />
+                                    <div class="valid-feedback">
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
