@@ -355,24 +355,36 @@ $releases = json_decode($cta->httpGetWithAuth($releases_url,$_SESSION['auth-phra
                                     <div class="col-md-12 mb-4">
                                         <label>Product</label>
                                         <select class="form-control selectpicker" name="product_details" id="product_details">
-                                            <option value="29042|Assist|5b3ef2eaab9cec2ed5a3cf83">Assist</option>
-                                            <option value="29043|Answers|6050c7e83adeca0067c9e638">Answers</option>
-                                            <option value="29033|Reporting|557058:b80b8f1a-d44c-4356-bd74-cd91119ea4eb">Reporting</option>
-                                            <option value="29487|Self-Serve/MSS|557058:b00e07bd-27a3-4936-8845-da5d74f4e83c">Self-Serve/MSS</option>
+                                            <option value="29042|Assist">Assist</option>
+                                            <option value="29043|Answers">Answers</option>
+                                            <option value="29033|Reporting">Reporting</option>
+                                            <option value="29487|Self-Serve/MSS">Self-Serve/MSS</option>
                                         </select>
-                                        <small id="productHelp" class="form-text text-muted">Assignee is auto-selectd based on product</small>
-                                        <div class="valid-feedback">
-                                        </div>
+                                        <div class="valid-feedback"></div>
                                     </div>
-                                <div class="col-md-12 mb-4">
-                                    <label>Priority</label>
-                                    <select class="form-control selectpicker" name="priority">
-                                        <option value="1">P1 (Critical)</option>
-                                        <option value="2">P2 (High)</option>
-                                        <option value="3">P3 (Medium)</option>
-                                        <option value="4">P4 (Low)</option>
-                                    </select>
-                                </div>
+                                    <div class="col-md-12 mb-4">
+                                        <label>Assignee Email</label>
+                                        <input type="text" class="form-control" id="assignee" name="assignee"
+                                            placeholder="snehasish.das@247.ai" max="128" required />
+                                        <small id="assigneetHelp" class="form-text text-muted">enter the email of the assignee available in Jira</small>
+                                        <div class="valid-feedback"></div>
+                                    </div>
+                                    <div class="col-md-12 mb-4">
+                                        <label>Project Name</label>
+                                        <input type="text" class="form-control" id="project" name="project"
+                                            placeholder="Automation and Tools" max="128" required />
+                                        <small id="projectHelp" class="form-text text-muted">provide the entire project name/key as seen in jira</small>
+                                        <div class="valid-feedback"></div>
+                                    </div>
+                                    <div class="col-md-12 mb-4">
+                                        <label>Priority</label>
+                                        <select class="form-control selectpicker" name="priority">
+                                            <option value="1">P1 (Critical)</option>
+                                            <option value="2">P2 (High)</option>
+                                            <option value="3">P3 (Medium)</option>
+                                            <option value="4">P4 (Low)</option>
+                                        </select>
+                                    </div>
                                 </div>
                                 <div class="form-row">
                                     <div class="col-md-12 mb-12">
