@@ -246,12 +246,9 @@ $app->post('/upload-tests/{product}/{node}', function (Request $request, Respons
     try {
         $db = new db();
         $db = $db->connect();
-        //$count = 1; 
-        //$totalIterations = ($total%50 == 0) ? $total/50 : ($total/50)+1;
 
         $query = "INSERT INTO `tcm_tests` (`name`, `description`, `product`, `author`, `test_type`, `test_category`, `priority`, `parent_node`, `scrum_name`, `steps`, `expected_output`, `automation_status`, `automation_script_path`, `automation_author`, `tag`, `feature_id`, `created_by`, `last_updated_by`) VALUES ";
         for($i=0; $i<$total; $i++){
-            //echo 'iteration:'. $i+1;
             if(isset($params[$i]['author']) && $params[$i]['author'] != ''){
                 $author_query = "SELECT `id` FROM tcm_users WHERE `email`='".$params[$i]['author']."'";
                 $user = $db->query($author_query)->fetch(PDO::FETCH_ASSOC);
@@ -259,7 +256,7 @@ $app->post('/upload-tests/{product}/{node}', function (Request $request, Respons
             }else{
                 $author = $_SESSION['id'];
             }
-            //echo 'Author:'.$author;
+
             if(isset($params[$i]['automation_author']) && $params[$i]['automation_author'] != ''){
                 $automation_author_query = "SELECT `id` FROM tcm_users WHERE `email`='".$params[$i]['automation_author']."'";
                 $user1 = $db->query($automation_author_query)->fetch(PDO::FETCH_ASSOC);
@@ -267,22 +264,28 @@ $app->post('/upload-tests/{product}/{node}', function (Request $request, Respons
             }else{
                 $automation_author = $_SESSION['id'];
             }
-            //echo 'Automation Author:'.$automation_author;
 
             $row = "('" .$params[$i]['name']. "', '" . $params[$i]['description']. "', '" . $product. "', '" . $author . "', '" . $params[$i]['test_type']. "', '" . $params[$i]['test_category']. "', '" . $params[$i]['priority']. "', '" . $node. "', '" . $params[$i]['scrum_name']. "', '" . $params[$i]['steps']. "', '" . $params[$i]['expected_output']. "', '" . $params[$i]['automation_status']. "', '" . $params[$i]['automation_script_path']. "', '" . $automation_author . "', '" . $params[$i]['tag']. "', '" . $params[$i]['feature_id']. "', '" .$_SESSION['id']. "', '" .$_SESSION['id']. "')";
             
             //echo 'Adding '. $row;
             if(($i+1) % 50 == 0){
-                echo 'Final Query: '.$query;
                 $query = $query.''.$row;
+                echo 'Final Query: '.$query;
                 $res = $db->prepare($query)->execute();
                 echo 'Result:'.json_decode($res);
                 $query = "INSERT INTO `tcm_tests` (`name`, `description`, `product`, `author`, `test_type`, `test_category`, `priority`, `parent_node`, `scrum_name`, `steps`, `expected_output`, `automation_status`, `automation_script_path`, `automation_author`, `tag`, `feature_id`, `created_by`, `last_updated_by`) VALUES ";
+                $currIteration++;
             }else{
-                $query = $query.''.$row.', ';
+                echo 'Iteration:'.$i;
+                if($i+1 == $total){
+                    $query = $query.''.$row;
+                    echo 'Final Query: '.$query;
+                    $res = $db->prepare($query)->execute();
+                }else{
+                    $query = $query.''.$row.', ';
+                }
             }
         }
-        //$res = $db->prepare($query)->execute();
 
         return $response->withStatus(200)->write('"Success":{"text":" '.$total.' records uploaded"}');
     } catch (PDOException $e) {
