@@ -4,8 +4,8 @@ use \Psr\Http\Message\ResponseInterface as Response;
 //session_start();
 require 'vendor/autoload.php';
 require 'src/config/db.php';
-// error_reporting(-1);
-// ini_set('display_errors', 1);
+//error_reporting(-1);
+//ini_set('display_errors', 1);
 
 
 $app = new \Slim\App;

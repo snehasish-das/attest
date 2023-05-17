@@ -136,8 +136,8 @@ $tests = json_decode($cta->httpGetWithAuth($tests_url,$_SESSION['auth-phrase']),
                                                 <div class="dropdown-menu" aria-labelledby="pendingTask"
                                                     style="will-change: transform; position: absolute; transform: translate3d(105px, 0, 0px); top: 0px; left: 0px;">
                                                     <a class="dropdown-item" href="javascript:void(0);" data-toggle="modal" data-target="#addNewTestModal">Add new test</a>
+                                                    <a class="dropdown-item" href="javascript:void(0);" data-toggle="modal" data-target="#uploadTestsModal">Upload tests</a>
                                                     <?php if(!$isRootNode){ ?><a class="dropdown-item" href="javascript:void(0);">Delete Folder</a><?php } ?>
-                                                    <!--a class="dropdown-item" href="javascript:void(0);">Mark as Done</a-->
                                                 </div>
                                             </div>
                                             <table id="html5-extension" class="table table-hover non-hover"

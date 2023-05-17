@@ -12,7 +12,7 @@ require_once 'api/src/functions.php';
 $cta = new CallToAction();
 $site_name_url = $_SESSION['site-url'] . '/api/site_options/site_name';
 $data = json_decode($cta->httpGet($site_name_url), true);
-$site_name = $data[0]['option_value'];
+@$site_name = $data[0]['option_value'];
 
 @$auth_user=$_REQUEST['username'];
 @$auth_pass=$_REQUEST['password'];
