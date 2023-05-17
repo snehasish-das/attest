@@ -17,7 +17,18 @@
     $product_details = explode('|',$_REQUEST['product_details']);
     $product_id = $product_details[0];
     $product_name = $product_details[1];
-    $assignee = $product_details[2];
+    $assignee_email = $_REQUEST['assignee'];
+    $assignee_url = $_SESSION['jira-url'] . '/api/3/user/search?query=' . $assignee_email;
+    $result = json_decode($cta->jiraGet($assignee_url,$jira_cookie,$jira_auth), true);
+    $assignee = $result[0]['accountId'];
+    echo '<hr>Assignee ID : '. $assignee;
+
+    $project_name = $_REQUEST['project'];
+    $project_url = $_SESSION['jira-url'] . '/api/3/project/search?query=' . $project_name;
+    $result = json_decode($cta->jiraGet($project_url,$jira_cookie,$jira_auth), true);
+    $project = $result['values'][0]['id'];
+    echo '<hr>Project ID : '. $project;
+
     $priority = $_REQUEST['priority'];
     $usecase = $_REQUEST['test_id'].' - '.$_REQUEST['test_name'];
 
@@ -26,7 +37,7 @@
     $payload = '{
         "fields": {
             "project": {
-                "id": "23511"
+                "id": "'.$project.'"
             },
             "issuetype": {
                 "id": "1"
