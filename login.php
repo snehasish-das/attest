@@ -33,14 +33,14 @@ if($auth_pass != '' && $auth_user != ''){
         }  
       }';
     $result = json_decode($cta->httpPost($okta_url,$payload), true);
-    echo 'Okta Results: '. json_encode($result);
+    //echo 'Okta Results: '. json_encode($result);
 
     if($result != '401'){
         //extracting data from okta 
-        $user_id = $result['_embedded']['user']['id'];
-        $username = $result['_embedded']['user']['profile']['firstName']." ".$result['_embedded']['user']['profile']['lastName'];
-        $useremail = $result['_embedded']['user']['profile']['login'];
-        $userpass = $auth_pass;
+        @$user_id = $result['_embedded']['user']['id'];
+        @$username = $result['_embedded']['user']['profile']['firstName']." ".$result['_embedded']['user']['profile']['lastName'];
+        @$useremail = $result['_embedded']['user']['profile']['login'];
+        @$userpass = $auth_pass;
 
         //Registering the user
         $userPayload='{
@@ -51,10 +51,10 @@ if($auth_pass != '' && $auth_user != ''){
             "created_by": "OKTA",
             "last_updated_by": "OKTA"
         }';
-        echo '<br>User Payload:<br>'. $userPayload;
+        //echo '<br>User Payload:<br>'. $userPayload;
         $user_url=$_SESSION['site-url'].'/api/users';
         $userResult = json_decode($cta->httpPost($user_url,$userPayload), true);
-        echo '<br>User URL: '.$user_url.'<br>User Registration Results: '. json_encode($userResult);
+        //echo '<br>User URL: '.$user_url.'<br>User Registration Results: '. json_encode($userResult);
         
         //Login process
         if($userResult != '400'){
@@ -62,7 +62,7 @@ if($auth_pass != '' && $auth_user != ''){
 
             $url=$_SESSION['site-url'].'/api/users/login';
             $data=json_decode($cta->httpGetWithAuth($url,$auth_phrase),true);
-            echo '<br><br>Login URL='.$url.'<br>Login Results: '. json_encode($data);
+            //echo '<br><br>Login URL='.$url.'<br>Login Results: '. json_encode($data);
         }
     }
 
