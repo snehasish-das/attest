@@ -20,7 +20,7 @@ $site_name = $data[0]['option_value'];
 //Tests by category
 $tests_url = $_SESSION['site-url'] . '/api/reports/tests-by-category';
 $tests = json_decode($cta->httpGetWithAuth($tests_url,$_SESSION['auth-phrase']), true);
-$count=0; $uiCount=0; $restCount=0; $hybridCount=0;
+$count=1; $uiCount=0; $restCount=0; $hybridCount=0;
 foreach($tests as $test){
     if($test['test_category'] == 'UI'){
         $uiCount = $test['count'];

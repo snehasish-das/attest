@@ -8,6 +8,7 @@ if (isset($_SESSION['user-details'])) {
 }
 
 require_once 'api/src/functions.php';
+require_once 'api/src/config/init.php';
 
 $cta = new CallToAction();
 $site_name_url = $_SESSION['site-url'] . '/api/site_options/site_name';
@@ -21,13 +22,52 @@ if($redirect == ''){
     $redirect = 'index';
 }
 if($auth_pass != '' && $auth_user != ''){
-    $auth_phrase = base64_encode($auth_user.":".$auth_pass);
+    //Integrating with okta
+    $okta_url = OKTA_URL."/v1/authn";
+    $payload = '{
+        "username": "'.$auth_user.'",
+        "password": "'.$auth_pass.'",
+        "options": {
+          "multiOptionalFactorEnroll": true,
+          "warnBeforePasswordExpired": true
+        }  
+      }';
+    $result = json_decode($cta->httpPost($okta_url,$payload), true);
+    echo 'Okta Results: '. json_encode($result);
 
-    $url=$_SESSION['site-url'].'/api/users/login';
-    //echo '<br>URL='.$url.'<br>';
-    $data=json_decode($cta->httpGetWithAuth($url,$auth_phrase),true);
+    if($result != '401'){
+        //extracting data from okta 
+        $user_id = $result['_embedded']['user']['id'];
+        $username = $result['_embedded']['user']['profile']['firstName']." ".$result['_embedded']['user']['profile']['lastName'];
+        $useremail = $result['_embedded']['user']['profile']['login'];
+        $userpass = $auth_pass;
 
-    if(isset($data)){
+        //Registering the user
+        $userPayload='{
+            "user_id": "'.$user_id.'",
+            "name": "'.$username.'",
+            "email": "'.$useremail.'",
+            "password": "'.$userpass.'",
+            "created_by": "OKTA",
+            "last_updated_by": "OKTA"
+        }';
+        echo '<br>User Payload:<br>'. $userPayload;
+        $user_url=$_SESSION['site-url'].'/api/users';
+        $userResult = json_decode($cta->httpPost($user_url,$userPayload), true);
+        echo '<br>User URL: '.$user_url.'<br>User Registration Results: '. json_encode($userResult);
+        
+        //Login process
+        if($userResult != '400'){
+            $auth_phrase = base64_encode($useremail.":".$auth_pass);
+
+            $url=$_SESSION['site-url'].'/api/users/login';
+            $data=json_decode($cta->httpGetWithAuth($url,$auth_phrase),true);
+            echo '<br><br>Login URL='.$url.'<br>Login Results: '. json_encode($data);
+        }
+    }
+
+
+    if(isset($data) && $data != '400'){
         $_SESSION['user-details']=$data;
         $_SESSION['auth-phrase']=$auth_phrase;
         header("Location: ".$redirect);
