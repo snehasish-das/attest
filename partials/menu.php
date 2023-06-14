@@ -1,6 +1,10 @@
 <?php
-    $endpoint = explode('?',$_SERVER['REQUEST_URI']);
-    @$currUrl = end(explode('/',$endpoint[0]));
+    $currUrl = $_SERVER['REQUEST_URI'];
+    $urlWithoutParams = explode('?',$_SERVER['REQUEST_URI']);
+    $endpointArray = explode('/',$urlWithoutParams[0]);
+    $endpoint = end($endpointArray);
+    //echo "Endpoint: ". $endpoint;
+    //@$currUrl = end(explode('/',$endpoint[0]));
     
     function getTreeView($nodes,$node_type){
         foreach($nodes as $node){
@@ -22,9 +26,9 @@
 ?>
 <nav id="compactSidebar">
     <ul class="menu-categories">
-        <li class="menu menu-single <?php  if(str_contains($currUrl,'index') || $currUrl =='') { echo 'active'; }?>">
+        <li class="menu menu-single <?php  if(str_contains($endpoint,'index') || $endpoint =='') { echo 'active'; }?>">
             <a href="index"
-                data-active="<?php echo (str_contains($currUrl,'index') || $currUrl =='') ? 'true' : 'false'  ?>"
+                data-active="<?php echo (str_contains($endpoint,'index') || $endpoint =='') ? 'true' : 'false'  ?>"
                 class="menu-toggle">
                 <div class="base-menu">
                     <div class="base-icons">
@@ -40,8 +44,8 @@
             </a>
         </li>
 
-        <li class="menu <?php  if(str_contains($currUrl,'test-plan')) { echo 'active'; }?>">
-            <a href="#testplan" data-active="<?php echo (str_contains($currUrl,'test-plan')) ? 'true' : 'false'  ?>"
+        <li class="menu <?php  if(str_contains($endpoint,'test-plan')) { echo 'active'; }?>">
+            <a href="#testplan" data-active="<?php echo (str_contains($endpoint,'test-plan')) ? 'true' : 'false'  ?>"
                 class="menu-toggle">
                 <div class="base-menu">
                     <div class="base-icons">
@@ -65,8 +69,8 @@
             </a>
         </li>
 
-        <li class="menu <?php  if(str_contains($currUrl,'test-lab')) { echo 'active'; }?>">
-            <a href="#testlab" data-active="<?php echo (str_contains($currUrl,'test-lab')) ? 'true' : 'false'  ?>"
+        <li class="menu <?php  if(str_contains($endpoint,'test-lab')) { echo 'active'; }?>">
+            <a href="#testlab" data-active="<?php echo (str_contains($endpoint,'test-lab')) ? 'true' : 'false'  ?>"
                 class="menu-toggle">
                 <div class="base-menu">
                     <div class="base-icons">
@@ -81,8 +85,8 @@
             </a>
         </li>
 
-        <li class="menu menu-single <?php  if(str_contains($currUrl,'features')) { echo 'active'; }?>">
-            <a href="features" data-active="<?php echo (str_contains($currUrl,'features')) ? 'true' : 'false'  ?>"
+        <li class="menu menu-single <?php  if(str_contains($endpoint,'features')) { echo 'active'; }?>">
+            <a href="features" data-active="<?php echo (str_contains($endpoint,'features')) ? 'true' : 'false'  ?>"
                 class="menu-toggle">
                 <div class="base-menu">
                     <div class="base-icons">
@@ -101,8 +105,8 @@
             </a>
         </li>
 
-        <!-- <li class="menu menu-single <?php  if(str_contains($currUrl,'releases')) { echo 'active'; }?>">
-            <a href="releases" data-active="<?php echo (str_contains($currUrl,'releases')) ? 'true' : 'false'  ?>"
+        <!-- <li class="menu menu-single <?php  if(str_contains($endpoint,'releases')) { echo 'active'; }?>">
+            <a href="releases" data-active="<?php echo (str_contains($endpoint,'releases')) ? 'true' : 'false'  ?>"
                 class="menu-toggle">
                 <div class="base-menu">
                     <div class="base-icons">
@@ -118,8 +122,8 @@
             </a>
         </li> -->
 
-        <li class="menu <?php  if(str_contains($currUrl,'reports')) { echo 'active'; }?>">
-            <a href="#reports" data-active="<?php echo (str_contains($currUrl,'reports')) ? 'true' : 'false'  ?>"
+        <li class="menu <?php  if(str_contains($endpoint,'reports')) { echo 'active'; }?>">
+            <a href="#reports" data-active="<?php echo (str_contains($endpoint,'reports')) ? 'true' : 'false'  ?>"
                 class="menu-toggle">
                 <div class="base-menu">
                     <div class="base-icons">
@@ -135,10 +139,24 @@
             </a>
         </li>
 
+        <li class="menu <?php if(str_contains($endpoint,'sast')) { echo 'active'; }?> ">
+            <a href="#sast" data-active="<?php echo str_contains($endpoint,'sast')? 'true': 'false'; ?>" class="menu-toggle">
+                <div class="base-menu">
+                    <div class="base-icons">
+                        <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2"
+                            fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1">
+                            <path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path>
+                            <path d="M22 12A10 10 0 0 0 12 2v10z"></path>
+                        </svg>
+                    </div>
+                    <span>SAST Reports</span>
+                </div>
+            </a>
+        </li>
     </ul>
 </nav>
 
-<div id="compact_submenuSidebar" class="submenu-sidebar">
+<div id="compact_submenuSidebar" class="submenu-sidebar <?php if(!(str_contains($endpoint,'index')  || $endpoint =='' )) { echo 'ps show submenu-enable'; }?> ">
     <div class="submenu" id="testplan">
         <div class="actions">
             <a data-toggle="modal" data-target="#addTestplanFolderModal">
@@ -191,23 +209,79 @@
 
     <div class="submenu" id="reports">
         <ul class="submenu-list" data-parent-element="#reports">
-            <li <?php  if(str_contains($currUrl,'top-bugs')) { echo 'class="active"'; }?>>
-                <a href="reports?node=top-bugs-in-recent-runs"> <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24"
-                            height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                            stroke-linecap="round" stroke-linejoin="round" class="feather feather-git-commit">
+            <li <?php  if(str_contains($endpoint,'top-bugs')) { echo 'class="active"'; }?>>
+                <a href="reports?node=top-bugs-in-recent-runs"> <span class="icon"><svg
+                            xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            class="feather feather-git-commit">
                             <circle cx="12" cy="12" r="4"></circle>
                             <line x1="1.05" y1="12" x2="7" y2="12"></line>
                             <line x1="17.01" y1="12" x2="22.96" y2="12"></line>
                         </svg></span> Top bugs in recent runs </a>
             </li>
-            <li <?php  if(str_contains($currUrl,'frequent-test-failures')) { echo 'class="active"'; }?>>
-                <a href="reports?node=frequent-test-failures"> <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24"
-                            height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                            stroke-linecap="round" stroke-linejoin="round" class="feather feather-git-commit">
+            <li <?php  if(str_contains($endpoint,'frequent-test-failures')) { echo 'class="active"'; }?>>
+                <a href="reports?node=frequent-test-failures"> <span class="icon"><svg
+                            xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            class="feather feather-git-commit">
                             <circle cx="12" cy="12" r="4"></circle>
                             <line x1="1.05" y1="12" x2="7" y2="12"></line>
                             <line x1="17.01" y1="12" x2="22.96" y2="12"></line>
                         </svg></span> Frequent Test Failures </a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="submenu <?php if(str_contains($endpoint,'sast')) {echo 'show'; } ?>" id="sast">
+        <ul class="submenu-list menu-block-submenu" data-parent-element="#sast">
+            <li
+                class="<?php if(str_contains($endpoint,'sast') && str_contains($currUrl,'platform')) { echo 'active'; }?> menu-block">
+                <a href="sast-dashboard?type=platform"><svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor"
+                        stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1">
+                        <path d="M5 17H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-1"></path>
+                        <polygon points="12 15 17 21 7 21 12 15"></polygon>
+                    </svg> Platform </a>
+            </li>
+            <li
+                class="<?php if(str_contains($endpoint,'sast') && str_contains($currUrl,'butterfly')) { echo 'active'; }?> menu-block">
+                <a href="sast-dashboard"?type=butterfly><svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor"
+                        stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1">
+                        <path
+                            d="M18 3a3 3 0 0 0-3 3v12a3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3H6a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3V6a3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3h12a3 3 0 0 0 3-3 3 3 0 0 0-3-3z">
+                        </path>
+                    </svg> Butterfly </a>
+            </li>
+            <li
+                class="<?php if(str_contains($endpoint,'sast') && str_contains($currUrl,'central')) { echo 'active'; }?> menu-block">
+                <a href="sast-dashboard?type=central"><svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor"
+                        stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1">
+                        <path
+                            d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z">
+                        </path>
+                        <polyline points="7.5 4.21 12 6.81 16.5 4.21"></polyline>
+                        <polyline points="7.5 19.79 7.5 14.6 3 12"></polyline>
+                        <polyline points="21 12 16.5 14.6 16.5 19.79"></polyline>
+                        <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                        <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                    </svg> Central </a>
+            </li>
+            <li
+                class="<?php if(str_contains($endpoint,'sast') && str_contains($currUrl,'assist')) { echo 'active'; }?> menu-block">
+                <a href="sast-dashboard?type=assist"><svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor"
+                        stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1">
+                        <path
+                            d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z">
+                        </path>
+                    </svg> Assist PE </a>
+            </li>
+            <li
+                class="<?php if(str_contains($endpoint,'sast') && str_contains($currUrl,'speech')) { echo 'active'; }?> menu-block">
+                <a href="sast-dashboard?type=speech"><svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor"
+                        stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1">
+                        <circle cx="5.5" cy="11.5" r="4.5"></circle>
+                        <circle cx="18.5" cy="11.5" r="4.5"></circle>
+                        <line x1="5.5" y1="16" x2="18.5" y2="16"></line>
+                    </svg> Speech CE </a>
             </li>
         </ul>
     </div>

@@ -23,7 +23,7 @@
 
 <header class="header navbar navbar-expand-sm">
     <div class="d-flex">
-        <a href="javascript:void(0);" class="sidebarCollapse" data-placement="bottom">
+        <a href="javascript:void(0);" class="sidebarCollapse <?php if(!str_contains($currUrl,'index') && $currUrl !='' ) { echo 'bt-menu-open'; }?>" data-placement="bottom">
             <div class="bt-menu-trigger">
                 <span></span>
             </div>
