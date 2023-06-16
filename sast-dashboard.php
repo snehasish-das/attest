@@ -122,8 +122,8 @@ $latestRuns = json_decode($cta->httpGetWithAuth($latest_runs_url,$_SESSION['auth
                                     //Retrieve status data
                                     $statusUrl = SONAR_URL . '/project_branches/list?project='. $repo;
                                     $statusData = json_decode($cta->httpGet($statusUrl), true);
-                                    echo '<br>Analysis date:'. $statusData['branches'][0]['analysisDate'];
-                                    echo '<hr>Status :'. $statusData['branches'][0]['status']['qualityGateStatus'];
+                                    $analysisDate = date_format(date_create($statusData['branches'][0]['analysisDate']),"d-M-Y");
+                                    $currStatus =  $statusData['branches'][0]['status']['qualityGateStatus'];
 
                                     //retrieve component data
                                     $componentUrl = SONAR_URL . '/measures/component?additionalFields=metrics,periods&component='.$repo.'&metricKeys=bugs,vulnerabilities,code_smells,coverage,duplicated_lines_density';
@@ -146,7 +146,7 @@ $latestRuns = json_decode($cta->httpGetWithAuth($latest_runs_url,$_SESSION['auth
                                             <div class="widget widget-account-invoice-three">
                                                 <div class="widget-heading">
                                                     <div class="wallet-usr-info">
-                                                        <div class="usr-name">
+                                                        <div class="usr-name success">
                                                             <span><img src="assets/img/90x90.jpg" alt="admin-profile"
                                                                     class="img-fluid"> Alan Green</span>
                                                         </div>
@@ -162,8 +162,8 @@ $latestRuns = json_decode($cta->httpGetWithAuth($latest_runs_url,$_SESSION['auth
                                                         </div>
                                                     </div>
                                                     <div class="wallet-balance">
-                                                        <p>Wallet Balance</p>
-                                                        <h5 class=""><span class="w-currency">$</span>2953</h5>
+                                                        <p><?php echo ucfirst($repo); ?></p>
+                                                        <p><?php echo $analysisDate; ?></p>
                                                     </div>
                                                 </div>
 
@@ -195,7 +195,7 @@ $latestRuns = json_decode($cta->httpGetWithAuth($latest_runs_url,$_SESSION['auth
                                                 <div class="widget-content">
 
                                                     <div class="bills-stats">
-                                                        <span>Pending</span>
+                                                        <span class="<?php echo ($currStatus == 'OK')? 'success': 'failure' ?>"><?php echo $currStatus; ?></span>
                                                     </div>
 
                                                     <div class="invoice-list">

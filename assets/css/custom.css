@@ -62,4 +62,16 @@ a.link{
 }
 .table-action:before {
     content: 'Row ';
-  }
+}
+
+.success{
+    background: #00968830;
+    color: #009688;
+    font-weight: bold;
+}
+
+.failure{
+    background: #e7515aaa;
+    color: #e7515a;
+    font-weight: bold;
+}

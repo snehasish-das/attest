@@ -1832,14 +1832,15 @@
       margin-bottom: 24px; }
       .widget-account-invoice-three .widget-content .bills-stats span {
         display: inline-block;
-        color: #fff;
-        background: rgba(0, 0, 0, 0.4);
+        /* color: #fff;
+        background: rgba(0, 0, 0, 0.4); */
         padding: 4px 12px 4px 20px;
         border-radius: 21px;
         position: relative;
         font-size: 12px;
         letter-spacing: 1px;
-        background-color: #1b2e4b; }
+        /* background-color: #1b2e4b;  */
+      }
         .widget-account-invoice-three .widget-content .bills-stats span:before {
           content: '';
           position: absolute;
