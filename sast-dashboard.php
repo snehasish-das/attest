@@ -17,46 +17,9 @@ $data = json_decode($cta->httpGet($site_name_url), true);
 $site_name = $data[0]['option_value'];
 
 
-//Tests by category
-$tests_url = $_SESSION['site-url'] . '/api/reports/tests-by-category';
-$tests = json_decode($cta->httpGetWithAuth($tests_url,$_SESSION['auth-phrase']), true);
-$count=1; $uiCount=0; $restCount=0; $hybridCount=0;
-foreach($tests as $test){
-    if($test['test_category'] == 'UI'){
-        $uiCount = $test['count'];
-        $count+= $test['count'];
-    }
-    if($test['test_category'] == 'REST'){
-        $restCount = $test['count'];
-        $count+= $test['count'];
-    }
-    if($test['test_category'] == 'HYBRID'){
-        $hybridCount = $test['count'];
-        $count+= $test['count'];
-    }
-}
+$platform = array("createbot","dal","dialogmanager","dialog-manager-runtimeclient","handler-webview","integrated-tool-suite","locations","mca-slack","messenger-client-onboarding","messenger-commons","messenger-distributor","messenger-handler-abc","messenger-handler-base","messenger-handler-fb","messenger-handler-gbm","messenger-standard-scxml","msg-deliverer","node-analytics-client","node-apigee-client","node-cassandra-client","node-hello","node-messenger-auth-token","node-messenger-metadata","node-messenger-provclient","node-nl","node-service-template","notifications","omnichannel-content-schema","registrations","scxml","speech-binlog-sessionizer-etl","tfs-ui","ude","ude-console-schema","ude-console-service","ude-console-ui","ude-frontends-service","ude-native-sdk","vagent-orchestrator","voicebiometrics","web2nl","web2spell","whatsappmca","speech-callsearch-webservice","tmmain-binlog2idm","omnichannel-orchestrator","omnichannel-uia","shortlinks","247inc-speakerverificationdemo-scxml","247inc-speakerverificationdemo-vxml","msft_stt_audio_stream_demo","speech-ana-webservice","speech-binlog-sessionizer-etl","custom-jobs","ATTLocality-jobs","kafka-producer","ATT-CDR","InvoiceDetailsReport","tfs-commons","pdsp-wrapper");
 
-
-//Test runs by type
-$runs_url = $_SESSION['site-url'] . '/api/reports/test-runs-by-type';
-$runs = json_decode($cta->httpGetWithAuth($runs_url,$_SESSION['auth-phrase']), true);
-$adhocCount=0; $featureCount=0; $releaseCount=0;
-foreach($runs as $run){
-    if(strtolower($run['parent_node']) == 'adhoc runs'){
-        //echo '<br>Adhoc Runs: '. $adhocCount;
-        $adhocCount = $run['count'];
-    }
-    if(strtolower($run['parent_node']) == 'feature runs'){
-        //echo '<br>Feature Runs: '. $featureCount;
-        $featureCount = $run['count'];
-    }
-    if(strtolower($run['parent_node']) == 'release runs'){
-        //echo '<br>Release Runs: '. $releaseCount;
-        $releaseCount = $run['count'];
-    }
-}
-//echo '<br>Adhoc: '. $adhocCount .', Feature: '. $featureCount .', Release: '. $releaseCount;
-
+$repos = array("platform:dialogmanager");
 
 //Test runs by type
 $latest_runs_url = $_SESSION['site-url'] . '/api/reports/lastest-runs';
@@ -69,7 +32,7 @@ $latestRuns = json_decode($cta->httpGetWithAuth($latest_runs_url,$_SESSION['auth
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
-    <title><?php echo $site_name; ?> - Dashboard</title>
+    <title>SAST Dashboard - <?php echo $site_name; ?></title>
     <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico" />
     <link href="assets/css/loader.css" rel="stylesheet" type="text/css" />
     <script src="assets/js/loader.js"></script>
@@ -155,94 +118,116 @@ $latestRuns = json_decode($cta->httpGetWithAuth($latest_runs_url,$_SESSION['auth
                             </div>
 
                             <div class="admin-data-content layout-top-spacing">
+                                <?php foreach($repos as $repo) {
+                                    //Retrieve status data
+                                    $statusUrl = SONAR_URL . '/project_branches/list?project='. $repo;
+                                    $statusData = json_decode($cta->httpGet($statusUrl), true);
+                                    echo '<br>Analysis date:'. $statusData['branches'][0]['analysisDate'];
+                                    echo '<hr>Status :'. $statusData['branches'][0]['status']['qualityGateStatus'];
 
-                                <div class="row">
+                                    //retrieve component data
+                                    $componentUrl = SONAR_URL . '/measures/component?additionalFields=metrics,periods&component='.$repo.'&metricKeys=bugs,vulnerabilities,code_smells,coverage,duplicated_lines_density';
+                                    $componentData = json_decode($cta->httpGet($componentUrl), true);
+                                    //$measuresArray
+                                    echo '<br>Bugs:'. $componentData['component']['measures'][2]['value'];
 
-                                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 layout-spacing">
-                                        <div class="widget widget-account-invoice-three">
-                                            <div class="widget-heading">
-                                                <div class="wallet-usr-info">
-                                                    <div class="usr-name">
-                                                        <span><img src="assets/img/90x90.jpg" alt="admin-profile"
-                                                                class="img-fluid"> Alan Green</span>
+                                    //retrieve history data
+                                    $historyUrl = SONAR_URL . '/measures/search_history?component='.$repo.'&metrics=bugs,vulnerabilities,code_smells,coverage,duplicated_lines_density';
+                                    $historyData = json_decode($cta->httpGet($historyUrl), true);
+                                    //echo '<hr> History Data:'. json_encode($historyData);
+                                    //$measuresArray
+                                    echo '<br>Coverage:'. $historyData['measures'][0]['history'][0]['value'];
+
+                                    
+                                ?>
+                                    <div class="row">
+
+                                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 layout-spacing">
+                                            <div class="widget widget-account-invoice-three">
+                                                <div class="widget-heading">
+                                                    <div class="wallet-usr-info">
+                                                        <div class="usr-name">
+                                                            <span><img src="assets/img/90x90.jpg" alt="admin-profile"
+                                                                    class="img-fluid"> Alan Green</span>
+                                                        </div>
+                                                        <div class="add">
+                                                            <span><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                    height="24" viewBox="0 0 24 24" fill="none"
+                                                                    stroke="currentColor" stroke-width="2"
+                                                                    stroke-linecap="round" stroke-linejoin="round"
+                                                                    class="feather feather-plus">
+                                                                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                                                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                                                </svg></span>
+                                                        </div>
                                                     </div>
-                                                    <div class="add">
-                                                        <span><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                    <div class="wallet-balance">
+                                                        <p>Wallet Balance</p>
+                                                        <h5 class=""><span class="w-currency">$</span>2953</h5>
+                                                    </div>
+                                                </div>
+
+                                                <div class="widget-amount">
+
+                                                    <div class="w-a-info funds-received">
+                                                        <span>Received <svg xmlns="http://www.w3.org/2000/svg" width="24"
                                                                 height="24" viewBox="0 0 24 24" fill="none"
                                                                 stroke="currentColor" stroke-width="2"
                                                                 stroke-linecap="round" stroke-linejoin="round"
-                                                                class="feather feather-plus">
-                                                                <line x1="12" y1="5" x2="12" y2="19"></line>
-                                                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                                                                class="feather feather-chevron-up">
+                                                                <polyline points="18 15 12 9 6 15"></polyline>
                                                             </svg></span>
+                                                        <p>$97.99</p>
+                                                    </div>
+
+                                                    <div class="w-a-info funds-spent">
+                                                        <span>Spent <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                height="24" viewBox="0 0 24 24" fill="none"
+                                                                stroke="currentColor" stroke-width="2"
+                                                                stroke-linecap="round" stroke-linejoin="round"
+                                                                class="feather feather-chevron-down">
+                                                                <polyline points="6 9 12 15 18 9"></polyline>
+                                                            </svg></span>
+                                                        <p>$53.00</p>
                                                     </div>
                                                 </div>
-                                                <div class="wallet-balance">
-                                                    <p>Wallet Balance</p>
-                                                    <h5 class=""><span class="w-currency">$</span>2953</h5>
-                                                </div>
-                                            </div>
 
-                                            <div class="widget-amount">
+                                                <div class="widget-content">
 
-                                                <div class="w-a-info funds-received">
-                                                    <span>Received <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                            height="24" viewBox="0 0 24 24" fill="none"
-                                                            stroke="currentColor" stroke-width="2"
-                                                            stroke-linecap="round" stroke-linejoin="round"
-                                                            class="feather feather-chevron-up">
-                                                            <polyline points="18 15 12 9 6 15"></polyline>
-                                                        </svg></span>
-                                                    <p>$97.99</p>
-                                                </div>
+                                                    <div class="bills-stats">
+                                                        <span>Pending</span>
+                                                    </div>
 
-                                                <div class="w-a-info funds-spent">
-                                                    <span>Spent <svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                            height="24" viewBox="0 0 24 24" fill="none"
-                                                            stroke="currentColor" stroke-width="2"
-                                                            stroke-linecap="round" stroke-linejoin="round"
-                                                            class="feather feather-chevron-down">
-                                                            <polyline points="6 9 12 15 18 9"></polyline>
-                                                        </svg></span>
-                                                    <p>$53.00</p>
-                                                </div>
-                                            </div>
+                                                    <div class="invoice-list">
 
-                                            <div class="widget-content">
-
-                                                <div class="bills-stats">
-                                                    <span>Pending</span>
-                                                </div>
-
-                                                <div class="invoice-list">
-
-                                                    <div class="inv-detail">
-                                                        <div class="info-detail-1">
-                                                            <p>Netflix</p>
-                                                            <p><span class="w-currency">$</span> <span
-                                                                    class="bill-amount">13.85</span></p>
+                                                        <div class="inv-detail">
+                                                            <div class="info-detail-1">
+                                                                <p>Netflix</p>
+                                                                <p><span class="w-currency">$</span> <span
+                                                                        class="bill-amount">13.85</span></p>
+                                                            </div>
+                                                            <div class="info-detail-2">
+                                                                <p>BlueHost VPN</p>
+                                                                <p><span class="w-currency">$</span> <span
+                                                                        class="bill-amount">15.66</span></p>
+                                                            </div>
                                                         </div>
-                                                        <div class="info-detail-2">
-                                                            <p>BlueHost VPN</p>
-                                                            <p><span class="w-currency">$</span> <span
-                                                                    class="bill-amount">15.66</span></p>
+
+                                                        <div class="inv-action">
+                                                            <a href="javascript:void(0);"
+                                                                class="btn btn-outline-primary view-details">View
+                                                                Details</a>
+                                                            <a href="javascript:void(0);"
+                                                                class="btn btn-outline-primary pay-now">Pay Now $29.51</a>
                                                         </div>
                                                     </div>
-
-                                                    <div class="inv-action">
-                                                        <a href="javascript:void(0);"
-                                                            class="btn btn-outline-primary view-details">View
-                                                            Details</a>
-                                                        <a href="javascript:void(0);"
-                                                            class="btn btn-outline-primary pay-now">Pay Now $29.51</a>
-                                                    </div>
                                                 </div>
-                                            </div>
 
+                                            </div>
                                         </div>
+                                        
                                     </div>
-                                    
-                                </div>
+                                <?php } ?>
                             </div>
                             <div class="footer-wrapper col-xl-12">
                                 <?php require './partials/footer.php'; ?>
