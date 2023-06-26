@@ -21,9 +21,6 @@ $platform = array("createbot","dal","dialogmanager","dialog-manager-runtimeclien
 
 $repos = array("platform:dialogmanager");
 
-//Test runs by type
-$latest_runs_url = $_SESSION['site-url'] . '/api/reports/lastest-runs';
-$latestRuns = json_decode($cta->httpGetWithAuth($latest_runs_url,$_SESSION['auth-phrase']), true);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -128,105 +125,285 @@ $latestRuns = json_decode($cta->httpGetWithAuth($latest_runs_url,$_SESSION['auth
                                     //retrieve component data
                                     $componentUrl = SONAR_URL . '/measures/component?additionalFields=metrics,periods&component='.$repo.'&metricKeys=bugs,vulnerabilities,code_smells,coverage,duplicated_lines_density';
                                     $componentData = json_decode($cta->httpGet($componentUrl), true);
+                                    $measures = $componentData['component']['measures'];
                                     //$measuresArray
-                                    echo '<br>Bugs:'. $componentData['component']['measures'][2]['value'];
+                                    //echo '<br>Bugs:'. $componentData['component']['measures'][2]['value'];
 
                                     //retrieve history data
                                     $historyUrl = SONAR_URL . '/measures/search_history?component='.$repo.'&metrics=bugs,vulnerabilities,code_smells,coverage,duplicated_lines_density';
                                     $historyData = json_decode($cta->httpGet($historyUrl), true);
                                     //echo '<hr> History Data:'. json_encode($historyData);
                                     //$measuresArray
-                                    echo '<br>Coverage:'. $historyData['measures'][0]['history'][0]['value'];
+                                    //echo '<br>Coverage:'. $historyData['measures'][0]['history'][0]['value'];
+
+                                    $finalArray = array(); $historyDates = array();
+                                    $ms= $historyData['measures'];
+                                    foreach($ms as $measure){
+                                        $dataArray = array();
+                                        $dataArray['name'] = $measure['metric'];
+                                        $value = array();
+                                        $hCount = 0;
+                                        $metrics = $measure['history'];
+                                        $limit=1;
+                                        foreach($metrics as $metric){
+                                            array_push($value,$metric['value']);
+                                            array_push($historyDates,date_format(date_create($metric['date']),"d-M-Y"));
+                                            $hCount++;
+                                            $limit++;
+                                            if($limit > 10){
+                                                break;
+                                            }
+                                        }
+                                        //echo '<br><hr>No. of Values: '. sizeof($value);
+                                        $dataArray['data']=$value;
+                                        array_push($finalArray,$dataArray);
+                                    }
+
+                                    $historyDates = array_slice($historyDates,0,$hCount);
+                                    // echo '<br><hr>'. json_encode($finalArray);
+                                    // echo '<br><hr>'. json_encode($historyDates);
+                                    // echo '<br><hr>No. of dates: '. sizeof($historyDates);
 
                                     
                                 ?>
-                                    <div class="row">
+                                <div class="row">
 
-                                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 layout-spacing">
-                                            <div class="widget widget-account-invoice-three">
-                                                <div class="widget-heading">
-                                                    <div class="wallet-usr-info">
-                                                        <div class="usr-name success">
-                                                            <span><img src="assets/img/90x90.jpg" alt="admin-profile"
-                                                                    class="img-fluid"> Alan Green</span>
-                                                        </div>
-                                                        <div class="add">
-                                                            <span><svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                                    height="24" viewBox="0 0 24 24" fill="none"
-                                                                    stroke="currentColor" stroke-width="2"
-                                                                    stroke-linecap="round" stroke-linejoin="round"
-                                                                    class="feather feather-plus">
-                                                                    <line x1="12" y1="5" x2="12" y2="19"></line>
-                                                                    <line x1="5" y1="12" x2="19" y2="12"></line>
-                                                                </svg></span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="wallet-balance">
-                                                        <p><?php echo ucfirst($repo); ?></p>
-                                                        <p><?php echo $analysisDate; ?></p>
+                                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 layout-spacing">
+                                        <div class="widget widget-account-invoice-three">
+                                            <div class="widget-heading">
+                                                <div class="wallet-usr-info">
+                                                    <div class="usr-name">
+                                                        <span><?php echo ucfirst($repo).'('.$analysisDate.')'; ?></span>
+                                                        <span
+                                                            class="<?php echo ($currStatus == 'OK')? 'success': 'failure' ?>"><?php echo trim($currStatus); ?></span>
                                                     </div>
                                                 </div>
+                                                <!-- <div class="wallet-balance">
+                                                        <p><?php echo ucfirst($repo); ?></p>
+                                                        <p><?php echo $analysisDate; ?></p>
+                                                    </div> -->
+                                            </div>
 
-                                                <div class="widget-amount">
-
-                                                    <div class="w-a-info funds-received">
-                                                        <span>Received <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                            <div class="widget-amount">
+                                                <?php foreach($measures as $measure){ ?>
+                                                <div
+                                                    class="w-a-info <?php if($measure['bestValue'] == 'true') echo 'funds-received'; else echo 'funds-spent'; ?>">
+                                                    <span><?php echo $measure['metric'].' '; if($measure['bestValue'] == 'true') echo '<svg xmlns="http://www.w3.org/2000/svg" width="24"
                                                                 height="24" viewBox="0 0 24 24" fill="none"
                                                                 stroke="currentColor" stroke-width="2"
                                                                 stroke-linecap="round" stroke-linejoin="round"
                                                                 class="feather feather-chevron-up">
                                                                 <polyline points="18 15 12 9 6 15"></polyline>
-                                                            </svg></span>
-                                                        <p>$97.99</p>
-                                                    </div>
-
-                                                    <div class="w-a-info funds-spent">
-                                                        <span>Spent <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                            </svg>'; else echo '<svg xmlns="http://www.w3.org/2000/svg" width="24"
                                                                 height="24" viewBox="0 0 24 24" fill="none"
                                                                 stroke="currentColor" stroke-width="2"
                                                                 stroke-linecap="round" stroke-linejoin="round"
                                                                 class="feather feather-chevron-down">
                                                                 <polyline points="6 9 12 15 18 9"></polyline>
-                                                            </svg></span>
-                                                        <p>$53.00</p>
+                                                            </svg>'; ?></span>
+                                                    <p><?php echo $measure['value']; ?></p>
+                                                </div>
+                                                <?php } ?>
+                                            </div>
+                                            <?php 
+                                                $sastOptions = "{
+                                                    chart: {
+                                                        fontFamily: 'Quicksand, sans-serif',
+                                                        height: 365,
+                                                        type: 'area',
+                                                        zoom: {
+                                                            enabled: false
+                                                        },
+                                                        dropShadow: {
+                                                            enabled: true,
+                                                            opacity: 0.2,
+                                                            blur: 10,
+                                                            left: -7,
+                                                            top: 22
+                                                        },
+                                                        toolbar: {
+                                                            show: false
+                                                        },
+                                                        events: {
+                                                            mounted: function(ctx, config) {
+                                                                const highest1 = ctx.getHighestValueInSeries(0);
+                                                                const highest2 = ctx.getHighestValueInSeries(1);
+                                                            },
+                                                        }
+                                                    },
+                                                    colors: ['#2196f3', '#6d17cb', '#e7515a', '#4361ee', '#009688', '#fc9842'],
+                                                    dataLabels: {
+                                                        enabled: false
+                                                    },
+                                                    markers: {
+                                                        discrete: [{
+                                                            seriesIndex: 0,
+                                                            dataPointIndex: 7,
+                                                            fillColor: '#000',
+                                                            strokeColor: '#000',
+                                                            size: 5
+                                                        }, {
+                                                            seriesIndex: 2,
+                                                            dataPointIndex: 11,
+                                                            fillColor: '#000',
+                                                            strokeColor: '#000',
+                                                            size: 4
+                                                        }]
+                                                    },
+                                                    subtitle: {
+                                                        text: '250',
+                                                        align: 'left',
+                                                        margin: 0,
+                                                        offsetX: 95,
+                                                        offsetY: 0,
+                                                        floating: false,
+                                                        style: {
+                                                            fontSize: '18px',
+                                                            color: '#4361ee'
+                                                        }
+                                                    },
+                                                    title: {
+                                                        text: 'Total Tests',
+                                                        align: 'left',
+                                                        margin: 0,
+                                                        offsetX: -10,
+                                                        offsetY: 0,
+                                                        floating: false,
+                                                        style: {
+                                                            fontSize: '18px',
+                                                            color: '#0e1726'
+                                                        },
+                                                    },
+                                                    stroke: {
+                                                        show: true,
+                                                        curve: 'smooth',
+                                                        width: 2,
+                                                        lineCap: 'square'
+                                                    },
+                                                    series: ".json_encode($finalArray).",
+                                                    labels: ".json_encode($historyDates).",
+                                                    xaxis: {
+                                                        axisBorder: {
+                                                            show: false
+                                                        },
+                                                        axisTicks: {
+                                                            show: false
+                                                        },
+                                                        crosshairs: {
+                                                            show: true
+                                                        },
+                                                        labels: {
+                                                            offsetX: 0,
+                                                            offsetY: 5,
+                                                            style: {
+                                                                fontSize: '12px',
+                                                                fontFamily: 'Quicksand, sans-serif',
+                                                                cssClass: 'apexcharts-xaxis-title',
+                                                            },
+                                                        }
+                                                    },
+                                                    yaxis: {
+                                                        labels: {
+                                                            formatter: function(value, index) {
+                                                                //return (value / 1000) + 'K'
+                                                                return value
+                                                            },
+                                                            offsetX: -22,
+                                                            offsetY: 0,
+                                                            style: {
+                                                                fontSize: '12px',
+                                                                fontFamily: 'Quicksand, sans-serif',
+                                                                cssClass: 'apexcharts-yaxis-title',
+                                                            },
+                                                        }
+                                                    },
+                                                    grid: {
+                                                        borderColor: '#e0e6ed',
+                                                        strokeDashArray: 5,
+                                                        xaxis: {
+                                                            lines: {
+                                                                show: true
+                                                            }
+                                                        },
+                                                        yaxis: {
+                                                            lines: {
+                                                                show: false,
+                                                            }
+                                                        },
+                                                        padding: {
+                                                            top: 0,
+                                                            right: 0,
+                                                            bottom: 0,
+                                                            left: -10
+                                                        },
+                                                    },
+                                                    legend: {
+                                                        position: 'top',
+                                                        horizontalAlign: 'right',
+                                                        offsetY: -50,
+                                                        fontSize: '16px',
+                                                        fontFamily: 'Quicksand, sans-serif',
+                                                        markers: {
+                                                            width: 10,
+                                                            height: 10,
+                                                            strokeWidth: 0,
+                                                            strokeColor: '#fff',
+                                                            fillColors: undefined,
+                                                            radius: 12,
+                                                            onClick: undefined,
+                                                            offsetX: 0,
+                                                            offsetY: 0
+                                                        },
+                                                        itemMargin: {
+                                                            horizontal: 0,
+                                                            vertical: 20
+                                                        }
+                                                    },
+                                                    tooltip: {
+                                                        theme: 'dark',
+                                                        marker: {
+                                                            show: true,
+                                                        },
+                                                        x: {
+                                                            show: false,
+                                                        }
+                                                    },
+                                                    fill: {
+                                                        type: 'gradient',
+                                                        gradient: {
+                                                            type: 'vertical',
+                                                            shadeIntensity: 1,
+                                                            inverseColors: !1,
+                                                            opacityFrom: .28,
+                                                            opacityTo: .05,
+                                                            stops: [45, 100]
+                                                        }
+                                                    },
+                                                    responsive: [{
+                                                        breakpoint: 575,
+                                                        options: {
+                                                            legend: {
+                                                                offsetY: -30,
+                                                            },
+                                                        },
+                                                    }]
+                                                }";
+                                            ?>
+                                            <div class="widget-content">
+                                                <div class="invoice-list">
+                                                    <!-- <div class="inv-detail" id="revenueMonthly"></div> -->
+                                                    <div class="inv-action">
+                                                        <a href="#sastHistoryModal" data-original-title="View SAST History"
+                                                            data-toggle="modal" data-repo="<?php echo $repo; ?>"
+                                                            class="btn btn-outline-primary view-details">View
+                                                            history</a>
                                                     </div>
                                                 </div>
-
-                                                <div class="widget-content">
-
-                                                    <div class="bills-stats">
-                                                        <span class="<?php echo ($currStatus == 'OK')? 'success': 'failure' ?>"><?php echo $currStatus; ?></span>
-                                                    </div>
-
-                                                    <div class="invoice-list">
-
-                                                        <div class="inv-detail">
-                                                            <div class="info-detail-1">
-                                                                <p>Netflix</p>
-                                                                <p><span class="w-currency">$</span> <span
-                                                                        class="bill-amount">13.85</span></p>
-                                                            </div>
-                                                            <div class="info-detail-2">
-                                                                <p>BlueHost VPN</p>
-                                                                <p><span class="w-currency">$</span> <span
-                                                                        class="bill-amount">15.66</span></p>
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="inv-action">
-                                                            <a href="javascript:void(0);"
-                                                                class="btn btn-outline-primary view-details">View
-                                                                Details</a>
-                                                            <a href="javascript:void(0);"
-                                                                class="btn btn-outline-primary pay-now">Pay Now $29.51</a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
                                             </div>
                                         </div>
-                                        
                                     </div>
+
+                                </div>
                                 <?php } ?>
                             </div>
                             <div class="footer-wrapper col-xl-12">
@@ -271,115 +448,13 @@ $latestRuns = json_decode($cta->httpGetWithAuth($latest_runs_url,$_SESSION['auth
     <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
 
     <script>
-    /*
-      ==================================
-          Test runs By Type | Options
-      ==================================
-  */
-    var options = {
-        chart: {
-            type: 'donut',
-            width: 380
-        },
-        colors: ['#2196f3', '#e2a03f', '#8738a7'],
-        dataLabels: {
-            enabled: false
-        },
-        legend: {
-            position: 'bottom',
-            horizontalAlign: 'center',
-            fontSize: '14px',
-            markers: {
-                width: 10,
-                height: 10,
-            },
-            itemMargin: {
-                horizontal: 0,
-                vertical: 8
-            }
-        },
-        plotOptions: {
-            pie: {
-                donut: {
-                    size: '65%',
-                    background: 'transparent',
-                    labels: {
-                        show: true,
-                        name: {
-                            show: true,
-                            fontSize: '29px',
-                            fontFamily: 'Nunito, sans-serif',
-                            color: undefined,
-                            offsetY: -10
-                        },
-                        value: {
-                            show: true,
-                            fontSize: '26px',
-                            fontFamily: 'Nunito, sans-serif',
-                            color: '20',
-                            offsetY: 16,
-                            formatter: function(val) {
-                                return val
-                            }
-                        },
-                        total: {
-                            show: true,
-                            showAlways: true,
-                            label: 'Total',
-                            color: '#888ea8',
-                            formatter: function(w) {
-                                return w.globals.seriesTotals.reduce(function(a, b) {
-                                    return a + b
-                                }, 0)
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        stroke: {
-            show: true,
-            width: 25,
-        },
-        series: [<?php echo $adhocCount.','.$releaseCount.','.$featureCount ?>],
-        labels: ['Adhoc', 'Release', 'Feature'],
-        responsive: [{
-            breakpoint: 1599,
-            options: {
-                chart: {
-                    width: '350px',
-                    height: '400px'
-                },
-                legend: {
-                    position: 'bottom'
-                }
-            },
 
-            breakpoint: 1439,
-            options: {
-                chart: {
-                    width: '250px',
-                    height: '390px'
-                },
-                legend: {
-                    position: 'bottom'
-                },
-                plotOptions: {
-                    pie: {
-                        donut: {
-                            size: '65%',
-                        }
-                    }
-                }
-            },
-        }]
-    }
-    var chart = new ApexCharts(
-        document.querySelector("#test-runs"),
-        options
+    var sastChart = new ApexCharts(
+        document.querySelector("#sastHistory"),
+        <?php echo $sastOptions; ?>
     );
 
-    chart.render();
+    sastChart.render();
     </script>
 </body>
 

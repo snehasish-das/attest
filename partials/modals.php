@@ -124,7 +124,8 @@ $rootnodes = json_decode($cta->httpGetWithAuth($rootnodes_url,$_SESSION['auth-ph
                             <div class="form-row">
                                 <div class="col-md-12 mb-4">
                                     <label>Name</label>
-                                    <input type="text" class="form-control" name="name" placeholder="Verify if login is successful" required />
+                                    <input type="text" class="form-control" name="name"
+                                        placeholder="Verify if login is successful" required />
                                     <div class="valid-feedback">
                                     </div>
                                 </div>
@@ -169,7 +170,8 @@ $rootnodes = json_decode($cta->httpGetWithAuth($rootnodes_url,$_SESSION['auth-ph
                             <div class="form-row">
                                 <div class="col-md-6 mb-4">
                                     <label>Scrum Name</label>
-                                    <input type="text" class="form-control" name="scrum_name" placeholder="Scrum Name" />
+                                    <input type="text" class="form-control" name="scrum_name"
+                                        placeholder="Scrum Name" />
                                     <div class="valid-feedback">
                                     </div>
                                 </div>
@@ -198,7 +200,8 @@ $rootnodes = json_decode($cta->httpGetWithAuth($rootnodes_url,$_SESSION['auth-ph
 <form id="executeAutomationTests" action="./actions/executeAutomationTests.php" method="POST">
     <input type="hidden" class="form-control" name="parent_node" value="<?php echo @$_REQUEST['node']; ?>" />
     <input type="hidden" class="form-control" name="ancestor_node" value="<?php echo @$_REQUEST['parent_node']; ?>" />
-    <div class="modal fade" id="executeAutomationTestsModal" tabindex="-1" role="dialog" aria-hidden="true" data-focus="false">
+    <div class="modal fade" id="executeAutomationTestsModal" tabindex="-1" role="dialog" aria-hidden="true"
+        data-focus="false">
         <div class="modal-dialog modal-dialog-centered" role="dialog">
             <div class="modal-content">
                 <div class="modal-body">
@@ -214,13 +217,15 @@ $rootnodes = json_decode($cta->httpGetWithAuth($rootnodes_url,$_SESSION['auth-ph
                             <div class="form-row">
                                 <div class="col-md-12 mb-4">
                                     <label>Home url</label>
-                                    <input type="text" class="form-control" name="home_url" placeholder="https://staging.247-inc.net/home" required />
+                                    <input type="text" class="form-control" name="home_url"
+                                        placeholder="https://staging.247-inc.net/home" required />
                                     <div class="valid-feedback">
                                     </div>
                                 </div>
                                 <div class="col-md-12 mb-4">
                                     <label>Jenkins Job url</label>
-                                    <input type="text" class="form-control" name="job_url" placeholder="https://cicd.cloud.247-inc.net/job/certify-test-framework/job/TCM_Adhoc_Test_Run" />
+                                    <input type="text" class="form-control" name="job_url"
+                                        placeholder="https://cicd.cloud.247-inc.net/job/certify-test-framework/job/TCM_Adhoc_Test_Run" />
                                     <div class="valid-feedback">
                                     </div>
                                 </div>
@@ -256,7 +261,8 @@ $rootnodes = json_decode($cta->httpGetWithAuth($rootnodes_url,$_SESSION['auth-ph
                             <div class="form-row">
                                 <div class="col-md-12 mb-4">
                                     <label>Name</label>
-                                    <input type="text" class="form-control" name="name" placeholder="Introducing cards to assist" required />
+                                    <input type="text" class="form-control" name="name"
+                                        placeholder="Introducing cards to assist" required />
                                     <div class="valid-feedback">
                                     </div>
                                 </div>
@@ -311,7 +317,7 @@ $rootnodes = json_decode($cta->httpGetWithAuth($rootnodes_url,$_SESSION['auth-ph
 
 
 <!-- Upload Tests Modal -->
-<form id="uploadTests" action="./actions/uploadTests.php" method="POST"  enctype="multipart/form-data">
+<form id="uploadTests" action="./actions/uploadTests.php" method="POST" enctype="multipart/form-data">
     <input type="hidden" class="form-control" name="parent_node" value="<?php echo @$_REQUEST['node']; ?>" />
     <input type="hidden" class="form-control" name="ancestor_node" value="<?php echo @$_REQUEST['parent_node']; ?>" />
     <div class="modal fade" id="uploadTestsModal" tabindex="-1" role="dialog" aria-hidden="true" data-focus="false">
@@ -346,3 +352,29 @@ $rootnodes = json_decode($cta->httpGetWithAuth($rootnodes_url,$_SESSION['auth-ph
         </div>
     </div>
 </form>
+
+<!-- Display SAST History modal -->
+<div class="modal fade" id="sastHistoryModal" tabindex="-1" role="dialog" aria-hidden="true" data-focus="false">
+    <div class="modal-dialog modal-dialog-centered" role="dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="feather feather-x close" data-dismiss="modal">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+                <div class="compose-box">
+                    <div class="compose-content">
+                        <h5 class="task-heading">SAST History</h5>
+                        <div id="sastHistory"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn" data-dismiss="modal"> Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
