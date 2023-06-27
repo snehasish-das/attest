@@ -140,7 +140,8 @@
         </li>
 
         <li class="menu <?php if(str_contains($endpoint,'sast')) { echo 'active'; }?> ">
-            <a href="#sast" data-active="<?php echo str_contains($endpoint,'sast')? 'true': 'false'; ?>" class="menu-toggle">
+            <a href="#sast" data-active="<?php echo str_contains($endpoint,'sast')? 'true': 'false'; ?>"
+                class="menu-toggle">
                 <div class="base-menu">
                     <div class="base-icons">
                         <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2"
@@ -156,7 +157,8 @@
     </ul>
 </nav>
 
-<div id="compact_submenuSidebar" class="submenu-sidebar <?php if(!(str_contains($endpoint,'index')  || $endpoint =='' )) { echo 'ps show submenu-enable'; }?> ">
+<div id="compact_submenuSidebar"
+    class="submenu-sidebar <?php if(!(str_contains($endpoint,'index')  || $endpoint =='' )) { echo 'ps show submenu-enable'; }?> ">
     <div class="submenu" id="testplan">
         <div class="actions">
             <a data-toggle="modal" data-target="#addTestplanFolderModal">
@@ -236,25 +238,34 @@
         <ul class="submenu-list menu-block-submenu" data-parent-element="#sast">
             <li
                 class="<?php if(str_contains($endpoint,'sast') && str_contains($currUrl,'platform')) { echo 'active'; }?> menu-block">
-                <a href="sast-dashboard?type=platform"><svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor"
-                        stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1">
+                <a href="sast-dashboard?type=platform"><svg viewBox="0 0 24 24" width="24" height="24"
+                        stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"
+                        stroke-linejoin="round" class="css-i6dzq1">
                         <path d="M5 17H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-1"></path>
                         <polygon points="12 15 17 21 7 21 12 15"></polygon>
                     </svg> Platform </a>
             </li>
             <li
-                class="<?php if(str_contains($endpoint,'sast') && str_contains($currUrl,'butterfly')) { echo 'active'; }?> menu-block">
-                <a href="sast-dashboard"?type=butterfly><svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor"
+                class="<?php if(str_contains($endpoint,'sast') && str_contains($currUrl,'mwb')) { echo 'active'; }?> menu-block">
+                <a href="sast-dashboard?type=mwb"><svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor"
                         stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1">
                         <path
                             d="M18 3a3 3 0 0 0-3 3v12a3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3H6a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3V6a3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3h12a3 3 0 0 0 3-3 3 3 0 0 0-3-3z">
                         </path>
-                    </svg> Butterfly </a>
+                    </svg> MWB </a>
+            </li>
+            <li
+                class="<?php if(str_contains($endpoint,'sast') && str_contains($currUrl,'ci')) { echo 'active'; }?> menu-block">
+                <a href="sast-dashboard?type=ci"><svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor"
+                        stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1">
+                        <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+                    </svg> CI </a>
             </li>
             <li
                 class="<?php if(str_contains($endpoint,'sast') && str_contains($currUrl,'central')) { echo 'active'; }?> menu-block">
-                <a href="sast-dashboard?type=central"><svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor"
-                        stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1">
+                <a href="sast-dashboard?type=central"><svg viewBox="0 0 24 24" width="24" height="24"
+                        stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"
+                        stroke-linejoin="round" class="css-i6dzq1">
                         <path
                             d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z">
                         </path>
@@ -267,8 +278,9 @@
             </li>
             <li
                 class="<?php if(str_contains($endpoint,'sast') && str_contains($currUrl,'assist')) { echo 'active'; }?> menu-block">
-                <a href="sast-dashboard?type=assist"><svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor"
-                        stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1">
+                <a href="sast-dashboard?type=assist"><svg viewBox="0 0 24 24" width="24" height="24"
+                        stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"
+                        stroke-linejoin="round" class="css-i6dzq1">
                         <path
                             d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z">
                         </path>
@@ -276,8 +288,9 @@
             </li>
             <li
                 class="<?php if(str_contains($endpoint,'sast') && str_contains($currUrl,'speech')) { echo 'active'; }?> menu-block">
-                <a href="sast-dashboard?type=speech"><svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor"
-                        stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1">
+                <a href="sast-dashboard?type=speech"><svg viewBox="0 0 24 24" width="24" height="24"
+                        stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"
+                        stroke-linejoin="round" class="css-i6dzq1">
                         <circle cx="5.5" cy="11.5" r="4.5"></circle>
                         <circle cx="18.5" cy="11.5" r="4.5"></circle>
                         <line x1="5.5" y1="16" x2="18.5" y2="16"></line>

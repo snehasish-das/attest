@@ -17,9 +17,34 @@ $data = json_decode($cta->httpGet($site_name_url), true);
 $site_name = $data[0]['option_value'];
 
 
-$platform = array("createbot","dal","dialogmanager","dialog-manager-runtimeclient","handler-webview","integrated-tool-suite","locations","mca-slack","messenger-client-onboarding","messenger-commons","messenger-distributor","messenger-handler-abc","messenger-handler-base","messenger-handler-fb","messenger-handler-gbm","messenger-standard-scxml","msg-deliverer","node-analytics-client","node-apigee-client","node-cassandra-client","node-hello","node-messenger-auth-token","node-messenger-metadata","node-messenger-provclient","node-nl","node-service-template","notifications","omnichannel-content-schema","registrations","scxml","speech-binlog-sessionizer-etl","tfs-ui","ude","ude-console-schema","ude-console-service","ude-console-ui","ude-frontends-service","ude-native-sdk","vagent-orchestrator","voicebiometrics","web2nl","web2spell","whatsappmca","speech-callsearch-webservice","tmmain-binlog2idm","omnichannel-orchestrator","omnichannel-uia","shortlinks","247inc-speakerverificationdemo-scxml","247inc-speakerverificationdemo-vxml","msft_stt_audio_stream_demo","speech-ana-webservice","speech-binlog-sessionizer-etl","custom-jobs","ATTLocality-jobs","kafka-producer","ATT-CDR","InvoiceDetailsReport","tfs-commons","pdsp-wrapper");
+$platform = array("platform:createbot","platform:dal","platform:dialogmanager","platform:dialog-manager-runtimeclient","platform:messenger-handler-webview","platform:integrated-tool-suite","platform:locations","platform:mca-slack","platform:messenger-client-onboarding","platform:messenger-commons","platform:messenger-distributor","platform:messenger-handler-abc","platform:messenger-handler-abc","platform:messenger-handler-abc","platform:messenger-handler-abc","platform:messenger-standard-scxml","platform:msg-deliverer","platform:node-analytics-client","platform:node-apigee-client","platform:node-cassandra-client","platform:node-messenger-card-maker","platform:node-messenger-card-maker","platform:node-messenger-card-maker","platform:node-nl","platform:node-service-template","platform:omnichannel-content-schema","platform:registrations","platform:messenger-omnichannel-scxml","speech-binlog-sessionizer-etl","platform:tfs-ui","platform:ude-console-service","platform:ude-console-schema","platform:ude-console-service","platform:ude-console-ui","platform:ude-frontends-service","platform:ude-native-sdk","platform:vagent-orchestrator","platform:voicebiometrics","platform:web2nl","platform:web2spell","platform:whatsappmca","speech-callsearch-webservice","tmmain-binlog2idm","platform:omnichannel-orchestrator-mechanisms","platform:omnichannel-uia","247inc-speakerverificationdemo-vxml","247inc-speakerverificationdemo-vxml","msft_stt_audio_stream_demo","speech-ana-webservice","speech-binlog-sessionizer-etl","custom-jobs","ATTLocality-jobs","kafka-producer","ATT-CDR","InvoiceDetailsReport","tfs-commons","pdsp-wrapper");
+$mwb = array("advancedprototype:conversation-discovery","advancedprototype:conversation-discovery","advancedprototype:conversation-discovery","advancedprototype:conversation-discovery","advancedprototypes:modelbuilder-web-service","advancedprototypes-ui");
+$ci = array("ingress-pipeline","client-uploader","kafka-integration-service-java");
+$central = array("Central-cobp-be","Central-cobp-fe","Central-org-hierarchy-service","dcc","dcrs","Central-config-versioning","config-listener","Central-org-hierarchy-cache","Central-ajuba-admin-console","Central-reload-framework");
+$speech = array("cosmos_indexer","speech_elastic_search","wcr_ap","speech-clientprov-webservice","filebeat_config","tpc-writer","raw-events-writer","speech-cassandra-etl","tm_tree","sisyphus_reports","247Genericpackages","utt_process","speech-modernization-studio-web-app","pcentral","TPM","binlog-sender","speech-modernization-studio-web-app","speech-modernization-studio-web-app","telaudio","cms_packages","speech-api-webservice","smpp_gateway","switchboard","Tellme-Mommy-sls","mod_tmwcr","call-recording-api-webservice","reports-api-webservice","admin_log_relay","Tellme-OutboundProcess develo","Tellme-OutboundProcess develo","Tellme-OutboundProcess develo","speech_elastic-search-7.1.0","sisyphus_db","lgspack","commons-webreco","gmspack","jobctl_package","siteadmin_reco","outbound_process","outbound_portal","notifypackages","mmep-sma-2","web2mm","Hindsightpackages","platform:function-executor-scxml","speech_kibana","sisyphuspackages","redis_centos6_sentinel","ana_webserver","CCXML","vault_database","content_static","web_calltools","content_static_private","247Genericpackages","extranet-devlog","speech-modernization-studio-web-app","speech-modernization-studio-web-app","speech-modernization-studio-web-app","cpm-webapp","outbound_vxml","speech-modernization-studio-web-app","cdr-ani-removal","speech-modernization-studio-web-app","speech-modernization-studio-web-app","tgs_configuration","ExpManager","tgs_jobctl_statusweb","tgs_jobctl_data","lgs","speech-monitoring-jobs","calldisplay","speech-callsearch-webservice","TTS-Containers","cms","CosmosTMScope","www-resources","extranet-devlog","sipproxy","statusd-checks-devlogs","statusd-checks-devlogs","statusd-checks-devlogs","statusd-checks-devlogs","outbound_qm_db");
+$assist = array("visitor-service-ef","breeze null","Assist-PE_nemo-core","Assist-PE_nemo-miscellaneous","com.tfs.answers:ir-user-core","platform:node-messenger-auth-token","Assist-PE_chronos-core","bridge","logarchiver assist-3.26","CRM-Integration","Assist-PE_chronos-base","mailer-service","speech-callsearch-webservice","http-utils");
 
 $repos = array("platform:dialogmanager");
+@$sast_type = @$_REQUEST['type'];
+
+if($sast_type=='platform'){
+    $repos = $platform;
+}
+if($sast_type=='mwb'){
+    $repos = $mwb;
+}
+if($sast_type=='ci'){
+    $repos = $ci;
+}
+if($sast_type=='central'){
+    $repos = $central;
+}
+if($sast_type=='speech'){
+    $repos = $speech;
+}
+if($sast_type=='assist'){
+    $repos = $assist;
+}
 
 ?>
 <!DOCTYPE html>
@@ -115,7 +140,8 @@ $repos = array("platform:dialogmanager");
                             </div>
 
                             <div class="admin-data-content layout-top-spacing">
-                                <?php foreach($repos as $repo) {
+                                <div class="row">
+                                    <?php foreach($repos as $repo) {
                                     //Retrieve status data
                                     $statusUrl = SONAR_URL . '/project_branches/list?project='. $repo;
                                     $statusData = json_decode($cta->httpGet($statusUrl), true);
@@ -130,7 +156,11 @@ $repos = array("platform:dialogmanager");
                                     //echo '<br>Bugs:'. $componentData['component']['measures'][2]['value'];
 
                                     //retrieve history data
-                                    $historyUrl = SONAR_URL . '/measures/search_history?component='.$repo.'&metrics=bugs,vulnerabilities,code_smells,coverage,duplicated_lines_density';
+                                    $fromDate = date('Y-m-d', strtotime("-30 days")); // Y-m-d
+                                    //$fromDate->add(new DateInterval('P30D'));
+                                    $toDate = date('Y-m-d');
+                                    $historyUrl = SONAR_URL . '/measures/search_history?component='.$repo.'&metrics=bugs,vulnerabilities,code_smells,coverage,duplicated_lines_density&from='.$fromDate.'&to='.$toDate;
+                                    //echo '<hr> History URL:'. $historyUrl;
                                     $historyData = json_decode($cta->httpGet($historyUrl), true);
                                     //echo '<hr> History Data:'. json_encode($historyData);
                                     //$measuresArray
@@ -166,7 +196,6 @@ $repos = array("platform:dialogmanager");
 
                                     
                                 ?>
-                                <div class="row">
 
                                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 layout-spacing">
                                         <div class="widget widget-account-invoice-three">
@@ -175,7 +204,7 @@ $repos = array("platform:dialogmanager");
                                                     <div class="usr-name">
                                                         <span><?php echo ucfirst($repo).'('.$analysisDate.')'; ?></span>
                                                         <span
-                                                            class="<?php echo ($currStatus == 'OK')? 'success': 'failure' ?>"><?php echo trim($currStatus); ?></span>
+                                                            class="<?php echo ($currStatus == 'OK')? 'success': 'failure' ?>"><?php echo ($currStatus == 'OK')? 'SUCCESS': $currStatus; ?></span>
                                                     </div>
                                                 </div>
                                                 <!-- <div class="wallet-balance">
@@ -251,7 +280,7 @@ $repos = array("platform:dialogmanager");
                                                         }]
                                                     },
                                                     subtitle: {
-                                                        text: '250',
+                                                        text: 'last 10 runs',
                                                         align: 'left',
                                                         margin: 0,
                                                         offsetX: 95,
@@ -263,7 +292,7 @@ $repos = array("platform:dialogmanager");
                                                         }
                                                     },
                                                     title: {
-                                                        text: 'Total Tests',
+                                                        text: 'History of :',
                                                         align: 'left',
                                                         margin: 0,
                                                         offsetX: -10,
@@ -393,8 +422,9 @@ $repos = array("platform:dialogmanager");
                                                 <div class="invoice-list">
                                                     <!-- <div class="inv-detail" id="revenueMonthly"></div> -->
                                                     <div class="inv-action">
-                                                        <a href="#sastHistoryModal" data-original-title="View SAST History"
-                                                            data-toggle="modal" data-repo="<?php echo $repo; ?>"
+                                                        <a href="#sastHistoryModal"
+                                                            data-original-title="View SAST History" data-toggle="modal"
+                                                            data-repo="<?php echo $repo; ?>"
                                                             class="btn btn-outline-primary view-details">View
                                                             history</a>
                                                     </div>
@@ -402,9 +432,8 @@ $repos = array("platform:dialogmanager");
                                             </div>
                                         </div>
                                     </div>
-
+                                    <?php } ?>
                                 </div>
-                                <?php } ?>
                             </div>
                             <div class="footer-wrapper col-xl-12">
                                 <?php require './partials/footer.php'; ?>
@@ -448,7 +477,6 @@ $repos = array("platform:dialogmanager");
     <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
 
     <script>
-
     var sastChart = new ApexCharts(
         document.querySelector("#sastHistory"),
         <?php echo $sastOptions; ?>
